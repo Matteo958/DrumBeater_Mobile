@@ -754,13 +754,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.23418936, y: -0.010207766, z: 0.0024595307, w: 0.9721343}
+  m_LocalRotation: {x: 0.2342005, y: 0, z: 0, w: 0.97218835}
   m_LocalPosition: {x: 0.008008004, y: 0.20202938, z: -0.45682406}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 24.41, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 27.089, y: 0, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1434,10 +1434,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noteSpawnGapInBeats: 7
   noteHeight: 0.6
-  firstTrackRemovers:
-  - {fileID: 0}
-  secondTrackRemovers: []
-  thirdTrackRemovers: []
+  firstTrack: {fileID: 0}
+  secondTrack: {fileID: 0}
+  thirdTrack: {fileID: 0}
   notePrefab: {fileID: 391866392545918537, guid: 650594f0b88d2e34db21ce771ba2746c, type: 3}
   noteMaterials:
   - {fileID: 2100000, guid: c8b2a1cbc9f631245a5e4f262c906cef, type: 2}
