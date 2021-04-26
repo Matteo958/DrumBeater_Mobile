@@ -16,14 +16,17 @@ using UnityEngine.Events;
 
 namespace Leap.Unity.Interaction {
 
-  /// <summary>
-  /// AnchorableBehaviours mix well with InteractionBehaviours you'd like to be able to
-  /// pick up and place in specific locations, specified by other GameObjects with an
-  /// Anchor component.
-  /// </summary>
-  public class AnchorableBehaviour : MonoBehaviour {
+    /// <summary>
+    /// AnchorableBehaviours mix well with InteractionBehaviours you'd like to be able to
+    /// pick up and place in specific locations, specified by other GameObjects with an
+    /// Anchor component.
+    /// </summary>
+    public class AnchorableBehaviour : MonoBehaviour {
+        
+        public enum MenuChoice { none, songs, tutorial, options, credits, quit };
 
-    [Disable]
+        public MenuChoice menu;
+        [Disable]
     [SerializeField]
     [Tooltip("Whether or not this AnchorableBehaviour is actively attached to its anchor.")]
     private bool _isAttached = false;
@@ -66,7 +69,7 @@ namespace Leap.Unity.Interaction {
       }
     }
 
-    [Tooltip("The current anchor of this AnchorableBehaviour.")]
+        [Tooltip("The current anchor of this AnchorableBehaviour.")]
     [OnEditorChange("anchor"), SerializeField]
     private Anchor _anchor;
     public Anchor anchor {

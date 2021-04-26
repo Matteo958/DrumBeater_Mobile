@@ -28,6 +28,9 @@ namespace Leap.Unity.Interaction {
       }
     }
 
+        [Tooltip("is used to recognize the anchor that will make the various menu panels appear")]
+        [SerializeField] private bool _isStarterAnchor = default;
+
     [Tooltip("Should this anchor allow multiple objects to be attached to it at the same time? "
            + "This property is enforced by AnchorGroups and AnchorableBehaviours.")]
     public bool allowMultipleObjects = false;
@@ -129,15 +132,55 @@ namespace Leap.Unity.Interaction {
     public void NotifyAttached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Add(anchObj);
 
-      if (_anchoredObjects.Count == 1) {
+            if (_isStarterAnchor)
+            {
+                switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
+                {
+                    case "songs":
+                        break;
+                    case "tutorial":
+                        UIManager.instance.openPanel("Tutorial");
+                        break;
+                    case "options":
+                        UIManager.instance.openPanel("Options");
+                        break;
+                    case "credits":
+                        UIManager.instance.openPanel("Credits");
+                        break;
+                    case "quit":
+                        UIManager.instance.openPanel("Quit");
+                        break;
+                }
+            }
+
+            if (_anchoredObjects.Count == 1) {
         OnAnchorablesAttached();
       }
     }
 
     public void NotifyDetached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Remove(anchObj);
-
-      if (_anchoredObjects.Count == 0) {
+            if (_isStarterAnchor)
+            {
+                switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
+                {
+                    case "songs":
+                        break;
+                    case "tutorial":
+                        UIManager.instance.closePanel("Tutorial");
+                        break;
+                    case "options":
+                        UIManager.instance.closePanel("Options");
+                        break;
+                    case "credits":
+                        UIManager.instance.closePanel("Credits");
+                        break;
+                    case "quit":
+                        UIManager.instance.closePanel("Quit");
+                        break;
+                }
+            }
+            if (_anchoredObjects.Count == 0) {
         OnNoAnchorablesAttached();
       }
     }
