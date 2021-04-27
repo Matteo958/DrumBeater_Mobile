@@ -11,9 +11,9 @@ public class PointsManager : MonoBehaviour
 
     [Tooltip("The maximum combo multiplier")]
     [SerializeField] private int maxComboMultiplier = 10;
-    [Tooltip("The consecutive hits needed for increase combo multiplier")]
+    [Tooltip("The consecutive hits needed to increase combo multiplier")]
     [SerializeField] private int comboMultiplierStep = 5;
-    [Tooltip("The consecutive hits needed for activate the auto perfect")]
+    [Tooltip("The consecutive hits needed to activate the auto perfect")]
     [SerializeField] private int autoModeHits = 50;
 
     [Tooltip("The multiplier for the easy mode")]
@@ -32,7 +32,6 @@ public class PointsManager : MonoBehaviour
     [Tooltip("The points given by each ok")]
     [SerializeField] private int okPoints = 50;
 
-
     private float difficultMultiplier = 1;
     private int comboMultiplier = 1;
 
@@ -43,16 +42,15 @@ public class PointsManager : MonoBehaviour
     private int miss = 0;
     private int consecutiveHits = 0;
 
-    private static PointsManager _instance;
-    public static PointsManager instance { get => _instance; }
+    public static PointsManager instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
             Destroy(this.gameObject);
         else
         {
-            _instance = this;
+            instance = this;
         }
     }
 
@@ -102,7 +100,7 @@ public class PointsManager : MonoBehaviour
 
     public void calculatePercentage()
     {
-        hitsPercentage = hits * 100 / hits + miss;
+        hitsPercentage = (hits * 100) / (hits + miss);
     }
 
     public void reset()

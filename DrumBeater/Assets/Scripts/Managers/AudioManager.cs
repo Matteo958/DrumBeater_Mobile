@@ -14,11 +14,13 @@ public class AudioManager : MonoBehaviour
     private Hashtable _jobTable;
 
     public AudioTrack[] tracks;
-    
+
     private enum AudioAction
     {
         START,
         STOP,
+        PAUSE,
+        UNPAUSE,
         RESTART
     }
 
@@ -65,7 +67,7 @@ public class AudioManager : MonoBehaviour
             populateAudioTable();
         }
     }
-    
+
     public void playAudio(AudioType type, bool fade = false, float delay = 0.0F)
     {
         addJob(new AudioJob(AudioAction.START, type, fade, delay));
@@ -79,6 +81,16 @@ public class AudioManager : MonoBehaviour
     public void stopAudio(AudioType type, bool fade = false, float delay = 0.0F)
     {
         addJob(new AudioJob(AudioAction.STOP, type, fade, delay));
+    }
+
+    public void pauseAudio(AudioType type, bool fade = false, float delay = 0.0F)
+    {
+        addJob(new AudioJob(AudioAction.PAUSE, type, fade, delay));
+    }
+
+    public void unpauseAudio(AudioType type, bool fade = false, float delay = 0.0F)
+    {
+        addJob(new AudioJob(AudioAction.UNPAUSE, type, fade, delay));
     }
 
     private void populateAudioTable()
@@ -106,9 +118,8 @@ public class AudioManager : MonoBehaviour
     private void RemoveJob(AudioType type)
     {
         if (!_jobTable.ContainsKey(type))
-        {
             return;
-        }
+        
         IEnumerator runningJob = (IEnumerator)_jobTable[type];
         StopCoroutine(runningJob);
         _jobTable.Remove(type);
@@ -117,10 +128,8 @@ public class AudioManager : MonoBehaviour
     private void RemoveConflictingJobs(AudioType type)
     {
         // cancel the job if one exists with the same type
-        if (_jobTable.ContainsKey(type))
-        {
+        if (_jobTable.ContainsKey(type))        
             RemoveJob(type);
-        }
 
         // cancel jobs that share the same audio track
         AudioType conflictAudio = AudioType.None;
@@ -129,15 +138,13 @@ public class AudioManager : MonoBehaviour
             AudioType audioType = (AudioType)entry.Key;
             AudioTrack audioTrackInUse = GetAudioTrack(audioType, "Get Audio Track In Use");
             AudioTrack audioTrackNeeded = GetAudioTrack(type, "Get Audio Track Needed");
-            if (audioTrackInUse.source == audioTrackNeeded.source)
-            {
+            if (audioTrackInUse.source == audioTrackNeeded.source)            
                 conflictAudio = audioType;
-            }
+            
         }
-        if (conflictAudio != AudioType.None)
-        {
+        if (conflictAudio != AudioType.None)        
             RemoveJob(conflictAudio);
-        }
+        
     }
 
     private IEnumerator RunAudioJob(AudioJob job)
@@ -152,15 +159,25 @@ public class AudioManager : MonoBehaviour
             case AudioAction.START:
                 track.source.Play();
                 break;
+
             case AudioAction.STOP:
                 if (!job.fade)
-                {
                     track.source.Stop();
-                }
                 break;
+
             case AudioAction.RESTART:
                 track.source.Stop();
                 track.source.Play();
+                break;
+
+            case AudioAction.PAUSE:
+                if (!job.fade)
+                    track.source.Pause();
+                break;
+
+            case AudioAction.UNPAUSE:
+                if (!job.fade)
+                    track.source.UnPause();
                 break;
         }
 
@@ -179,9 +196,19 @@ public class AudioManager : MonoBehaviour
                 yield return null;
             }
 
-            if (job.action == AudioAction.STOP)
+            switch (job.action)
             {
-                track.source.Stop();
+                case AudioAction.STOP:
+                    track.source.Stop();
+                    break;
+
+                case AudioAction.PAUSE:
+                    track.source.Pause();
+                    break;
+
+                case AudioAction.UNPAUSE:
+                    track.source.UnPause();
+                    break;
             }
         }
 
@@ -203,10 +230,8 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AudioObject obj in track.audio)
         {
-            if (obj.type == type)
-            {
-                return obj.clip;
-            }
+            if (obj.type == type)            
+                return obj.clip;            
         }
         return null;
     }

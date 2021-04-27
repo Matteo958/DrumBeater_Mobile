@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+//using System.Security.Cryptography;
 using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
@@ -14,8 +15,6 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] private Transform secondTrack;
     [Tooltip("The third track")]
     [SerializeField] private Transform thirdTrack;
-    [Tooltip("The prefab of the note")]
-    [SerializeField] private GameObject notePrefab;
     [Tooltip("List of possible color for the note")]
     [SerializeField] private List<Material> noteMaterials;
     [Tooltip("The color of the note during auto perfect")]
@@ -46,12 +45,11 @@ public class NoteSpawner : MonoBehaviour
     // Spawned note
     private GameObject spawnedNote;
 
-    private static NoteSpawner _instance;
-    public static NoteSpawner instance { get => _instance; }
+    public static NoteSpawner instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
             Destroy(this.gameObject);
         else
         {
@@ -74,7 +72,7 @@ public class NoteSpawner : MonoBehaviour
                 thirdTrackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
-            _instance = this;
+            instance = this;
         }
     }
 
@@ -113,21 +111,22 @@ public class NoteSpawner : MonoBehaviour
 
     private void spawnNote(NoteInfo note)
     {
+        //Get the note from the pool
         spawnedNote = ObjectPool.instance.getPooledObj();
-
+        
         if (spawnedNote != null)
         {
             switch (note.track)
             {
                 case 1:
-                    spawnedNote.transform.position = firstTrackRemoversMap[note.removerID].transform.position + Vector3.up * noteHeight;
+                    spawnedNote.transform.position = firstTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
                     spawnedNote.transform.SetParent(firstTrackRemoversMap[note.removerID].transform);
                     //firstTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
                     //    firstTrackRemoversMap[note.line].isLastNote = true;
 
                     break;
                 case 2:
-                    spawnedNote.transform.position = secondTrackRemoversMap[note.removerID].transform.position + Vector3.up * noteHeight;
+                    spawnedNote.transform.position = secondTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
                     spawnedNote.transform.SetParent(secondTrackRemoversMap[note.removerID].transform);
 
                     //secondTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
@@ -135,7 +134,7 @@ public class NoteSpawner : MonoBehaviour
 
                     break;
                 case 3:
-                    spawnedNote.transform.position = thirdTrackRemoversMap[note.removerID].transform.position + Vector3.up * noteHeight;
+                    spawnedNote.transform.position = thirdTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
                     spawnedNote.transform.SetParent(thirdTrackRemoversMap[note.removerID].transform);
 
                     //thirdTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
@@ -143,7 +142,6 @@ public class NoteSpawner : MonoBehaviour
 
                     break;
             }
-
 
             spawnedNote.SetActive(true);
 
@@ -156,7 +154,11 @@ public class NoteSpawner : MonoBehaviour
             if (GameManager.instance.autoMode)
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
             else
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[Random.Range(0, noteMaterials.Count - 1)];
+            {
+                //Set a new seed for the random
+                Random.InitState(System.DateTime.Now.Millisecond);
+                spawnedNote.GetComponent<Renderer>().material = noteMaterials[Random.Range(0, noteMaterials.Count)];
+            }
         }
         else
         {
@@ -178,4 +180,17 @@ public class NoteSpawner : MonoBehaviour
     {
         ObjectPool.instance.changeObjsMaterial(noteMaterials);
     }
+
+    //private int getRandomInt(int minimumValue, int maximumValue)
+    //{
+    //    byte[] randomNumber = new byte[1];
+    //    _generator.GetBytes(randomNumber);
+
+    //    double asciiValueOfRandomCharacter = System.Convert.ToDouble(randomNumber[0]);
+    //    double multiplier = System.Math.Max(0, (asciiValueOfRandomCharacter / 255d) - 0.00000000001d);
+    //    int range = maximumValue - minimumValue + 1;
+    //    double randomValueInRange = System.Math.Floor(multiplier * range);
+
+    //    return (int)(minimumValue + randomValueInRange);
+    //}
 }

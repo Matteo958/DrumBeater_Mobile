@@ -8,15 +8,14 @@ public class ObjectPool : MonoBehaviour
     [SerializeField] private int amountToPool = 20;
     [HideInInspector] public List<GameObject> pooledObjs;
 
-    private static ObjectPool _instance;
-    public static ObjectPool instance { get => _instance; }
+    public static ObjectPool instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
             Destroy(this.gameObject);
         else
-            _instance = this;
+            instance = this;
     }
 
     private void Start()
@@ -56,7 +55,10 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < amountToPool; i++)
         {
             if (pooledObjs[i].activeInHierarchy)
+            {
+                Random.InitState(System.DateTime.Now.Millisecond);
                 pooledObjs[i].GetComponent<Renderer>().material = mat[Random.Range(0, mat.Count - 1)];
+            }
         }
     }
 }

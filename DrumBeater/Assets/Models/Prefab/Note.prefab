@@ -12,8 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2431de8dd00361847905dfc316c29a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tmp: 0
-  vel: 0.5
   bpmTime: 0
   isLastNote: 0
   special: 0
@@ -74,7 +72,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f2b241ddcabcb040942caa29f3beb5e, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6f2b241ddcabcb040942caa29f3beb5e, type: 3}
       propertyPath: m_LocalScale.z

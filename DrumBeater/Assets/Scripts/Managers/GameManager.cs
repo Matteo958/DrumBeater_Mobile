@@ -7,24 +7,25 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool hasFinalBonus = false;
+    [HideInInspector] public bool gamePaused = false;
 
     [Tooltip("Duration of the auto mode in seconds")]
     [SerializeField] private float autoModeTime = 15;
 
-    private static GameManager _instance;
-    public static GameManager instance { get => _instance; }
+    public static GameManager instance { get; private set; }
 
     private void Awake()
     {
-        if (_instance != null && _instance != this)
+        if (instance != null && instance != this)
             Destroy(this.gameObject);
         else
-            _instance = this;
+            instance = this;
     }
 
     public void activateAutoMode()
     {
-        StartCoroutine(autoModeCoroutine());
+        if (hasAutoMode)
+            StartCoroutine(autoModeCoroutine());
     }
 
     private IEnumerator autoModeCoroutine()
@@ -39,5 +40,21 @@ public class GameManager : MonoBehaviour
 
         autoMode = false;
         NoteSpawner.instance.deactivateAutoMode();
+    }
+
+    public void pause()
+    {
+        Time.timeScale = 0;
+        AudioListener.pause = true;
+        gamePaused = true;
+        //TODO
+    }
+
+    public void unpause()
+    {
+        Time.timeScale = 1;
+        AudioListener.pause = false;
+        gamePaused = false;
+        //TODO
     }
 }
