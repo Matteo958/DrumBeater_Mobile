@@ -6,6 +6,11 @@ TagManager:
   tags:
   - Songs
   - StarterAnchor
+  - PanelSong
+  - Easy
+  - Medium
+  - Hard
+  - PanelTutorial
   layers:
   - Default
   - TransparentFX
@@ -15,7 +20,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Song
   - 
   - 
   - 
