@@ -28,6 +28,8 @@ namespace Leap.Unity.Interaction {
       }
     }
 
+        public string choice = "";
+
         [Tooltip("is used to recognize the anchor that will make the various menu panels appear")]
         [SerializeField] private bool _isStarterAnchor = default;
 
@@ -136,20 +138,15 @@ namespace Leap.Unity.Interaction {
             {
                 switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
                 {
-                    case "songs":
+                    case "Songs":
+                        choice = "Songs";
+                        
                         break;
-                    case "tutorial":
-                        UIManager.instance.openPanel("Tutorial");
+                    case "Tutorial":
+                        choice = "Tutorial";
+                        
                         break;
-                    case "options":
-                        UIManager.instance.openPanel("Options");
-                        break;
-                    case "credits":
-                        UIManager.instance.openPanel("Credits");
-                        break;
-                    case "quit":
-                        UIManager.instance.openPanel("Quit");
-                        break;
+                    
                 }
             }
 
@@ -164,19 +161,13 @@ namespace Leap.Unity.Interaction {
             {
                 switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
                 {
-                    case "songs":
+                    case "Songs":
+                        choice = "";
+                        
                         break;
-                    case "tutorial":
-                        UIManager.instance.closePanel("Tutorial");
-                        break;
-                    case "options":
-                        UIManager.instance.closePanel("Options");
-                        break;
-                    case "credits":
-                        UIManager.instance.closePanel("Credits");
-                        break;
-                    case "quit":
-                        UIManager.instance.closePanel("Quit");
+                    case "Tutorial":
+                        choice = "";
+                        
                         break;
                 }
             }

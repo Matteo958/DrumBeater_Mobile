@@ -23,7 +23,7 @@ namespace Leap.Unity.Interaction {
     /// </summary>
     public class AnchorableBehaviour : MonoBehaviour {
         
-        public enum MenuChoice { none, songs, tutorial, options, credits, quit };
+        public enum MenuChoice { none, Songs, Tutorial };
 
         public MenuChoice menu;
         [Disable]
