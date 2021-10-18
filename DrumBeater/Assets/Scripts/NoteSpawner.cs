@@ -181,6 +181,7 @@ public class NoteSpawner : MonoBehaviour
         ObjectPool.instance.changeObjsMaterial(noteMaterials);
     }
 
+
     //private int getRandomInt(int minimumValue, int maximumValue)
     //{
     //    byte[] randomNumber = new byte[1];

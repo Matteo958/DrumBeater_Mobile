@@ -34,8 +34,6 @@ public class GameManager : MonoBehaviour
         hasAutoMode = false;
         NoteSpawner.instance.activateAutoMode();
 
-        //TODO rallentare il tempo?
-
         yield return new WaitForSeconds(autoModeTime);
 
         autoMode = false;

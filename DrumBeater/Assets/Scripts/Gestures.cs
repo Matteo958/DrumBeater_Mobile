@@ -82,7 +82,7 @@ public class Gestures : MonoBehaviour
         {
             UpdatePalmPosHandsClapping(0.02f);
 
-            yield return new WaitForSeconds(0.01f);
+            yield return null;
         }
 
     }
@@ -93,11 +93,11 @@ public class Gestures : MonoBehaviour
         if (Vector3.Distance(_palmLeft.localPosition, _palmRight.localPosition) < destination)
         {
             _canActivatePower1 = false;
-            foreach (Transform cube in _cubeExample.transform)
-            {
-                cube.GetComponent<ExplodeExample>().Explode();
-            }
-            //TO-DO: Power Up Hands Up
+            //foreach (Transform cube in _cubeExample.transform)
+            //{
+            //    cube.GetComponent<ExplodeExample>().Explode();
+            //}
+            NoteSpawner.instance.activateFinalBonus();
         }
     }
 
@@ -165,12 +165,14 @@ public class Gestures : MonoBehaviour
             _handOpenLeft = false;
 
             _canActivatePower2 = false;
-            foreach (Transform cube in _cubeExample.transform)
-            {
-                cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                cube.GetComponent<Collider>().enabled = false;
-                cube.GetComponent<ExplodeExample>().ReturnToStartPos();
-            }
+            //foreach (Transform cube in _cubeExample.transform)
+            //{
+            //    cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //    cube.GetComponent<Collider>().enabled = false;
+            //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
+            //}
+            GameManager.instance.activateAutoMode();
+
         }
     }
     #endregion
@@ -178,7 +180,6 @@ public class Gestures : MonoBehaviour
     #region Right Fist
     public void ActivateFistRight()
     {
-       
         _fistRight = true;
 
         if (_canActivatePower2)
@@ -203,6 +204,7 @@ public class Gestures : MonoBehaviour
         Debug.Log("RightHand Open");
     }
 
+    // Richiamare in update in un if con condizioni !handopenright && canativatepower2 per fare in modo che venga controllato continuamente e non solo con mano verso camera
     private void UpdateHandOpenRight()
     {
         if ((Vector3.Distance(_palmRight.position, _thumbRightEnd.transform.position) > 0.07f
@@ -228,8 +230,6 @@ public class Gestures : MonoBehaviour
 
     private void UpdatePalmPosFistRight()
     {
-
-
         if ((Vector3.Distance(_palmRight.position, _thumbRightEnd.transform.position) < 0.06f
             && Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) < 0.05f
@@ -240,12 +240,13 @@ public class Gestures : MonoBehaviour
             _handOpenRight = false;
 
             _canActivatePower2 = false;
-            foreach (Transform cube in _cubeExample.transform)
-            {
-                cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                cube.GetComponent<Collider>().enabled = false;
-                cube.GetComponent<ExplodeExample>().ReturnToStartPos();
-            }
+            //foreach (Transform cube in _cubeExample.transform)
+            //{
+            //    cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //    cube.GetComponent<Collider>().enabled = false;
+            //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
+            //}
+            GameManager.instance.activateAutoMode();
         }
     }
 
