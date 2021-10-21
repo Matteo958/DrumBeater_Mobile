@@ -6,6 +6,13 @@ using UnityEngine.UI;
 
     public class UIManager : MonoBehaviour
     {
+
+    [SerializeField] private Material _buttonTrackNotPressed = default;
+    [SerializeField] private Material _buttonTrackPressed = default;
+    [SerializeField] private GameObject _forceField = default;
+
+
+
     [SerializeField] private GameObject _panelSongs = default;
     [SerializeField] private GameObject _panelTutorial = default;
     [SerializeField] private GameObject _panelCredits = default;
@@ -404,5 +411,7 @@ using UnityEngine.UI;
                 break;
         }
     }
+
+    
 }
 
