@@ -65,6 +65,6 @@ public class GameManager : MonoBehaviour
     public void OnPressButtonTrack(Transform button)
     {
         button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(-1.0f, 4.5f)), Quaternion.identity);
+        Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
     }
 }

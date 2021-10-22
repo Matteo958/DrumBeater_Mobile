@@ -33,7 +33,7 @@ public class Public : MonoBehaviour
     {
         if(other.gameObject.tag == "ForceField")
         {
-            jumpPower = Random.Range(4.0f, 5.5f);
+            jumpPower = Random.Range(3.0f, 3.8f);
         }
     }
 

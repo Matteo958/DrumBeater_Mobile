@@ -8,7 +8,7 @@ public class ForceField : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        endScale = Random.Range(3.0f, 4.5f);
+        endScale = Random.Range(1.5f, 3.0f);
         StartCoroutine(GrowForceField());
     }
 
