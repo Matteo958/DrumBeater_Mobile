@@ -623,7 +623,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &41114354
 PrefabInstance:
@@ -749,7 +748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &50959101
 PrefabInstance:
@@ -953,7 +951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &63740897
 GameObject:
@@ -1220,7 +1217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &82216414
 PrefabInstance:
@@ -1421,7 +1417,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &101232357 stripped
 GameObject:
@@ -1474,7 +1469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &112622278
 PrefabInstance:
@@ -1762,7 +1756,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &135279719 stripped
 GameObject:
@@ -2159,7 +2152,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &174620622
 GameObject:
@@ -3600,7 +3592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &240474588
 PrefabInstance:
@@ -3737,7 +3728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &249345380
 PrefabInstance:
@@ -3896,11 +3886,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 963144300}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &271318633 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 963144300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &271318634
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3953,7 +3938,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 271318633}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -4330,7 +4315,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &287879363
 GameObject:
@@ -4485,7 +4469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &291139637
 PrefabInstance:
@@ -4611,7 +4594,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &307630684
 GameObject:
@@ -4694,7 +4676,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &314611051
 GameObject:
@@ -4852,7 +4833,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &340382626
 PrefabInstance:
@@ -5362,6 +5342,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &381493877 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 381493876}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &383526924 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2c37637e33065d1449c254a09c26ec7e, type: 3}
@@ -5413,7 +5398,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &388979350
 GameObject:
@@ -5998,7 +5982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &442788500
 PrefabInstance:
@@ -6197,7 +6180,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &474655440 stripped
 GameObject:
@@ -6250,7 +6232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &475840134 stripped
 GameObject:
@@ -6303,7 +6284,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &487147349 stripped
 GameObject:
@@ -6356,7 +6336,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &497588788
 PrefabInstance:
@@ -6771,7 +6750,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &551084425 stripped
 GameObject:
@@ -6824,7 +6802,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &555708119 stripped
 GameObject:
@@ -6877,7 +6854,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &557448416 stripped
 GameObject:
@@ -6930,7 +6906,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &576296930
 PrefabInstance:
@@ -7137,7 +7112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &591070151
 PrefabInstance:
@@ -7263,7 +7237,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &606131229 stripped
 GameObject:
@@ -7894,7 +7867,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!4 &664662320 stripped
 Transform:
@@ -8036,7 +8008,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &707802251 stripped
 GameObject:
@@ -8089,7 +8060,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &722856384
 PrefabInstance:
@@ -8442,7 +8412,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &753187622
 PrefabInstance:
@@ -8810,7 +8779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &776510207
 PrefabInstance:
@@ -9420,11 +9388,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 1474962176}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &801508013 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 1474962176}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &801508014
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9464,7 +9427,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 801508013}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -9708,7 +9671,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &826075146 stripped
 GameObject:
@@ -9761,7 +9723,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &828092476
 GameObject:
@@ -9998,6 +9959,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &832755078 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 832755077}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &832813056
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10122,7 +10088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &841932268
 PrefabInstance:
@@ -10321,7 +10286,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &868486910
 PrefabInstance:
@@ -10674,7 +10638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &914185541
 PrefabInstance:
@@ -11019,7 +10982,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &951380852
 PrefabInstance:
@@ -11296,6 +11258,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &963144301 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 963144300}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &965552538
 GameObject:
   m_ObjectHideFlags: 0
@@ -11964,7 +11931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1008547453
 PrefabInstance:
@@ -12604,7 +12570,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1079033938
 GameObject:
@@ -12806,7 +12771,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1119861250
 GameObject:
@@ -12970,7 +12934,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1130414856
 PrefabInstance:
@@ -13096,7 +13059,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1145933988
 GameObject:
@@ -13216,7 +13178,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1152488365 stripped
 GameObject:
@@ -13269,7 +13230,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1154197062
 PrefabInstance:
@@ -13395,7 +13355,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1159691658 stripped
 GameObject:
@@ -13448,7 +13407,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1164378699
 PrefabInstance:
@@ -13574,7 +13532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1172601496
 GameObject:
@@ -13784,7 +13741,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1177726496 stripped
 GameObject:
@@ -13837,7 +13793,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1183441587
 PrefabInstance:
@@ -13963,16 +13918,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1196362160 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 1204483270}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1196362161 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 1204483270}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &1196362162
@@ -14027,7 +13976,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 1196362161}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -14101,7 +14050,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1204483270
 PrefabInstance:
@@ -14164,6 +14112,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &1204483271 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 1204483270}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1207477980
 GameObject:
   m_ObjectHideFlags: 0
@@ -14310,7 +14263,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1215725063
 GameObject:
@@ -14622,7 +14574,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1244118803 stripped
 GameObject:
@@ -14675,7 +14626,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1253456969
 PrefabInstance:
@@ -14801,7 +14751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1265725822
 GameObject:
@@ -14930,7 +14879,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1271878874
 PrefabInstance:
@@ -15056,7 +15004,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1280912865 stripped
 GameObject:
@@ -15109,7 +15056,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1282551965 stripped
 GameObject:
@@ -15162,7 +15108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1288123919
 PrefabInstance:
@@ -15288,7 +15233,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1295524756
 PrefabInstance:
@@ -15487,7 +15431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1326095122 stripped
 GameObject:
@@ -15540,7 +15483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1331725857
 PrefabInstance:
@@ -15905,7 +15847,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1352328982 stripped
 GameObject:
@@ -15958,7 +15899,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1355099482 stripped
 GameObject:
@@ -16011,7 +15951,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1355278827 stripped
 GameObject:
@@ -16064,7 +16003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1378374367 stripped
 GameObject:
@@ -16117,7 +16055,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1380793489 stripped
 GameObject:
@@ -16170,7 +16107,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1386343405
 GameObject:
@@ -16473,6 +16409,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &1400561597 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 1400561596}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1411704510 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1238166340976364, guid: 2aa010a1e75292e49a24f3f71bb9cddb, type: 3}
@@ -16529,7 +16470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1421055614
 GameObject:
@@ -16612,7 +16552,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1440199819
 PrefabInstance:
@@ -16738,7 +16677,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1454521657 stripped
 GameObject:
@@ -16791,7 +16729,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1460940062
 GameObject:
@@ -16874,7 +16811,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1474962176
 PrefabInstance:
@@ -16937,14 +16873,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &1474962177 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 1474962176}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1494155963 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 381493876}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1494155964 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 381493876}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1494155965
@@ -16986,7 +16922,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 1494155964}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -17073,7 +17009,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1505129025 stripped
 GameObject:
@@ -17126,16 +17061,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1512302799 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 832755077}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1512302800 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 832755077}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &1512302801
@@ -17177,7 +17106,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 1512302800}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -17496,7 +17425,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1529701169
 PrefabInstance:
@@ -17622,7 +17550,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1532928375 stripped
 GameObject:
@@ -17675,7 +17602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1535828851
 PrefabInstance:
@@ -17874,7 +17800,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1566498517
 GameObject:
@@ -18070,7 +17995,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1572886326
 GameObject:
@@ -18636,7 +18560,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1614672975
 PrefabInstance:
@@ -18802,7 +18725,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1622034212
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18812,7 +18735,7 @@ RectTransform:
   m_GameObject: {fileID: 1622034211}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 4.5}
-  m_LocalScale: {x: 0.03, y: 0, z: 0.03}
+  m_LocalScale: {x: 0.03, y: 0.03, z: 0.03}
   m_Children:
   - {fileID: 1918535403}
   - {fileID: 983444865}
@@ -18946,7 +18869,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1625475201
 GameObject:
@@ -19143,7 +19065,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1678464294 stripped
 GameObject:
@@ -19196,7 +19117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1693061596
 GameObject:
@@ -19446,7 +19366,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1719644414
 GameObject:
@@ -19925,7 +19844,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1784206838 stripped
 GameObject:
@@ -19978,7 +19896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1802748038
 PrefabInstance:
@@ -20104,7 +20021,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1820137427 stripped
 GameObject:
@@ -20157,7 +20073,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1821252232 stripped
 GameObject:
@@ -20210,7 +20125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1823394717
 PrefabInstance:
@@ -20409,7 +20323,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1826784939
 GameObject:
@@ -20438,13 +20351,13 @@ Transform:
   m_LocalPosition: {x: 0, y: 1.5239, z: 0.5107}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
-  - {fileID: 271318633}
-  - {fileID: 1512302800}
-  - {fileID: 1196362161}
-  - {fileID: 801508013}
-  - {fileID: 1957347311}
-  - {fileID: 1494155964}
-  - {fileID: 2007590122}
+  - {fileID: 963144301}
+  - {fileID: 832755078}
+  - {fileID: 1204483271}
+  - {fileID: 1474962177}
+  - {fileID: 1942819971}
+  - {fileID: 381493877}
+  - {fileID: 1400561597}
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: -45.739, y: 0, z: 0}
@@ -20703,7 +20616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1844146999
 GameObject:
@@ -21336,7 +21248,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1875820255
 PrefabInstance:
@@ -21462,7 +21373,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1905570961
 GameObject:
@@ -21570,7 +21480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1916047593 stripped
 GameObject:
@@ -21623,7 +21532,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1918535402
 GameObject:
@@ -21880,7 +21788,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1931208325
 GameObject:
@@ -22179,6 +22086,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+--- !u!4 &1942819971 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
+  m_PrefabInstance: {fileID: 1942819970}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1952986864
 GameObject:
   m_ObjectHideFlags: 0
@@ -22268,16 +22180,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1957347310 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 1942819970}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &1957347311 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 1942819970}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &1957347312
@@ -22332,7 +22238,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 1957347311}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -22766,7 +22672,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &1986821984
 PrefabInstance:
@@ -22892,7 +22797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &1990218116
 GameObject:
@@ -23114,7 +23018,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!4 &1992626546 stripped
 Transform:
@@ -23262,7 +23165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2003869215 stripped
 GameObject:
@@ -23315,7 +23217,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2005489155
 GameObject:
@@ -23378,11 +23279,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1932182844710218718, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
   m_PrefabInstance: {fileID: 1400561596}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &2007590122 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1932182844710218714, guid: 34dc6c8693bca324e8b1d7b21035b5d6, type: 3}
-  m_PrefabInstance: {fileID: 1400561596}
-  m_PrefabAsset: {fileID: 0}
 --- !u!65 &2007590123
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -23435,7 +23331,7 @@ MonoBehaviour:
             m_MethodName: OnPressButtonTrack
             m_Mode: 2
             m_Arguments:
-              m_ObjectArgument: {fileID: 2007590122}
+              m_ObjectArgument: {fileID: 0}
               m_ObjectArgumentAssemblyTypeName: UnityEngine.Transform, UnityEngine
               m_IntArgument: 0
               m_FloatArgument: 0
@@ -24049,7 +23945,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2091434337 stripped
 GameObject:
@@ -24102,7 +23997,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2091573936 stripped
 GameObject:
@@ -24155,7 +24049,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2110209353 stripped
 GameObject:
@@ -24208,7 +24101,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1 &2116860085 stripped
 GameObject:
@@ -24261,7 +24153,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 639118cb37eb71649ad25f441872cabd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startJumpPower: 0
   jumpPower: 0
 --- !u!1001 &2122872972
 PrefabInstance:
