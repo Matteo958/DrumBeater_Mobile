@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Public : MonoBehaviour
+public class Audience: MonoBehaviour
 {
     public float jumpPower;
 

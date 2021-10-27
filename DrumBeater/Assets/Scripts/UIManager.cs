@@ -388,7 +388,7 @@ using UnityEngine.UI;
             if(t == button)
                 t.GetComponent<Text>().color = new Color(0, 1, 0, 1);
             else
-                t.GetComponent<Text>().color = new Color(0.2f, 0.2f, 0.2f, 1);
+                t.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1);
         }
         
     }

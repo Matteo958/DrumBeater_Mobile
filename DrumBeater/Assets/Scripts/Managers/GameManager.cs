@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
 
+    [SerializeField] private GameObject _PowerUpIcosphere = default;
+
 
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
@@ -61,6 +63,17 @@ public class GameManager : MonoBehaviour
         //TODO
     }
 
+    private void Update()
+    {
+        if(_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") == 1.0)
+        {
+            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
+        }
+        else
+        {
+            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
+        }
+    }
 
     public void OnPressButtonTrack(Transform button)
     {
