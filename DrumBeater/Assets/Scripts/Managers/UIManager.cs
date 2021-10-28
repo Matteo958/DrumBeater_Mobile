@@ -4,14 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-    public class UIManager : MonoBehaviour
-    {
+public class UIManager : MonoBehaviour
+{
+    [SerializeField] private Text pointsText;
+    [SerializeField] private Text percentageText;
+    [SerializeField] private Text comboText;
+    [SerializeField] private Text maxComboText;
+    [SerializeField] private Text comboMultiplierText;
+    [SerializeField] private GameObject soloText;
+    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject endGamePanel;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
-
-
 
     [SerializeField] private GameObject _panelSongs = default;
     [SerializeField] private GameObject _panelTutorial = default;
@@ -29,16 +35,16 @@ using UnityEngine.UI;
 
     [SerializeField] private float _panelsOffset = default;
 
-        private static UIManager _instance;
+    private static UIManager _instance;
 
-        public static UIManager instance { get => _instance; }
+    public static UIManager instance { get => _instance; }
 
     private float _panelStartScaleX;
     private Vector3 _panelArrivingScale;
 
     private List<GameObject> _panelsSongs = new List<GameObject>();
 
-    
+
     // Check if player is pressing button play
     private bool _buttonPressed;
 
@@ -55,22 +61,21 @@ using UnityEngine.UI;
     private Transform _panelActive;
 
     private void Awake()
+    {
+        if (_instance != null && _instance != this)
         {
-            if (_instance != null && _instance != this)
-            {
-                Destroy(this.gameObject);
-            }
-            else
-            {
-                _instance = this;
-            }
-
+            Destroy(this.gameObject);
         }
+        else
+        {
+            _instance = this;
+        }
+    }
 
     private void Start()
     {
         // Firstly all difficulties are set to 1 --> Medium
-        for(int i=0; i<3; i++)
+        for (int i = 0; i < 3; i++)
         {
             Songs[i] = 1;
         }
@@ -81,29 +86,24 @@ using UnityEngine.UI;
         _panelCredits.SetActive(false);
     }
 
-    private void Update()
-    {
-        
-    }
-
     public void openPanel()
-        {
+    {
         _buttonCredits.GetComponent<Collider>().enabled = false;
         _buttonQuit.GetComponent<Collider>().enabled = false;
-            switch (_starterAnchor.GetComponent<Anchor>().choice)
-            {
-                case "Songs":
-                    _panelSongs.SetActive(true);
-                    _panelContainerActive = _panelSongs;
-                    StartCoroutine(open(_panelContainerActive));
+        switch (_starterAnchor.GetComponent<Anchor>().choice)
+        {
+            case "Songs":
+                _panelSongs.SetActive(true);
+                _panelContainerActive = _panelSongs;
+                StartCoroutine(open(_panelContainerActive));
                 break;
-                case "Tutorial":
-                    _panelTutorial.SetActive(true);
-                    _panelContainerActive = _panelTutorial;
-                    StartCoroutine(open(_panelContainerActive));
+            case "Tutorial":
+                _panelTutorial.SetActive(true);
+                _panelContainerActive = _panelTutorial;
+                StartCoroutine(open(_panelContainerActive));
                 break;
         }
-        }
+    }
 
     public void closePanel()
     {
@@ -112,18 +112,15 @@ using UnityEngine.UI;
         foreach (Transform panel in _panelContainerActive.transform)
         {
             panel.GetComponent<Collider>().enabled = false;
-            if(_panelContainerActive == _panelSongs)
+            if (_panelContainerActive == _panelSongs)
             {
                 foreach (Transform text in panel.GetChild(3))
                 {
                     text.GetComponent<Collider>().enabled = false;
                 }
             }
-
         }
         StartCoroutine(close(_panelContainerActive));
-                
-        
     }
 
     IEnumerator open(GameObject _panel)
@@ -136,20 +133,17 @@ using UnityEngine.UI;
             t += Time.deltaTime * 0.05f;
             yield return null;
         }
-        foreach(Transform p in _panel.transform)
+        foreach (Transform p in _panel.transform)
         {
             p.GetComponent<Collider>().enabled = true;
-            if(_panelContainerActive == _panelSongs)
+            if (_panelContainerActive == _panelSongs)
             {
                 foreach (Transform text in p.GetChild(3))
                 {
                     text.GetComponent<Collider>().enabled = true;
                 }
             }
-
         }
-
-        
     }
 
     IEnumerator close(GameObject _panel)
@@ -162,7 +156,7 @@ using UnityEngine.UI;
             t += Time.deltaTime * 0.1f;
             yield return null;
         }
-        
+
         _panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
     }
@@ -170,17 +164,14 @@ using UnityEngine.UI;
     // If I release the panel without giving it a speed to move it, it returns in front of the camera
     public void ContactEnd()
     {
-        if(_panelContainerActive.GetComponent<Rigidbody>().velocity.x >= -1f && _panelContainerActive.GetComponent<Rigidbody>().velocity.x <= 1f && _panelContainerActive.GetComponent<Rigidbody>().velocity.x != 0)
+        if (_panelContainerActive.GetComponent<Rigidbody>().velocity.x >= -1f && _panelContainerActive.GetComponent<Rigidbody>().velocity.x <= 1f && _panelContainerActive.GetComponent<Rigidbody>().velocity.x != 0)
         {
             _panelContainerActive.GetComponent<Rigidbody>().velocity = Vector3.zero;
             _panelActive.GetComponent<Collider>().enabled = false;
 
-            StartCoroutine(NextPos( - (_panelActive.GetSiblingIndex() * _panelsOffset)));
+            StartCoroutine(NextPos(-(_panelActive.GetSiblingIndex() * _panelsOffset)));
         }
-        
     }
-
-
 
     IEnumerator NextPos(float destination)
     {
@@ -211,26 +202,25 @@ using UnityEngine.UI;
 
         if (col.gameObject.tag == "PanelSong")
         {
-            
+
             // The song to play is set as the active panel song; its difficulty is taken from the dictionary
             SongToPlay[0] = _panelActive.GetSiblingIndex();
             SongToPlay[1] = Songs[SongToPlay[0]];
 
             _panelActive.GetChild(3).GetChild(SongToPlay[1]).GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-            
 
-        }else if (col.gameObject.tag == "PanelTutorial")
-        {
-           TutorialToPlay = _panelActive.GetSiblingIndex(); 
+
         }
-        
+        else if (col.gameObject.tag == "PanelTutorial")
+        {
+            TutorialToPlay = _panelActive.GetSiblingIndex();
+        }
     }
 
     // When a panel leaves the camera view, the current panel becomes the next one
     private void OnTriggerExit(Collider col)
     {
-        
         // If the current panel is the first one, I can't move to the left
         if (col.transform.GetSiblingIndex() == 0)
         {
@@ -261,28 +251,28 @@ using UnityEngine.UI;
     {
         _buttonPressed = true;
         // while I'm pressing the play button, I can't change the difficulty
-        if(_panelContainerActive == _panelSongs)
+        if (_panelContainerActive == _panelSongs)
         {
             foreach (Transform t in _panelActive.GetChild(3))
             {
                 t.GetComponent<Collider>().enabled = false;
             }
         }
-        
+
         StartCoroutine(FillButtonRange("Play", _panelActive.GetChild(0)));
     }
 
     public void StopPressPlayButton()
     {
         _buttonPressed = false;
-        if(_panelContainerActive == _panelSongs)
+        if (_panelContainerActive == _panelSongs)
         {
             foreach (Transform t in _panelActive.GetChild(3))
             {
                 t.GetComponent<Collider>().enabled = true;
             }
         }
-        
+
         _panelActive.GetChild(0).GetComponent<Image>().fillAmount = 0;
     }
 
@@ -310,7 +300,7 @@ using UnityEngine.UI;
     public void LongPressBackCreditsButton()
     {
         _buttonPressed = true;
-       
+
         StartCoroutine(FillButtonRange("BackCredits", _panelCredits.transform.GetChild(0)));
     }
 
@@ -336,7 +326,7 @@ using UnityEngine.UI;
             t += Time.deltaTime * 0.005f;
             yield return null;
         }
-        if(obj.GetComponent<Image>().fillAmount >= 0.98)
+        if (obj.GetComponent<Image>().fillAmount >= 0.98)
         {
             switch (button)
             {
@@ -360,7 +350,6 @@ using UnityEngine.UI;
                     break;
             }
         }
-        
     }
 
     // The difficulty level is set for the current active panel song;
@@ -381,18 +370,16 @@ using UnityEngine.UI;
         }
 
         Songs[_panelActive.GetSiblingIndex()] = SongToPlay[1];
-        
 
         foreach (Transform t in _panelActive.GetChild(3))
         {
-            if(t == button)
+            if (t == button)
                 t.GetComponent<Text>().color = new Color(0, 1, 0, 1);
             else
                 t.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1);
         }
-        
     }
-    
+
     public void OpenPanelMenu(string panel)
     {
         switch (panel)
@@ -412,6 +399,28 @@ using UnityEngine.UI;
         }
     }
 
-    
+    public void updateGameUI()
+    {
+        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+    }
+
+    public void showSoloText(bool active)
+    {
+        soloText.SetActive(active);
+    }
+
+    public void showEndGame()
+    {
+        pointsText.text = "POINTS: " + PointsManager.instance.points;
+        percentageText.text = PointsManager.instance.hitsPercentage + "%";
+        maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
+        endGamePanel.SetActive(true);
+    }
+
+    public void showPausePanel(bool active)
+    {
+        pausePanel.SetActive(active);
+    }
 }
 

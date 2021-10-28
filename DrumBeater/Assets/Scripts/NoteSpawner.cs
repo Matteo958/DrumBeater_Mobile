@@ -166,9 +166,20 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    public void activateFinalBonus()
+    public void activateSolo()
     {
-        // TODO
+        foreach (KeyValuePair<int, Remover> entry in firstTrackRemoversMap)
+        {
+            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
+        }
+        foreach (KeyValuePair<int, Remover> entry in secondTrackRemoversMap)
+        {
+            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
+        }
+        foreach (KeyValuePair<int, Remover> entry in secondTrackRemoversMap)
+        {
+            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
+        }
     }
 
     public void activateAutoMode()
@@ -180,18 +191,4 @@ public class NoteSpawner : MonoBehaviour
     {
         ObjectPool.instance.changeObjsMaterial(noteMaterials);
     }
-
-
-    //private int getRandomInt(int minimumValue, int maximumValue)
-    //{
-    //    byte[] randomNumber = new byte[1];
-    //    _generator.GetBytes(randomNumber);
-
-    //    double asciiValueOfRandomCharacter = System.Convert.ToDouble(randomNumber[0]);
-    //    double multiplier = System.Math.Max(0, (asciiValueOfRandomCharacter / 255d) - 0.00000000001d);
-    //    int range = maximumValue - minimumValue + 1;
-    //    double randomValueInRange = System.Math.Floor(multiplier * range);
-
-    //    return (int)(minimumValue + randomValueInRange);
-    //}
 }

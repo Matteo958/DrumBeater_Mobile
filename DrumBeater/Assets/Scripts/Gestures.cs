@@ -97,7 +97,7 @@ public class Gestures : MonoBehaviour
             //{
             //    cube.GetComponent<ExplodeExample>().Explode();
             //}
-            NoteSpawner.instance.activateFinalBonus();
+            GameManager.instance.activateAutoMode();
         }
     }
 
@@ -171,7 +171,7 @@ public class Gestures : MonoBehaviour
             //    cube.GetComponent<Collider>().enabled = false;
             //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
             //}
-            GameManager.instance.activateAutoMode();
+            GameManager.instance.pause();
 
         }
     }
@@ -246,7 +246,7 @@ public class Gestures : MonoBehaviour
             //    cube.GetComponent<Collider>().enabled = false;
             //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
             //}
-            GameManager.instance.activateAutoMode();
+            GameManager.instance.pause();
         }
     }
 
@@ -285,7 +285,7 @@ public class Gestures : MonoBehaviour
         {
             _canRotateLeft = false;
             Debug.Log("Left rotation");
-            // Rotate to Left
+            GameManager.instance.rotateTrack();
         }
     }
     #endregion
@@ -322,7 +322,7 @@ public class Gestures : MonoBehaviour
         {
             _canRotateRight = false;
             Debug.Log("Right rotation");
-            // Rotate to Left
+            GameManager.instance.rotateTrack(false);
         }
     }
     #endregion

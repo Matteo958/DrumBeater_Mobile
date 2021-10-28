@@ -9,15 +9,18 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _forceField = default;
 
     [SerializeField] private GameObject _PowerUpIcosphere = default;
-
+    [SerializeField] private GameObject _tracks = default;
+    private int activeTrack = 2;
 
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
-    [HideInInspector] public bool hasFinalBonus = false;
     [HideInInspector] public bool gamePaused = false;
+    private bool soloIsActive = false;
 
     [Tooltip("Duration of the auto mode in seconds")]
     [SerializeField] private float autoModeTime = 15;
+    [SerializeField] private float finalBonusTime = 15;
+    [SerializeField] private int comboHitsToBonus = 150;
 
     public static GameManager instance { get; private set; }
 
@@ -52,15 +55,15 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         AudioListener.pause = true;
         gamePaused = true;
-        //TODO
+        UIManager.instance.showPausePanel(true);
     }
 
     public void unpause()
     {
+        UIManager.instance.showPausePanel(false);
         Time.timeScale = 1;
         AudioListener.pause = false;
         gamePaused = false;
-        //TODO
     }
 
     private void Update()
@@ -77,7 +80,71 @@ public class GameManager : MonoBehaviour
 
     public void OnPressButtonTrack(Transform button)
     {
-        button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
+        //for (int i = 1; i < button.transform.childCount; i++)
+        //{
+        //    if (button.GetChild(i).GetComponent<NoteController>().press())
+        //        return;
+        //}
+
+        if (soloIsActive)
+        {
+            PointsManager.instance.finalBonusHit();
+            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        }
+        else if (button.GetChild(1).GetComponent<NoteController>().press())
+            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+    }
+
+    public void rotateTrack(bool left = true)
+    {
+        if (left)
+        {
+            if (activeTrack == 3)
+                return;
+            _tracks.transform.Rotate(0, -90, 0);
+        }
+        else
+        {
+            if (activeTrack == 1)
+                return;
+            _tracks.transform.Rotate(0, 90, 0);
+
+        }
+    }
+
+    public void finishSong()
+    {
+        if (PointsManager.instance.maxComboHits > comboHitsToBonus)
+        {
+            StartCoroutine(activateFinalBonus());
+        }
+        else
+        {
+            NoteSpawner.instance.songHasStarted = false;
+            PointsManager.instance.calculatePercentage();
+            UIManager.instance.showEndGame();
+        }
+    }
+
+    private IEnumerator activateFinalBonus()
+    {
+        soloIsActive = true;
+
+        UIManager.instance.showSoloText(true);
+
+        yield return new WaitForSeconds(2);
+
+        UIManager.instance.showSoloText(false);
+
+        NoteSpawner.instance.activateSolo();
+        
+
+        yield return new WaitForSeconds(finalBonusTime);
+
+        soloIsActive = false;
+        NoteSpawner.instance.songHasStarted = false;
+        PointsManager.instance.calculatePercentage();
+        UIManager.instance.showEndGame();
     }
 }

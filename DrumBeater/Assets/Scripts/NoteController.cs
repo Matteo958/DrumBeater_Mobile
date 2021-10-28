@@ -20,17 +20,26 @@ public class NoteController : MonoBehaviour
             miss();
     }
 
-    private void OnCollisionEnter(Collision collision)
+
+    public bool press()
     {
-        if (collision.gameObject.name == "Hand")
+        if ((fill <= 1.1 && fill > 1.07) || (fill >= 0.9 && fill < 0.3))
         {
-            if ((fill <= 1.1 && fill > 1.07) || (fill >= 0.9 && fill < 0.3))
-                hit(PointsManager.Precision.OK);
-            else if ((fill <= 1.07 && fill > 1.03) || (fill >= 0.93 && fill < 0.97))
-                hit(PointsManager.Precision.GOOD);
-            else if (fill <= 1.03 && fill >= 0.97)
-                hit(PointsManager.Precision.PERFECT);
+            hit(PointsManager.Precision.OK);
+            return true;
         }
+        else if ((fill <= 1.07 && fill > 1.03) || (fill >= 0.93 && fill < 0.97))
+        {
+            hit(PointsManager.Precision.GOOD);
+            return true;
+        }
+        else if (fill <= 1.03 && fill >= 0.97)
+        {
+            hit(PointsManager.Precision.PERFECT);
+            return true;
+        }
+
+        return false;
     }
     
     private void hit(PointsManager.Precision p)
@@ -38,8 +47,7 @@ public class NoteController : MonoBehaviour
         PointsManager.instance.hitNote(p);
         if (isLastNote)
         {
-            NoteSpawner.instance.songHasStarted = false;
-            PointsManager.instance.calculatePercentage();
+            GameManager.instance.finishSong();
         }
         gameObject.SetActive(false);
     }
@@ -49,8 +57,7 @@ public class NoteController : MonoBehaviour
         PointsManager.instance.missNote();
         if (isLastNote)
         {
-            NoteSpawner.instance.songHasStarted = false;
-            PointsManager.instance.calculatePercentage();
+            GameManager.instance.finishSong();
         }
         gameObject.SetActive(false);
     }
