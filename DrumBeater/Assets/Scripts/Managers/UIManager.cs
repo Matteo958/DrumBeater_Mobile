@@ -405,11 +405,6 @@ public class UIManager : MonoBehaviour
         comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
-    public void showSoloText(bool active)
-    {
-        soloText.SetActive(active);
-    }
-
     public void showEndGame()
     {
         pointsText.text = "POINTS: " + PointsManager.instance.points;

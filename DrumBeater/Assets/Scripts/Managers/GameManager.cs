@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private GameObject _PowerUpIcosphere = default;
     [SerializeField] private GameObject _tracks = default;
+    [SerializeField] private GameObject _soloText = default;
     private int activeTrack = 2;
 
     [HideInInspector] public bool autoMode = false;
@@ -130,19 +131,16 @@ public class GameManager : MonoBehaviour
     private IEnumerator activateFinalBonus()
     {
         soloIsActive = true;
-
-        UIManager.instance.showSoloText(true);
+        _soloText.GetComponent<RotateText>().activate();
 
         yield return new WaitForSeconds(2);
 
-        UIManager.instance.showSoloText(false);
-
         NoteSpawner.instance.activateSolo();
-        
 
         yield return new WaitForSeconds(finalBonusTime);
 
         soloIsActive = false;
+        _soloText.GetComponent<RotateText>().deactivate();
         NoteSpawner.instance.songHasStarted = false;
         PointsManager.instance.calculatePercentage();
         UIManager.instance.showEndGame();
