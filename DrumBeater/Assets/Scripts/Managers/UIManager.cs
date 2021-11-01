@@ -401,21 +401,21 @@ public class UIManager : MonoBehaviour
 
     public void updateGameUI()
     {
-        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
-        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+        //comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        //comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
     public void showEndGame()
     {
-        pointsText.text = "POINTS: " + PointsManager.instance.points;
-        percentageText.text = PointsManager.instance.hitsPercentage + "%";
-        maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
-        endGamePanel.SetActive(true);
+        //pointsText.text = "POINTS: " + PointsManager.instance.points;
+        //percentageText.text = PointsManager.instance.hitsPercentage + "%";
+        //maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
+        //endGamePanel.SetActive(true);
     }
 
     public void showPausePanel(bool active)
     {
-        pausePanel.SetActive(active);
+        //pausePanel.SetActive(active);
     }
 }
 

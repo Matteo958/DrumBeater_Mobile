@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") == 1.0)
+        if (_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") == 1.0)
         {
             _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
         }

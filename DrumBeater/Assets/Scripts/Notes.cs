@@ -50,7 +50,6 @@ public class Notes : MonoBehaviour
         int rand = Random.Range(0, 4);
 
         StartCoroutine(startNote(rand));
-
     }
     
 

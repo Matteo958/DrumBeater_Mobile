@@ -12,12 +12,17 @@ public class NoteController : MonoBehaviour
     void Update()
     {
         fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
-        transform.localScale = Vector3.Lerp(new Vector3(0.001f, 15, 0.001f), new Vector3(1, 15, 1), fill);
+        //Debug.Log(fill);
+        transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), fill);
 
         if (GameManager.instance.autoMode && fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
-        else if (fill > 1.1)
+        else if (fill > 1)
+        {
+            if(isLastNote)
+            Debug.Log("MISS");
             miss();
+        }
     }
 
 
@@ -57,6 +62,7 @@ public class NoteController : MonoBehaviour
         PointsManager.instance.missNote();
         if (isLastNote)
         {
+            Debug.Log(gameObject.name);
             GameManager.instance.finishSong();
         }
         gameObject.SetActive(false);
@@ -64,6 +70,7 @@ public class NoteController : MonoBehaviour
 
     private void OnDisable()
     {
-        transform.localScale = new Vector3(0.001f, 15, 0.001f);
+        isLastNote = false;
+        transform.localScale = new Vector3(0.001f, 1, 0.001f);
     }
 }

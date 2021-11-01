@@ -8,7 +8,7 @@ public class NoteSpawner : MonoBehaviour
     public float noteSpawnGapInBeats;
 
     [Tooltip("Heights of the note")]
-    [SerializeField] private float noteHeight = 0.6f;
+    [SerializeField] private float noteHeight = 1.3f;
     [Tooltip("The first track")]
     [SerializeField] private Transform firstTrack;
     [Tooltip("The second track")]
@@ -20,9 +20,7 @@ public class NoteSpawner : MonoBehaviour
     [Tooltip("The color of the note during auto perfect")]
     [SerializeField] private Material autoModeNoteMaterial;
 
-    private Dictionary<int, Remover> firstTrackRemoversMap = new Dictionary<int, Remover>();
-    private Dictionary<int, Remover> secondTrackRemoversMap = new Dictionary<int, Remover>();
-    private Dictionary<int, Remover> thirdTrackRemoversMap = new Dictionary<int, Remover>();
+    private Dictionary<int, Remover> trackRemoversMap = new Dictionary<int, Remover>();
 
     // Notes of the current song
     private List<NoteInfo> notes;
@@ -44,6 +42,7 @@ public class NoteSpawner : MonoBehaviour
     private int nextNoteIndex = 0;
     // Spawned note
     private GameObject spawnedNote;
+    int i = 0;
 
     public static NoteSpawner instance { get; private set; }
 
@@ -54,22 +53,22 @@ public class NoteSpawner : MonoBehaviour
         else
         {
             Remover tmpRemover;
-            for (int i = 0; i < firstTrack.childCount - 1; i++)
+            for (int i = 0; i < firstTrack.childCount; i++)
             {
                 tmpRemover = firstTrack.GetChild(i).GetComponent<Remover>();
-                firstTrackRemoversMap.Add(tmpRemover.id, tmpRemover);
+                trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
             for (int i = 0; i < secondTrack.childCount; i++)
             {
                 tmpRemover = secondTrack.GetChild(i).GetComponent<Remover>();
-                secondTrackRemoversMap.Add(tmpRemover.id, tmpRemover);
+                trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
             for (int i = 0; i < thirdTrack.childCount; i++)
             {
                 tmpRemover = thirdTrack.GetChild(i).GetComponent<Remover>();
-                thirdTrackRemoversMap.Add(tmpRemover.id, tmpRemover);
+                trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
             instance = this;
@@ -78,6 +77,7 @@ public class NoteSpawner : MonoBehaviour
 
     public void startSong(Song song)
     {
+        nextNoteIndex = 0;
         notes = song.notes;
         songBpm = song.bpm;
 
@@ -94,7 +94,10 @@ public class NoteSpawner : MonoBehaviour
     void Update()
     {
         if (!songHasStarted)
+        {
+            //Debug.Log("CIAO");
             return;
+        }
 
         // Determine how many seconds since the song started
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
@@ -113,40 +116,24 @@ public class NoteSpawner : MonoBehaviour
     {
         //Get the note from the pool
         spawnedNote = ObjectPool.instance.getPooledObj();
-        
+
         if (spawnedNote != null)
         {
-            switch (note.track)
-            {
-                case 1:
-                    spawnedNote.transform.position = firstTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
-                    spawnedNote.transform.SetParent(firstTrackRemoversMap[note.removerID].transform);
-                    //firstTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
-                    //    firstTrackRemoversMap[note.line].isLastNote = true;
+            spawnedNote.transform.SetParent(trackRemoversMap[note.removerID].transform);
+            spawnedNote.transform.localRotation = Quaternion.identity;
+            spawnedNote.transform.localPosition = Vector3.zero + transform.up * noteHeight;
 
-                    break;
-                case 2:
-                    spawnedNote.transform.position = secondTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
-                    spawnedNote.transform.SetParent(secondTrackRemoversMap[note.removerID].transform);
-
-                    //secondTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
-                    //    secondTrackRemoversMap[note.line].isLastNote = true;
-
-                    break;
-                case 3:
-                    spawnedNote.transform.position = thirdTrackRemoversMap[note.removerID].transform.position + Vector3.up * (noteHeight / 100);
-                    spawnedNote.transform.SetParent(thirdTrackRemoversMap[note.removerID].transform);
-
-                    //thirdTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
-                    //    thirdTrackRemoversMap[note.line].isLastNote = true;
-
-                    break;
-            }
+            //thirdTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
+            //    thirdTrackRemoversMap[note.line].isLastNote = true;
 
             spawnedNote.SetActive(true);
 
             if (nextNoteIndex == notes.Count - 1)
+            {
+                Debug.Log("index: " + nextNoteIndex);
+                Debug.Log("notes count: " + nextNoteIndex);
                 spawnedNote.GetComponent<NoteController>().isLastNote = true;
+            }
 
             //Set the time in bpm of the note
             spawnedNote.GetComponent<NoteController>().bpmTime = note.bpmTime;
@@ -168,15 +155,7 @@ public class NoteSpawner : MonoBehaviour
 
     public void activateSolo()
     {
-        foreach (KeyValuePair<int, Remover> entry in firstTrackRemoversMap)
-        {
-            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
-        }
-        foreach (KeyValuePair<int, Remover> entry in secondTrackRemoversMap)
-        {
-            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
-        }
-        foreach (KeyValuePair<int, Remover> entry in secondTrackRemoversMap)
+        foreach (KeyValuePair<int, Remover> entry in trackRemoversMap)
         {
             entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
         }

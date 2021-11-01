@@ -25,6 +25,7 @@ public class ObjectPool : MonoBehaviour
         for (int i = 0; i < amountToPool; i++)
         {
             tmp = Instantiate(objToPool);
+            tmp.name = "Note" + i;
             tmp.SetActive(false);
             pooledObjs.Add(tmp);
         }
