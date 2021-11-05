@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PowerUpIcosphereMaterial
+  m_Name: PanelTutorialMaterial
   m_Shader: {fileID: -6465566751694194690, guid: 00e4dd521a29535448486c1e81fb23fc, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
@@ -25,12 +25,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Boolean_2F0D27D7: 1
-    - Vector1_517CA56A: 0.06
-    - Vector1_813A2525: 0.02
-    - Vector1_CEC48B02: 0
-    - Vector1_DB8774A6: 1
-    - Vector1_DCE9F2AD: 0.1
+    - Vector1_517CA56A: 3
+    - Vector1_C43A585D: -0.01
+    - Vector1_CEC48B02: 0.7
+    - Vector1_DB8774A6: 2
+    - Vector1_DCE9F2AD: 0.02
     m_Colors:
-    - Color_3B0A04F4: {r: 0.22739409, g: 0.24186566, b: 0.6603774, a: 0}
-    - Vector2_23BC46EA: {r: 2.5, g: 2.5, b: 0, a: 0}
+    - Color_3B0A04F4: {r: 0.5, g: 0.023529412, b: 0, a: 1}
+    - Vector2_23BC46EA: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []

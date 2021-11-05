@@ -12,6 +12,8 @@ TagManager:
   - Hard
   - PanelTutorial
   - ForceField
+  - SongChoice
+  - TutorialChoice
   layers:
   - Default
   - TransparentFX

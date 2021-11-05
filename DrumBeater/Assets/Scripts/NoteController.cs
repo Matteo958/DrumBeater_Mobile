@@ -17,7 +17,7 @@ public class NoteController : MonoBehaviour
 
         if (GameManager.instance.autoMode && fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
-        else if (fill > 1)
+        else if (fill > 1.1f)
         {
             if(isLastNote)
             Debug.Log("MISS");

@@ -21,13 +21,19 @@ public class Audience: MonoBehaviour
         
     }
 
+    public void Jump()
+    {
+        _canJump = true;
+        transform.GetComponent<Rigidbody>().AddForce(transform.up * jumpPower, ForceMode.Impulse);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.layer == 9)
+        if (collision.gameObject.layer == 9 && !GameManager.instance.gamePaused && GameManager.instance.LevelStarted)
         {
-            _canJump = true;
-            transform.GetComponent<Rigidbody>().AddForce(transform.up * jumpPower, ForceMode.Impulse);
+            
+            Jump();
         }
             
     }

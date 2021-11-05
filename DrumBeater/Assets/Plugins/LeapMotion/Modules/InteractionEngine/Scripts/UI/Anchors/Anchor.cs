@@ -133,7 +133,9 @@ namespace Leap.Unity.Interaction {
 
     public void NotifyAttached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Add(anchObj);
-
+            //Debug.Log("Attached");
+            
+            
             if (_isStarterAnchor)
             {
                 switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
@@ -157,6 +159,8 @@ namespace Leap.Unity.Interaction {
 
     public void NotifyDetached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Remove(anchObj);
+            //Debug.Log("Detached");
+            
             if (_isStarterAnchor)
             {
                 switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())

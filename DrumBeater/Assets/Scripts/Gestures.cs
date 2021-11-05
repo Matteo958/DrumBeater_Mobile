@@ -33,7 +33,7 @@ public class Gestures : MonoBehaviour
     {
         _powerUp1Active = 0;
 
-        _canActivatePower1 = _canActivatePower2 = false;
+        _canActivatePower1 = _canActivatePower2 = true;
         _handOpenLeft = _handOpenRight = false;
         _fistLeft = _fistRight = false;
         _canRotateLeft = _canRotateRight = false;
@@ -204,7 +204,7 @@ public class Gestures : MonoBehaviour
         Debug.Log("RightHand Open");
     }
 
-    // Richiamare in update in un if con condizioni !handopenright && canativatepower2 per fare in modo che venga controllato continuamente e non solo con mano verso camera
+    // Richiamare in update in un if con condizioni !handopenright && canactivatepower2 per fare in modo che venga controllato continuamente e non solo con mano verso camera
     private void UpdateHandOpenRight()
     {
         if ((Vector3.Distance(_palmRight.position, _thumbRightEnd.transform.position) > 0.07f
@@ -236,17 +236,20 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f))
         {
-            Debug.Log("Power Activated by Right Hand");
+            
             _handOpenRight = false;
-
-            _canActivatePower2 = false;
             //foreach (Transform cube in _cubeExample.transform)
             //{
             //    cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
             //    cube.GetComponent<Collider>().enabled = false;
             //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
             //}
-            GameManager.instance.pause();
+            if (!GameManager.instance.gamePaused && GameManager.instance.LevelStarted)
+            {
+                Debug.Log("Power Activated by Right Hand");
+                GameManager.instance.pause();
+            }
+                
         }
     }
 
