@@ -5,9 +5,12 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainMenu.unity
     guid: 3075819f4147c0645b7bbac6e45975ed
+  - enabled: 1
+    path: Assets/Scenes/TestScene.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
   m_configObjects:
     Unity.XR.WindowsMR.Settings: {fileID: 11400000, guid: 1715c4cbb6f1f174bba7bb5e0c1e2594, type: 2}
     com.unity.xr.magicleap.magic_leap_settings: {fileID: 11400000, guid: 83b73e5b2312ca8489f14607a3e551da, type: 2}

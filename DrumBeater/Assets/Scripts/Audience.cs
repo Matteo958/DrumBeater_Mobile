@@ -25,6 +25,8 @@ public class Audience: MonoBehaviour
     {
         _canJump = true;
         transform.GetComponent<Rigidbody>().AddForce(transform.up * jumpPower, ForceMode.Impulse);
+
+        
     }
 
     private void OnCollisionEnter(Collision collision)

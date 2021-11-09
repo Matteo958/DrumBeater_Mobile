@@ -142,8 +142,7 @@ public class UIManager : MonoBehaviour
     public void openPanel()
     {
         _panelOpening = true;
-        _buttonCredits.GetComponent<Collider>().enabled = false;
-        _buttonQuit.GetComponent<Collider>().enabled = false;
+        
         switch (_starterAnchor.GetComponent<Anchor>().choice)
         {
             case "Songs":
@@ -152,7 +151,7 @@ public class UIManager : MonoBehaviour
                 _choice = _songChoice;
                 _choiceStartPos = _songChoiceStartPos;
                 _tutorialChoice.GetComponent<Collider>().enabled = false;
-                StartCoroutine(open(_panelSongs));
+                StartCoroutine(open(_panelSongs, true));
                 break;
             case "Tutorial":
                 _panelTutorial.SetActive(true);
@@ -160,7 +159,7 @@ public class UIManager : MonoBehaviour
                 _choice = _tutorialChoice;
                 _choiceStartPos = _tutorialChoiceStartPos;
                 _songChoice.GetComponent<Collider>().enabled = false;
-                StartCoroutine(open(_panelTutorial));
+                StartCoroutine(open(_panelTutorial, false));
                 break;
         }
     }
@@ -168,8 +167,8 @@ public class UIManager : MonoBehaviour
     public void ClosePanel()
     {
         _panelOpening = false;
-        _buttonCredits.GetComponent<Collider>().enabled = true;
-        _buttonQuit.GetComponent<Collider>().enabled = true;
+        //_buttonCredits.GetComponent<Collider>().enabled = true;
+        //_buttonQuit.GetComponent<Collider>().enabled = true;
         //foreach (Transform panel in _panelContainerActive.transform)
         //{
         //    panel.GetComponent<Collider>().enabled = false;
@@ -182,7 +181,7 @@ public class UIManager : MonoBehaviour
         //    }
         //}
 
-        _panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
+        //_panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
         if(_panelContainerActive == _panelSongs)
         {
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
@@ -195,7 +194,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(close(_panelContainerActive));
     }
 
-    IEnumerator open(GameObject _panel)
+    IEnumerator open(GameObject _panel, bool songs)
     {
         float t = 0;
         Vector3 _panelArrivingScale = new Vector3(_panel.transform.localScale.x, _panel.transform.localScale.y, 12);
@@ -206,12 +205,16 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
-        foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
+        if (songs)
         {
-            p.GetComponent<Collider>().enabled = true;
-            
+            _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
+            foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
+            {
+                p.GetComponent<Collider>().enabled = true;
+
+            }
         }
+        
     }
 
     IEnumerator close(GameObject _panel)
@@ -380,42 +383,42 @@ public class UIManager : MonoBehaviour
     public void LongPressQuitGame()
     {
         _buttonPressed = true;
-        _panelQuit.transform.GetChild(3).GetComponent<Collider>().enabled = false;
-        StartCoroutine(FillButtonRange("Quit", _panelQuit.transform.GetChild(1)));
+        _panelQuit.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
+        StartCoroutine(FillButtonRange("Quit", _panelQuit.transform.GetChild(0).transform.GetChild(3)));
     }
 
     public void StopPressQuitGame()
     {
         _buttonPressed = false;
-        _panelQuit.transform.GetChild(3).GetComponent<Collider>().enabled = true;
-        _panelQuit.transform.GetChild(1).GetComponent<Image>().fillAmount = 0;
+        _panelQuit.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
+        _panelQuit.transform.GetChild(0).transform.GetChild(3).GetComponent<Image>().fillAmount = 0;
     }
 
     public void LongPressBackQuitButton()
     {
         _buttonPressed = true;
-        _panelQuit.transform.GetChild(1).GetComponent<Collider>().enabled = false;
-        StartCoroutine(FillButtonRange("BackQuit", _panelQuit.transform.GetChild(3)));
+        _panelQuit.transform.GetChild(0).transform.GetChild(3).GetComponent<Collider>().enabled = false;
+        StartCoroutine(FillButtonRange("BackQuit", _panelQuit.transform.GetChild(0).transform.GetChild(1)));
+    }
+
+    public void StopPressBackQuitButton()
+    {
+        _buttonPressed = false;
+        _panelQuit.transform.GetChild(0).transform.GetChild(3).GetComponent<Collider>().enabled = true;
+        _panelQuit.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
     public void LongPressBackCreditsButton()
     {
         _buttonPressed = true;
 
-        StartCoroutine(FillButtonRange("BackCredits", _panelCredits.transform.GetChild(0)));
+        StartCoroutine(FillButtonRange("BackCredits", _panelCredits.transform.GetChild(0).transform.GetChild(1)));
     }
-
-    public void StopPressBackQuitButton()
-    {
-        _buttonPressed = false;
-        _panelQuit.transform.GetChild(1).GetComponent<Collider>().enabled = true;
-        _panelQuit.transform.GetChild(3).GetComponent<Image>().fillAmount = 0;
-    }
-
+    
     public void StopPressBackCreditsButton()
     {
         _buttonPressed = false;
-        _panelCredits.transform.GetChild(0).GetComponent<Image>().fillAmount = 0;
+        _panelCredits.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
     IEnumerator FillButtonRange(string button, Transform obj)
@@ -446,8 +449,8 @@ public class UIManager : MonoBehaviour
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
                     _isDarkening = false;
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
-                    StartCoroutine(ConsoleDown(-542.5f, 0.1f, 0.05f));
-                    StartCoroutine(TracksUp(-540.15f, 0.1f, 0.05f, true));
+                    StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
+                    StartCoroutine(TracksUp(-540.28f, 0.01f, 0.05f, true));
 
                     //GameManager.instance.StartLevel();
                     
@@ -456,13 +459,15 @@ public class UIManager : MonoBehaviour
                     Application.Quit();
                     break;
                 case "BackQuit":
-                    _panelQuit.SetActive(false);
+                    ClosePanel();
+                    
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonCredits.GetComponent<Collider>().enabled = true;
                     break;
                 case "BackCredits":
-                    _panelCredits.SetActive(false);
+                    ClosePanel();
+                   
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonQuit.GetComponent<Collider>().enabled = true;
@@ -474,6 +479,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator FillButtonRangePause(string button, Transform obj)
     {
+        Debug.Log("Coroutine avviata");
         float t = 0;
         while (obj.GetComponent<Image>().fillAmount < 0.98f && _buttonPressed)
         {
@@ -481,31 +487,34 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.1f;
             yield return null;
         }
+        Debug.Log("Coroutine terminata senza premere il tasto");
         if (obj.GetComponent<Image>().fillAmount >= 0.98)
         {
+            Debug.Log("Coroutine terminata premendo il tasto");
+            _buttonPressed = false;
             switch (button)
             {
                 
                 case "Continue":
                     Option = PauseOption.Continue;
-                    _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-                    _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+                    _pauseRestartText.GetComponent<Collider>().enabled = true;
+                    _pauseReturnText.GetComponent<Collider>().enabled = true;
 
                     GameManager.instance.unpause();
                     break;
                 case "Restart":
                     Option = PauseOption.Restart;
 
-                    _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-                    _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+                    _pauseContinueText.GetComponent<Collider>().enabled = true;
+                    _pauseReturnText.GetComponent<Collider>().enabled = true;
 
                     GameManager.instance.unpause();
                     break;
                 case "Return":
                     Option = PauseOption.Return;
 
-                    _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-                    _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+                    _pauseContinueText.GetComponent<Collider>().enabled = true;
+                    _pauseRestartText.GetComponent<Collider>().enabled = true;
 
                     GameManager.instance.unpause();
                     break;
@@ -540,25 +549,7 @@ public class UIManager : MonoBehaviour
                 t.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1);
         }
     }
-
-    public void OpenPanelMenu(string panel)
-    {
-        switch (panel)
-        {
-            case "Quit":
-                _panelQuit.SetActive(true);
-                _songChoice.GetComponent<Collider>().enabled = false;
-                _tutorialChoice.GetComponent<Collider>().enabled = false;
-                _buttonCredits.GetComponent<Collider>().enabled = false;
-                break;
-            case "Credits":
-                _panelCredits.SetActive(true);
-                _songChoice.GetComponent<Collider>().enabled = false;
-                _tutorialChoice.GetComponent<Collider>().enabled = false;
-                _buttonQuit.GetComponent<Collider>().enabled = false;
-                break;
-        }
-    }
+    
 
     public void updateGameUI()
     {
@@ -581,8 +572,8 @@ public class UIManager : MonoBehaviour
         _isDarkening = true;
 
         StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
-        StartCoroutine(TracksDown(-542.5f, 0.1f, 0.1f));
-        StartCoroutine(PauseContainerUp(-540.2f, 0.1f, 0.1f));
+        StartCoroutine(TracksDown(-542.5f, 0.01f, 0.1f));
+        StartCoroutine(PauseContainerUp(-540.28f, 0.01f, 0.1f));
 
     }
 
@@ -597,8 +588,8 @@ public class UIManager : MonoBehaviour
                 _tracks.gameObject.SetActive(true);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
-                StartCoroutine(PauseContainerDown(-542.5f, 0.1f, 0.1f));
-                StartCoroutine(TracksUp(-540.15f, 0.1f, 0.1f, false));
+                StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
+                StartCoroutine(TracksUp(-540.28f, 0.01f, 0.1f, false));
                
                 break;
             case PauseOption.Restart:
@@ -620,8 +611,8 @@ public class UIManager : MonoBehaviour
                 
                 
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
-                StartCoroutine(PauseContainerDown(-542.5f, 0.1f, 0.1f));
-                StartCoroutine(ConsoleUp(-540.3f, 0.1f, 0.1f));
+                StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
+                StartCoroutine(ConsoleUp(-540.4f, 0.01f, 0.1f));
                 
                 break;
         }
@@ -630,10 +621,11 @@ public class UIManager : MonoBehaviour
     
     public void OnContinueText(Transform text)
     {
-        _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = true;
-        _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = true;
-        
+        _pauseRestartText.GetComponent<Collider>().enabled = false;
+        _pauseReturnText.GetComponent<Collider>().enabled = false;
+
         _buttonPressed = true;
+        Debug.Log("ButtonPressedTRUE");
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
         StartCoroutine(FillButtonRangePause("Continue", text.GetChild(1)));
@@ -643,8 +635,8 @@ public class UIManager : MonoBehaviour
 
     public void OnRestartText(Transform text)
     {
-        _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = true;
-        _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = true;
+        _pauseContinueText.GetComponent<Collider>().enabled = false;
+        _pauseReturnText.GetComponent<Collider>().enabled = false;
 
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
@@ -657,8 +649,8 @@ public class UIManager : MonoBehaviour
 
     public void OnReturnText(Transform text)
     {
-        _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = true;
-        _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = true;
+        _pauseContinueText.GetComponent<Collider>().enabled = false;
+        _pauseRestartText.GetComponent<Collider>().enabled = false;
 
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
@@ -671,28 +663,32 @@ public class UIManager : MonoBehaviour
 
     public void OutContinueText(Transform text)
     {
-        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
         _buttonPressed = false;
-        _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-        _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+        Debug.Log("ButtonPressedFALSE");
+        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+
+        _pauseRestartText.GetComponent<Collider>().enabled = true;
+        _pauseReturnText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
     public void OutRestartText(Transform text)
     {
-        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
         _buttonPressed = false;
-        _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-        _pauseReturnText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+
+        _pauseContinueText.GetComponent<Collider>().enabled = true;
+        _pauseReturnText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
     public void OutReturnText(Transform text)
     {
-        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
         _buttonPressed = false;
-        _pauseRestartText.GetComponent<InteractionBehaviour>().ignoreContact = false;
-        _pauseContinueText.GetComponent<InteractionBehaviour>().ignoreContact = false;
+        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+
+        _pauseContinueText.GetComponent<Collider>().enabled = true;
+        _pauseRestartText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
@@ -717,6 +713,8 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+
+        _console.gameObject.SetActive(false);
     }
 
     IEnumerator TracksUp(float endPosY, float threshold, float speed, bool levelStarted)
@@ -738,7 +736,7 @@ public class UIManager : MonoBehaviour
             {
                 a.GetComponent<Audience>().Jump();
             }
-        
+        Debug.Log("TRACKS UP");
     }
 
     IEnumerator TracksDown(float endPosY, float threshold, float speed)
@@ -750,6 +748,8 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+
+        _tracks.gameObject.SetActive(false);
     }
 
     IEnumerator PauseContainerUp(float endPosY, float threshold, float speed)
@@ -773,6 +773,12 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+
+        _pauseContinueText.GetComponent<Image>().fillAmount = 0;
+        _pauseRestartText.GetComponent<Image>().fillAmount = 0;
+        _pauseReturnText.GetComponent<Image>().fillAmount = 0;
+
+        _pauseContainer.gameObject.SetActive(false);
     }
     
 
@@ -853,32 +859,54 @@ public class UIManager : MonoBehaviour
         switch (anch.tag)
         {
             case "SongChoice":
-                if ((anch.position - _songChoiceStartPos.position).magnitude < 0.06f || (anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
+                if ((anch.position - _songChoiceStartPos.position).magnitude < 0.06f)
                 {
-                    Debug.Log("Attached");
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
+                    _buttonCredits.GetComponent<Collider>().enabled = true;
+                    _buttonQuit.GetComponent<Collider>().enabled = true;
+                }
+                else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
+                {
+                    
+                    anch.GetComponent<Rigidbody>().useGravity = false;
+                    anch.GetComponent<Rigidbody>().isKinematic = true;
+
+                    
                 }
                 else
                 {
-                    Debug.Log("Attached2");
                     anch.GetComponent<Rigidbody>().isKinematic = false;
                     _songChoiceIsFloating = true;
+
+                    _buttonCredits.GetComponent<Collider>().enabled = true;
+                    _buttonQuit.GetComponent<Collider>().enabled = true;
                     StartCoroutine(CheckSongChoiceHeight(anch));
                 }
                 break;
             case "TutorialChoice":
-                if ((anch.position - _tutorialChoiceStartPos.position).magnitude < 0.06f || (anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
+                if ((anch.position - _tutorialChoiceStartPos.position).magnitude < 0.06f)
                 {
-                    Debug.Log("Attached");
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
+                    _buttonCredits.GetComponent<Collider>().enabled = true;
+                    _buttonQuit.GetComponent<Collider>().enabled = true;
+
+                }
+                else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
+                {
+                    anch.GetComponent<Rigidbody>().useGravity = false;
+                    anch.GetComponent<Rigidbody>().isKinematic = true;
+
+                    
                 }
                 else
                 {
-                    Debug.Log("Attached2");
                     anch.GetComponent<Rigidbody>().isKinematic = false;
                     _tutorialChoiceIsFloating = true;
+
+                    _buttonCredits.GetComponent<Collider>().enabled = true;
+                    _buttonQuit.GetComponent<Collider>().enabled = true;
                     StartCoroutine(CheckTutorialChoiceHeight(anch));
                 }
                 break;
@@ -892,8 +920,37 @@ public class UIManager : MonoBehaviour
         anch.GetComponent<Rigidbody>().useGravity = true;
         anch.GetComponent<Rigidbody>().isKinematic = false;
 
+        _buttonCredits.GetComponent<Collider>().enabled = false;
+        _buttonQuit.GetComponent<Collider>().enabled = false;
+    }
+
+    public void OnPressButtonCredits()
+    {
+        
+        _panelContainerActive = _panelCredits;
+        _panelOpening = true;
+        _panelCredits.SetActive(true);
+        _buttonQuit.GetComponent<Collider>().enabled = false;
+        _songChoice.GetComponent<Collider>().enabled = false;
+        _tutorialChoice.GetComponent<Collider>().enabled = false;
+
+       
+        StartCoroutine(open(_panelCredits, false));
     }
 
     
+    public void OnPressButtonQuit()
+    {
+        _panelOpening = true;
+        _panelQuit.SetActive(true);
+        _panelContainerActive = _panelQuit;
+        _buttonCredits.GetComponent<Collider>().enabled = false;
+        _songChoice.GetComponent<Collider>().enabled = false;
+        _tutorialChoice.GetComponent<Collider>().enabled = false;
+
+        StartCoroutine(open(_panelQuit, false));
+    }
+
+
 }
 

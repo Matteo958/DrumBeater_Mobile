@@ -128,6 +128,8 @@ public class GameManager : MonoBehaviour
         button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
         Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
         _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
+
+
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
         //for (int i = 1; i < button.transform.childCount; i++)
         //{
@@ -135,13 +137,13 @@ public class GameManager : MonoBehaviour
         //        return;
         //}
 
-        if (soloIsActive)
-        {
-            PointsManager.instance.finalBonusHit();
-            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
-        }
-        else if (button.GetChild(1).GetComponent<NoteController>().press())
-            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        //if (soloIsActive)
+        //{
+        //    PointsManager.instance.finalBonusHit();
+        //    Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        //}
+        //else if (button.GetChild(1).GetComponent<NoteController>().press())
+        //    Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
     }
 
     public void OnUnpressButtonTrack(Transform button)
