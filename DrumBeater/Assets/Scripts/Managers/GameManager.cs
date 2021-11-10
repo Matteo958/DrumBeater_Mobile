@@ -13,6 +13,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _soloText = default;
     private int activeTrack = 2;
 
+    [SerializeField] private Light _dirLight = default;
+    [SerializeField] private Color _pauseDirLightColor = default;
+    [SerializeField] private Camera _mainCamera = default;
+    [SerializeField] private Transform _fog = default;
+
+
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool gamePaused = false;
@@ -23,6 +29,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float finalBonusTime = 15;
     [SerializeField] private int comboHitsToBonus = 150;
 
+    // Check if the level is already started
+    public bool LevelStarted;
+
+
+    private Color _startDirLightColor;
+    private Vector3 _fogStartPos;
+
+    private bool _isPausing;
+
+    
+
     public static GameManager instance { get; private set; }
 
     private void Awake()
@@ -32,6 +49,28 @@ public class GameManager : MonoBehaviour
         else
             instance = this;
     }
+
+    private void Start()
+    {
+        LevelStarted = false;
+        
+
+    }
+
+    //public void StartLevel()
+    //{
+    //    Debug.Log("StartLevel");
+    //    StartCoroutine(UnpauseDirLightColor(_startDirLightColor, _fog.position, _fogStartPos));
+    //}
+
+    //public void LevelFinished()
+    //{
+    //    LevelStarted = false;
+    //    UIManager.instance.closePausePanel();
+    //    StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
+    //}
+
+
 
     public void activateAutoMode()
     {
@@ -53,23 +92,28 @@ public class GameManager : MonoBehaviour
 
     public void pause()
     {
-        Time.timeScale = 0;
+        //Time.timeScale = 0;
+        
         AudioListener.pause = true;
         gamePaused = true;
-        UIManager.instance.showPausePanel(true);
+        _isPausing = true;
+        
+        //TODO
+        UIManager.instance.showPausePanel();
     }
 
     public void unpause()
     {
-        UIManager.instance.showPausePanel(false);
-        Time.timeScale = 1;
-        AudioListener.pause = false;
-        gamePaused = false;
+        //Time.timeScale = 1;
+
+        _isPausing = false;
+        
+        UIManager.instance.closePausePanel();
     }
 
     private void Update()
     {
-        if (_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") == 1.0)
+        if(_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") >= 1.0)
         {
             _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
         }
@@ -81,6 +125,11 @@ public class GameManager : MonoBehaviour
 
     public void OnPressButtonTrack(Transform button)
     {
+        button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
+        Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
+
+
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
         //for (int i = 1; i < button.transform.childCount; i++)
         //{
@@ -88,13 +137,18 @@ public class GameManager : MonoBehaviour
         //        return;
         //}
 
-        if (soloIsActive)
-        {
-            PointsManager.instance.finalBonusHit();
-            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
-        }
-        else if (button.GetChild(1).GetComponent<NoteController>().press())
-            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        //if (soloIsActive)
+        //{
+        //    PointsManager.instance.finalBonusHit();
+        //    Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        //}
+        //else if (button.GetChild(1).GetComponent<NoteController>().press())
+        //    Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+    }
+
+    public void OnUnpressButtonTrack(Transform button)
+    {
+        button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
     }
 
     public void rotateTrack(bool left = true)

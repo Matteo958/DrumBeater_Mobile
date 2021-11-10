@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs: []
     m_Floats:
-    - Fill: 0.495
+    - Fill: 0
     - Vector1_63F28935: 0.1
     - Vector1_91E2B196: 0.01
     - Vector1_974F592C: 0.462
