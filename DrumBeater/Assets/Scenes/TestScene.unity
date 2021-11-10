@@ -7520,13 +7520,14 @@ MonoBehaviour:
   maxComboMultiplier: 10
   comboMultiplierStep: 5
   autoModeHits: 50
-  easyMultiplier: 0.5
-  normalMultiplier: 1
-  hardMultiplier: 2
-  expertMultiplier: 4
   perfectPoints: 100
   goodPoints: 50
   okPoints: 25
+  comboMultiplier: 1
+  points: 0
+  hitsPercentage: 0
+  comboHits: 0
+  maxComboHits: 0
 --- !u!1 &196296957
 GameObject:
   m_ObjectHideFlags: 0
@@ -8119,7 +8120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 175533670}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -9548,7 +9549,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 175533670}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -14745,7 +14746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 175533670}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -20200,6 +20201,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e670cd37e99946242bccb957941632b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  pointsText: {fileID: 0}
+  percentageText: {fileID: 0}
+  comboText: {fileID: 0}
+  maxComboText: {fileID: 0}
+  comboMultiplierText: {fileID: 0}
+  soloText: {fileID: 0}
+  endGamePanel: {fileID: 0}
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
@@ -33329,7 +33337,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 175533670}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -34516,7 +34524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f10fa40360571247a7ca806d6859557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _manager: {fileID: 0}
+  _manager: {fileID: 175533670}
   _ignoreHoverMode: 0
   _isIgnoringAllHoverState: 0
   _ignorePrimaryHover: 0
@@ -35287,7 +35295,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1618833501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38165,11 +38173,13 @@ MonoBehaviour:
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
   _PowerUpIcosphere: {fileID: 919132148429521920}
+  _tracks: {fileID: 0}
   autoMode: 0
   hasAutoMode: 0
-  hasFinalBonus: 0
   gamePaused: 0
   autoModeTime: 15
+  finalBonusTime: 15
+  comboHitsToBonus: 150
 --- !u!4 &1830810048
 Transform:
   m_ObjectHideFlags: 0

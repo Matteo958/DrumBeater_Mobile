@@ -12,19 +12,14 @@ public class NoteController : MonoBehaviour
     void Update()
     {
         fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
-        //Debug.Log(fill);
+
         transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), fill);
 
         if (GameManager.instance.autoMode && fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
         else if (fill > 1)
-        {
-            if(isLastNote)
-            Debug.Log("MISS");
             miss();
-        }
     }
-
 
     public bool press()
     {

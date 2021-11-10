@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Melanchall.DryWetMidi.Interaction;
+using System.Collections;
+using System.Collections.Generic;
 //using System.Security.Cryptography;
 using UnityEngine;
 
 public class NoteSpawner : MonoBehaviour
 {
+    public List<float> timeStamps = new List<float>();
     [Tooltip("The gap in beats between the note's spawn and its actual beat time")]
     public float noteSpawnGapInBeats;
-
     [Tooltip("Heights of the note")]
     [SerializeField] private float noteHeight = 1.3f;
     [Tooltip("The first track")]
@@ -21,15 +23,12 @@ public class NoteSpawner : MonoBehaviour
     [SerializeField] private Material autoModeNoteMaterial;
 
     private Dictionary<int, Remover> trackRemoversMap = new Dictionary<int, Remover>();
+    private List<int> notesPosition = new List<int>();
 
-    // Notes of the current song
-    private List<NoteInfo> notes;
-    // Song beats per minute
-    private float songBpm;
     // The number of seconds for each song beat
     private float secPerBeat;
     // Current song position, in seconds
-    private float songPosition;
+    public float songPosition;
     // Current song position, in beats
     [HideInInspector] public float songPosInBeats;
     // Check if the song is already started
@@ -39,10 +38,9 @@ public class NoteSpawner : MonoBehaviour
     // The offset to the first beat of the song in seconds
     private float firstBeatOffset;
     // The index of the note to spawn
-    private int nextNoteIndex = 0;
+    private int spawnIndex = 0;
     // Spawned note
     private GameObject spawnedNote;
-    int i = 0;
 
     public static NoteSpawner instance { get; private set; }
 
@@ -77,27 +75,26 @@ public class NoteSpawner : MonoBehaviour
 
     public void startSong(Song song)
     {
-        nextNoteIndex = 0;
-        notes = song.notes;
-        songBpm = song.bpm;
+        spawnIndex = 0;
 
-        // Calculate the number of seconds in each beat
-        secPerBeat = 60f / songBpm;
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
 
         AudioManager.instance.playAudio(song.type);
 
+        StartCoroutine(boh());
+    }
+
+    private IEnumerator boh()
+    {
+        yield return new WaitForSeconds(1);
         songHasStarted = true;
     }
 
     void Update()
     {
-        if (!songHasStarted)
-        {
-            //Debug.Log("CIAO");
+        if (!songHasStarted || spawnIndex == timeStamps.Count)
             return;
-        }
 
         // Determine how many seconds since the song started
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
@@ -105,51 +102,48 @@ public class NoteSpawner : MonoBehaviour
         songPosInBeats = songPosition / secPerBeat;
 
         // Check if there are still notes for the song and if the note has to be spawned yet
-        if (nextNoteIndex < notes.Count && notes[nextNoteIndex].bpmTime < songPosInBeats + noteSpawnGapInBeats)
+        if (songPosInBeats >= timeStamps[spawnIndex] - noteSpawnGapInBeats)
         {
-            spawnNote(notes[nextNoteIndex]);
-            nextNoteIndex++;
+            spawnNote();
+            spawnIndex++;
         }
     }
 
-    private void spawnNote(NoteInfo note)
+    private void spawnNote()
     {
-        //Get the note from the pool
         spawnedNote = ObjectPool.instance.getPooledObj();
-
         if (spawnedNote != null)
         {
-            spawnedNote.transform.SetParent(trackRemoversMap[note.removerID].transform);
+            spawnedNote.transform.SetParent(trackRemoversMap[notesPosition[spawnIndex]].transform);
             spawnedNote.transform.localRotation = Quaternion.identity;
             spawnedNote.transform.localPosition = Vector3.zero + transform.up * noteHeight;
-
-            //thirdTrackRemoversMap[note.line].notesBeatQueue.Enqueue(note.bpmTime);
-            //    thirdTrackRemoversMap[note.line].isLastNote = true;
-
             spawnedNote.SetActive(true);
 
-            if (nextNoteIndex == notes.Count - 1)
-            {
-                Debug.Log("index: " + nextNoteIndex);
-                Debug.Log("notes count: " + nextNoteIndex);
+            if (spawnIndex == timeStamps.Count - 1)
                 spawnedNote.GetComponent<NoteController>().isLastNote = true;
-            }
 
-            //Set the time in bpm of the note
-            spawnedNote.GetComponent<NoteController>().bpmTime = note.bpmTime;
-            //Set note color
+            spawnedNote.GetComponent<NoteController>().bpmTime = timeStamps[spawnIndex];
             if (GameManager.instance.autoMode)
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
             else
-            {
-                //Set a new seed for the random
-                Random.InitState(System.DateTime.Now.Millisecond);
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[Random.Range(0, noteMaterials.Count)];
-            }
+                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex]];
         }
         else
         {
-            Debug.LogError("No more notes available to activate. Add more notes to the pool");
+            //Debug.LogError("Increase object pool number");
+        }
+    }
+
+    public void setNotes(Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)
+    {
+        // Calculate the number of seconds in each beat
+        secPerBeat = 60f / bpm;
+
+        foreach (Note note in array)
+        {
+            MetricTimeSpan metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, Song.midiFile.GetTempoMap());
+            timeStamps.Add((metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + metricTimeSpan.Milliseconds / 1000f) / secPerBeat);
+            notesPosition.Add((int)note.NoteName);
         }
     }
 

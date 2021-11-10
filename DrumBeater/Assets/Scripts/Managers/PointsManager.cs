@@ -58,15 +58,15 @@ public class PointsManager : MonoBehaviour
         switch (precision)
         {
             case Precision.OK:
-                points += okPoints * comboMultiplier /** difficultMultiplier*/;
+                points += okPoints * comboMultiplier;
                 break;
 
             case Precision.GOOD:
-                points += goodPoints * comboMultiplier /** difficultMultiplier*/;
+                points += goodPoints * comboMultiplier;
                 break;
 
             case Precision.PERFECT:
-                points += perfectPoints * comboMultiplier/* * difficultMultiplier*/;
+                points += perfectPoints * comboMultiplier;
                 break;
         }
 
@@ -96,7 +96,7 @@ public class PointsManager : MonoBehaviour
 
     public void finalBonusHit()
     {
-        points += perfectPoints * comboMultiplier/* * difficultMultiplier*/;
+        points += perfectPoints * comboMultiplier;
     }
 
     public void calculatePercentage()
