@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+    [SerializeField] private GameObject Video = default;
+
+
     [SerializeField] private Text pointsText;
     [SerializeField] private Text percentageText;
     [SerializeField] private Text comboText;
@@ -48,8 +51,12 @@ public class UIManager : MonoBehaviour
     // Animations
     [SerializeField] private Transform _pauseContainer = default;
     [SerializeField] private Transform _tracks = default;
-    [SerializeField] private Transform _manhole = default;
+    
     [SerializeField] private Transform _console = default;
+
+    [SerializeField] private Transform _manhole = default;
+    [SerializeField] private Transform _manhole2 = default;
+    [SerializeField] private Transform _manhole3 = default;
 
     [SerializeField] private Light _dirLight = default;
     [SerializeField] private Color _pauseDirLightColor = default;
@@ -207,6 +214,7 @@ public class UIManager : MonoBehaviour
 
         if (songs)
         {
+            Video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
             foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
             {
@@ -447,6 +455,9 @@ public class UIManager : MonoBehaviour
                     _tracks.gameObject.SetActive(true);
                     
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
+                    _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+                    _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
                     _isDarkening = false;
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                     StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
@@ -568,6 +579,9 @@ public class UIManager : MonoBehaviour
     public void showPausePanel()
     {
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
         _pauseContainer.gameObject.SetActive(true);
         _isDarkening = true;
 
@@ -585,6 +599,9 @@ public class UIManager : MonoBehaviour
         switch (Option)
         {
             case PauseOption.Continue:
+                _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+                _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
                 _tracks.gameObject.SetActive(true);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
@@ -726,7 +743,11 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
+
         if (levelStarted)
             GameManager.instance.LevelStarted = true;
         else
@@ -762,6 +783,8 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
     }
 
     IEnumerator PauseContainerDown(float endPosY, float threshold, float speed)
