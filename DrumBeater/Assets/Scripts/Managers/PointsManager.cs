@@ -47,10 +47,9 @@ public class PointsManager : MonoBehaviour
     {
         if (instance != null && instance != this)
             Destroy(this.gameObject);
-        else
-        {
+        else        
             instance = this;
-        }
+        
     }
 
     public void hitNote(Precision precision)
@@ -77,11 +76,9 @@ public class PointsManager : MonoBehaviour
 
         if (comboMultiplier < maxComboMultiplier && comboHits % comboMultiplierStep == 0)
             comboMultiplier++;
-        if(comboHits == autoModeHits)
-        {
+        if(comboHits == autoModeHits)        
             GameManager.instance.hasAutoMode = true;
-            // TODO: Modificare UI
-        }
+        
 
         UIManager.instance.updateGameUI();
     }

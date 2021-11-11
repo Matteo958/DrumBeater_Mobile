@@ -31,7 +31,6 @@ public class Song : MonoBehaviour
     private void ReadFromFile()
     {
         midiFile = MidiFile.Read(Application.streamingAssetsPath + "/" + fileLocation);
-        //GetDataFromMidi();
     }
     public void GetDataFromMidi()
     {
@@ -49,7 +48,7 @@ public class Song : MonoBehaviour
         NoteSpawner.instance.startSong(this);
     }
     public static float GetAudioSourceTime()
-    {
+    {       
         return instance.audioSource.timeSamples / instance.audioSource.clip.frequency;
     }
 }

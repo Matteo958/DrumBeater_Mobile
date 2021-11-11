@@ -56,8 +56,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Color _songDirLightColor = default;
     [SerializeField] private Camera _mainCamera = default;
     [SerializeField] private Transform _fog = default;
+    [SerializeField] private Image _halo = default;
     private Vector3 _fogStartPos;
     private bool _isDarkening;
+    private bool _showingHalo = false;
 
     private static UIManager _instance;
 
@@ -76,7 +78,7 @@ public class UIManager : MonoBehaviour
 
     public PauseOption Option;
 
-   
+
 
     // Check if player is pressing button play
     private bool _buttonPressed;
@@ -119,7 +121,7 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         _songChoiceIsFloating = _tutorialChoiceIsFloating = false;
-        
+
         _choiceStartScale = _songChoice.transform.localScale;
         _panelOpening = false;
 
@@ -138,11 +140,11 @@ public class UIManager : MonoBehaviour
         _panelCredits.SetActive(false);
     }
 
-    
+
     public void openPanel()
     {
         _panelOpening = true;
-        
+
         switch (_starterAnchor.GetComponent<Anchor>().choice)
         {
             case "Songs":
@@ -182,7 +184,7 @@ public class UIManager : MonoBehaviour
         //}
 
         //_panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
-        if(_panelContainerActive == _panelSongs)
+        if (_panelContainerActive == _panelSongs)
         {
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
             {
@@ -214,7 +216,7 @@ public class UIManager : MonoBehaviour
 
             }
         }
-        
+
     }
 
     IEnumerator close(GameObject _panel)
@@ -230,7 +232,7 @@ public class UIManager : MonoBehaviour
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
-        
+
     }
 
     //Change directional light and main camera color
@@ -358,8 +360,8 @@ public class UIManager : MonoBehaviour
     {
         _buttonPressed = true;
         // while I'm pressing the play button, I can't change the difficulty
-        
-        
+
+
         foreach (Transform t in _panelSongs.transform.GetChild(0).transform.GetChild(3))
         {
             t.GetComponent<Collider>().enabled = false;
@@ -414,7 +416,7 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(FillButtonRange("BackCredits", _panelCredits.transform.GetChild(0).transform.GetChild(1)));
     }
-    
+
     public void StopPressBackCreditsButton()
     {
         _buttonPressed = false;
@@ -445,7 +447,7 @@ public class UIManager : MonoBehaviour
                     //_tutorialChoice.GetComponent<Collider>().enabled = false;
 
                     _tracks.gameObject.SetActive(true);
-                    
+
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
                     _isDarkening = false;
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
@@ -453,26 +455,26 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(TracksUp(-540.28f, 0.01f, 0.05f, true));
 
                     //GameManager.instance.StartLevel();
-                    
+
                     break;
                 case "Quit":
                     Application.Quit();
                     break;
                 case "BackQuit":
                     ClosePanel();
-                    
+
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonCredits.GetComponent<Collider>().enabled = true;
                     break;
                 case "BackCredits":
                     ClosePanel();
-                   
+
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonQuit.GetComponent<Collider>().enabled = true;
                     break;
-                
+
             }
         }
     }
@@ -494,7 +496,7 @@ public class UIManager : MonoBehaviour
             _buttonPressed = false;
             switch (button)
             {
-                
+
                 case "Continue":
                     Option = PauseOption.Continue;
                     _pauseRestartText.GetComponent<Collider>().enabled = true;
@@ -549,20 +551,20 @@ public class UIManager : MonoBehaviour
                 t.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1);
         }
     }
-    
+
 
     public void updateGameUI()
     {
-        //comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
-        //comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
     public void showEndGame()
     {
-        //pointsText.text = "POINTS: " + PointsManager.instance.points;
-        //percentageText.text = PointsManager.instance.hitsPercentage + "%";
-        //maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
-        //endGamePanel.SetActive(true);
+        pointsText.text = "POINTS: " + PointsManager.instance.points;
+        percentageText.text = PointsManager.instance.hitsPercentage + "%";
+        maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
+        endGamePanel.SetActive(true);
     }
 
     public void showPausePanel()
@@ -580,8 +582,8 @@ public class UIManager : MonoBehaviour
     public void closePausePanel()
     {
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
-        
-        
+
+
         switch (Option)
         {
             case PauseOption.Continue:
@@ -590,14 +592,14 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
                 StartCoroutine(TracksUp(-540.28f, 0.01f, 0.1f, false));
-               
+
                 break;
             case PauseOption.Restart:
                 break;
             case PauseOption.Return:
                 _console.gameObject.SetActive(true);
 
-                GameManager.instance.LevelStarted = false;
+                GameManager.instance.levelStarted = false;
                 GameManager.instance.gamePaused = false;
                 _choice.GetComponent<AnchorableBehaviour>().Detach();
 
@@ -608,17 +610,17 @@ public class UIManager : MonoBehaviour
                 _buttonQuit.GetComponent<Collider>().enabled = true;
                 _knobMusicSlider.GetComponent<Collider>().enabled = true;
                 _knobSFXSlider.GetComponent<Collider>().enabled = true;
-                
-                
+
+
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
                 StartCoroutine(ConsoleUp(-540.4f, 0.01f, 0.1f));
-                
+
                 break;
         }
     }
 
-    
+
     public void OnContinueText(Transform text)
     {
         _pauseRestartText.GetComponent<Collider>().enabled = false;
@@ -728,14 +730,14 @@ public class UIManager : MonoBehaviour
         }
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
         if (levelStarted)
-            GameManager.instance.LevelStarted = true;
+            GameManager.instance.levelStarted = true;
         else
             GameManager.instance.gamePaused = false;
 
         foreach (Transform a in _audience)
-            {
-                a.GetComponent<Audience>().Jump();
-            }
+        {
+            a.GetComponent<Audience>().Jump();
+        }
         Debug.Log("TRACKS UP");
     }
 
@@ -780,7 +782,7 @@ public class UIManager : MonoBehaviour
 
         _pauseContainer.gameObject.SetActive(false);
     }
-    
+
 
     IEnumerator CheckSongChoiceHeight(Transform choice)
     {
@@ -793,17 +795,18 @@ public class UIManager : MonoBehaviour
 
     private void UpdateSongChoiceHeight(Transform choice)
     {
-        if(choice.position.y < -1f)
+        if (choice.position.y < -1f)
         {
             _songChoiceIsFloating = false;
             choice.transform.localScale = new Vector3(0, 0, 0);
             choice.GetComponent<Rigidbody>().useGravity = false;
             choice.GetComponent<Rigidbody>().isKinematic = true;
             choice.GetComponent<Collider>().enabled = false;
-            if(choice.tag == "SongChoice")
+            if (choice.tag == "SongChoice")
             {
                 choice.position = _songChoiceStartPos.position;
-            }else
+            }
+            else
                 choice.position = _tutorialChoiceStartPos.position;
 
             StartCoroutine(MenuChoiceScale(choice));
@@ -842,7 +845,7 @@ public class UIManager : MonoBehaviour
     IEnumerator MenuChoiceScale(Transform choice)
     {
         float t = 0;
-        
+
         while (Mathf.Abs(choice.localScale.x - _choiceStartScale.x) > 0.1f)
         {
             choice.localScale = Vector3.Lerp(choice.localScale, _choiceStartScale, t);
@@ -868,11 +871,11 @@ public class UIManager : MonoBehaviour
                 }
                 else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
                 {
-                    
+
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
 
-                    
+
                 }
                 else
                 {
@@ -898,7 +901,7 @@ public class UIManager : MonoBehaviour
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
 
-                    
+
                 }
                 else
                 {
@@ -911,8 +914,8 @@ public class UIManager : MonoBehaviour
                 }
                 break;
         }
-        
-        
+
+
     }
 
     public void AnchorDetached(Transform anch)
@@ -926,7 +929,7 @@ public class UIManager : MonoBehaviour
 
     public void OnPressButtonCredits()
     {
-        
+
         _panelContainerActive = _panelCredits;
         _panelOpening = true;
         _panelCredits.SetActive(true);
@@ -934,11 +937,11 @@ public class UIManager : MonoBehaviour
         _songChoice.GetComponent<Collider>().enabled = false;
         _tutorialChoice.GetComponent<Collider>().enabled = false;
 
-       
+
         StartCoroutine(open(_panelCredits, false));
     }
 
-    
+
     public void OnPressButtonQuit()
     {
         _panelOpening = true;
@@ -951,6 +954,41 @@ public class UIManager : MonoBehaviour
         StartCoroutine(open(_panelQuit, false));
     }
 
+    public void showHalo(bool left = false) {
+        if(!_showingHalo)
+            StartCoroutine(showHaloRoutine(left));
+    }
 
+    private IEnumerator showHaloRoutine(bool left)
+    {
+        _showingHalo = true;
+
+        if (left)        
+            _halo.rectTransform.localScale = new Vector3(-1,1,1);        
+        else
+            _halo.rectTransform.localScale = new Vector3(1,1,1);
+
+        float t = 0;
+
+        Color tempColor = _halo.color;
+
+        while (t < 1)
+        {
+            t += Time.deltaTime * 5;
+            tempColor.a = Mathf.Lerp(0, 1, t);
+            _halo.color = tempColor;
+            yield return null;
+        }
+    }
+
+    public void hideHalo()
+    {
+        _showingHalo = false;
+        float t = 0;
+
+        Color tempColor = _halo.color;
+        tempColor.a = 0;
+        _halo.color = tempColor;
+    }
 }
 

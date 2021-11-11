@@ -82,10 +82,10 @@ public class NoteSpawner : MonoBehaviour
 
         AudioManager.instance.playAudio(song.type);
 
-        StartCoroutine(boh());
+        StartCoroutine(wait());
     }
 
-    private IEnumerator boh()
+    private IEnumerator wait()
     {
         yield return new WaitForSeconds(1);
         songHasStarted = true;
@@ -129,9 +129,9 @@ public class NoteSpawner : MonoBehaviour
                 spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex]];
         }
         else
-        {
-            //Debug.LogError("Increase object pool number");
-        }
+            Debug.LogError("Increase object pool number");
+
+        GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]);
     }
 
     public void setNotes(Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)

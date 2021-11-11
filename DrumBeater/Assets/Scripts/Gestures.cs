@@ -170,7 +170,7 @@ public class Gestures : MonoBehaviour
             //    cube.GetComponent<Collider>().enabled = false;
             //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
             //}
-            if (!GameManager.instance.gamePaused && GameManager.instance.LevelStarted)
+            if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
             {
                 //Debug.Log("Power Activated by Right Hand");
                 GameManager.instance.pause();
@@ -247,7 +247,7 @@ public class Gestures : MonoBehaviour
             //    cube.GetComponent<Collider>().enabled = false;
             //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
             //}
-            if (!GameManager.instance.gamePaused && GameManager.instance.LevelStarted)
+            if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
             {
                 //Debug.Log("Power Activated by Right Hand");
                 GameManager.instance.pause();

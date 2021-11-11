@@ -57,7 +57,6 @@ public class NoteController : MonoBehaviour
         PointsManager.instance.missNote();
         if (isLastNote)
         {
-            Debug.Log(gameObject.name);
             GameManager.instance.finishSong();
         }
         gameObject.SetActive(false);
