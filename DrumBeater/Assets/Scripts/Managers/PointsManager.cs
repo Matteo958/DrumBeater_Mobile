@@ -47,10 +47,9 @@ public class PointsManager : MonoBehaviour
     {
         if (instance != null && instance != this)
             Destroy(this.gameObject);
-        else
-        {
+        else        
             instance = this;
-        }
+        
     }
 
     public void hitNote(Precision precision)
@@ -58,15 +57,15 @@ public class PointsManager : MonoBehaviour
         switch (precision)
         {
             case Precision.OK:
-                points += okPoints * comboMultiplier /** difficultMultiplier*/;
+                points += okPoints * comboMultiplier;
                 break;
 
             case Precision.GOOD:
-                points += goodPoints * comboMultiplier /** difficultMultiplier*/;
+                points += goodPoints * comboMultiplier;
                 break;
 
             case Precision.PERFECT:
-                points += perfectPoints * comboMultiplier/* * difficultMultiplier*/;
+                points += perfectPoints * comboMultiplier;
                 break;
         }
 
@@ -77,11 +76,9 @@ public class PointsManager : MonoBehaviour
 
         if (comboMultiplier < maxComboMultiplier && comboHits % comboMultiplierStep == 0)
             comboMultiplier++;
-        if(comboHits == autoModeHits)
-        {
+        if(comboHits == autoModeHits)        
             GameManager.instance.hasAutoMode = true;
-            // TODO: Modificare UI
-        }
+        
 
         UIManager.instance.updateGameUI();
     }
@@ -96,7 +93,7 @@ public class PointsManager : MonoBehaviour
 
     public void finalBonusHit()
     {
-        points += perfectPoints * comboMultiplier/* * difficultMultiplier*/;
+        points += perfectPoints * comboMultiplier;
     }
 
     public void calculatePercentage()

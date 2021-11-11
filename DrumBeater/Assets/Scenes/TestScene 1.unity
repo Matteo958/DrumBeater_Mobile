@@ -7802,7 +7802,7 @@ MonoBehaviour:
   - source: {fileID: 1787371239}
     audio:
     - type: 1
-      clip: {fileID: 8300000, guid: 52b791574a6430d429755f4abc66a210, type: 3}
+      clip: {fileID: 8300000, guid: 9521c95e805fad64f829278ad19cf4e4, type: 3}
     - type: 2
       clip: {fileID: 8300000, guid: f96704db8d6a9db498b8bc5991037010, type: 3}
 --- !u!4 &207969277
@@ -8768,9 +8768,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fccfba70aa64841851e8926f9a5226, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 123
-  type: 2
-  notes: []
 --- !u!1 &249941107
 GameObject:
   m_ObjectHideFlags: 0
@@ -10294,7 +10291,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Song 1
+  m_Text: Song
 --- !u!222 &356977439
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -20247,12 +20244,12 @@ GameObject:
   - component: {fileID: 979573404}
   - component: {fileID: 979573405}
   m_Layer: 0
-  m_Name: Song1GO
+  m_Name: SpaceInvader_Expert
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &979573404
 Transform:
   m_ObjectHideFlags: 0
@@ -20276,80 +20273,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 979573403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3fccfba70aa64841851e8926f9a5226, type: 3}
+  m_Script: {fileID: 11500000, guid: d54f12e16a7c4ec44a0ef8e3aafb46e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 129
+  bpm: 133
+  audioSource: {fileID: 1787371239}
   type: 1
-  notes:
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 33.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 39.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 41.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 49
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 55
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 57
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 65
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 68
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 69
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 71
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 72.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 76.1
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 80.8
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 83.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 84.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 86
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 88
+  songDelayInSeconds: 0
+  fileLocation: SpaceInvader_Expert.mid
 --- !u!1001 &982846412
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20760,19 +20691,28 @@ MonoBehaviour:
   _panelQuit: {fileID: 703798053}
   _songChoice: {fileID: 1963797098}
   _tutorialChoice: {fileID: 1970831145}
+  _songChoiceStartPos: {fileID: 0}
+  _tutorialChoiceStartPos: {fileID: 0}
   _buttonQuit: {fileID: 0}
   _buttonCredits: {fileID: 0}
   _knobMusicSlider: {fileID: 0}
   _knobSFXSlider: {fileID: 0}
   _starterAnchor: {fileID: 0}
-  _panelsOffset: 1.2
+  _audience: {fileID: 0}
+  _pauseContinueText: {fileID: 0}
+  _pauseRestartText: {fileID: 0}
+  _pauseReturnText: {fileID: 0}
   _pauseContainer: {fileID: 0}
   _tracks: {fileID: 0}
   _manhole: {fileID: 0}
   _console: {fileID: 0}
+  _dirLight: {fileID: 0}
+  _pauseDirLightColor: {r: 0, g: 0, b: 0, a: 0}
+  _songDirLightColor: {r: 0, g: 0, b: 0, a: 0}
+  _mainCamera: {fileID: 0}
+  _fog: {fileID: 0}
   Option: 0
-  SongToPlay: 0000000000000000
-  TutorialToPlay: 0
+  Difficulty: 0
 --- !u!54 &1008221645
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -22849,7 +22789,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1153724360
 RectTransform:
   m_ObjectHideFlags: 0
@@ -26621,7 +26561,7 @@ GameObject:
   - component: {fileID: 1337284829}
   - component: {fileID: 1337284828}
   m_Layer: 5
-  m_Name: Song1
+  m_Name: SpaceInvader_Difficult
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26640,7 +26580,6 @@ RectTransform:
   m_Children:
   - {fileID: 356977437}
   - {fileID: 979573404}
-  - {fileID: 1397640656}
   m_Father: {fileID: 2040289922}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -26692,9 +26631,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1397640657}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Song, Assembly-CSharp
-        m_MethodName: play
+        m_MethodName: GetDataFromMidi
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -27834,220 +27773,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c37637e33065d1449c254a09c26ec7e, type: 3}
---- !u!1 &1397640655
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1397640656}
-  - component: {fileID: 1397640657}
-  m_Layer: 0
-  m_Name: Song1GO (1)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1397640656
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397640655}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 207.9527, y: -123.92929, z: 112.316895}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1337284827}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1397640657
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1397640655}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f3fccfba70aa64841851e8926f9a5226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bpm: 129
-  type: 1
-  notes:
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 33.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 34.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 35.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 36.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 37.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 38.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 39.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 40.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 41.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 42.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 43.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 44.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 45.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 46.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 47.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 48.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 49.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 50.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 51.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 52.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 53.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 54.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 55.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 56.5
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 57.3
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 58.3
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 59.3
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 60.3
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 61.3
-  - removerID: 7
-    special: 0
-    difficulty: 1
-    bpmTime: 62.25
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 63.1
-  - removerID: 6
-    special: 0
-    difficulty: 1
-    bpmTime: 65
-  - removerID: 10
-    special: 0
-    difficulty: 1
-    bpmTime: 68
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 69
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 71
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 72.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 76.1
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 80.8
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 83.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 84.5
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 86
-  - removerID: 9
-    special: 0
-    difficulty: 1
-    bpmTime: 88
 --- !u!1 &1398677373
 GameObject:
   m_ObjectHideFlags: 0
@@ -39575,6 +39300,7 @@ MonoBehaviour:
   autoModeTime: 15
   finalBonusTime: 15
   comboHitsToBonus: 150
+  LevelStarted: 0
 --- !u!4 &1830810048
 Transform:
   m_ObjectHideFlags: 0
@@ -40688,6 +40414,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53e8899ff7486d04bb8a3d3162b5a190, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeStamps: []
   noteSpawnGapInBeats: 5
   noteHeight: 1.41
   firstTrack: {fileID: 1722282484}
@@ -40698,7 +40425,14 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   - {fileID: 2100000, guid: 0b7f5fb52c517644899c099dbec65f3c, type: 2}
   - {fileID: 2100000, guid: 6273e559dfe02264298bcbab339291f2, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
+  - {fileID: 2100000, guid: 7a971fddf53881d4a9ef691281c50016, type: 2}
   autoModeNoteMaterial: {fileID: 2100000, guid: 51e4e98991c5a514981f3e8985876089, type: 2}
+  songPosition: 0
   songPosInBeats: 0
   songHasStarted: 0
 --- !u!4 &1880878441
@@ -43046,7 +42780,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1986339019}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: 0.6947178, z: -0, w: 0.71928245}
   m_LocalPosition: {x: 0, y: -0.281, z: -3.792}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -43055,7 +42789,7 @@ Transform:
   - {fileID: 1408837140}
   m_Father: {fileID: 0}
   m_RootOrder: 28
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 88.009, z: 0}
 --- !u!1 &1990910498 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2c37637e33065d1449c254a09c26ec7e, type: 3}

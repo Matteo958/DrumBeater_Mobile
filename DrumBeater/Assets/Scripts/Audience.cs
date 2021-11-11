@@ -32,7 +32,7 @@ public class Audience: MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         
-        if (collision.gameObject.layer == 9 && !GameManager.instance.gamePaused && GameManager.instance.LevelStarted)
+        if (collision.gameObject.layer == 9 && !GameManager.instance.gamePaused && GameManager.instance.levelStarted)
         {
             
             Jump();
