@@ -65,6 +65,7 @@ public class NoteController : MonoBehaviour
     private void OnDisable()
     {
         isLastNote = false;
+        gameObject.transform.parent = null;
         transform.localScale = new Vector3(0.001f, 1, 0.001f);
     }
 }
