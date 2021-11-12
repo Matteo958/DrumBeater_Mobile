@@ -49,6 +49,7 @@ public class NoteController : MonoBehaviour
         {
             GameManager.instance.finishSong();
         }
+        transform.parent = null;
         gameObject.SetActive(false);
     }
 
@@ -59,6 +60,7 @@ public class NoteController : MonoBehaviour
         {
             GameManager.instance.finishSong();
         }
+        transform.parent = null;
         gameObject.SetActive(false);
     }
 
