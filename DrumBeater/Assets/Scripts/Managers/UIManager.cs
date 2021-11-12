@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour
         _choiceStartScale = _songChoice.transform.localScale;
         _panelOpening = false;
 
-        //_fogStartPos = _fog.position;
+        _fogStartPos = _fog.position;
         //// Firstly all difficulties are set to 1 --> Medium
         //for (int i = 0; i < 3; i++)
         //{
@@ -566,8 +566,8 @@ public class UIManager : MonoBehaviour
 
     public void updateGameUI()
     {
-        //comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
-        //comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
     public void showEndGame()
@@ -753,7 +753,7 @@ public class UIManager : MonoBehaviour
         if (levelStarted)
         {
             GameManager.instance.levelStarted = true;
-            //GameManager.instance.StartSong();
+            GameManager.instance.StartSong();
         }
         else
             GameManager.instance.gamePaused = false;
@@ -979,8 +979,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void showHalo(bool left = false) {
-        //if(!_showingHalo)
-        //    StartCoroutine(showHaloRoutine(left));
+        if (!_showingHalo)
+            StartCoroutine(showHaloRoutine(left));
     }
 
     private IEnumerator showHaloRoutine(bool left)
@@ -1007,12 +1007,12 @@ public class UIManager : MonoBehaviour
 
     public void hideHalo()
     {
-        //_showingHalo = false;
-        //float t = 0;
+        _showingHalo = false;
+        float t = 0;
 
-        //Color tempColor = _halo.color;
-        //tempColor.a = 0;
-        //_halo.color = tempColor;
+        Color tempColor = _halo.color;
+        tempColor.a = 0;
+        _halo.color = tempColor;
     }
 }
 

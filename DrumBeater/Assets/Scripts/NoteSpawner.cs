@@ -53,19 +53,19 @@ public class NoteSpawner : MonoBehaviour
             Remover tmpRemover;
             for (int i = 0; i < firstTrack.childCount; i++)
             {
-                tmpRemover = firstTrack.GetChild(i).GetComponent<Remover>();
+                tmpRemover = firstTrack.GetChild(i).GetChild(0).GetComponent<Remover>();
                 trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
             for (int i = 0; i < secondTrack.childCount; i++)
             {
-                tmpRemover = secondTrack.GetChild(i).GetComponent<Remover>();
+                tmpRemover = secondTrack.GetChild(i).GetChild(0).GetComponent<Remover>();
                 trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 
             for (int i = 0; i < thirdTrack.childCount; i++)
             {
-                tmpRemover = thirdTrack.GetChild(i).GetComponent<Remover>();
+                tmpRemover = thirdTrack.GetChild(i).GetChild(0).GetComponent<Remover>();
                 trackRemoversMap.Add(tmpRemover.id, tmpRemover);
             }
 

@@ -36,7 +36,7 @@ public class Gestures : MonoBehaviour
         _canActivatePower1 = _canActivatePower2 = true;
         _handOpenLeft = _handOpenRight = false;
         _fistLeft = _fistRight = false;
-        canRotateLeft = canRotateRight = false;
+        canRotateLeft = canRotateRight = true;
         _rotationStarted = false;
     }
 
@@ -289,8 +289,7 @@ public class Gestures : MonoBehaviour
 
         if (_palmRight.transform.localPosition.x < _palmRightStartPos.x - displacement)
         {
-            canRotateLeft = false;
-            canRotateRight = false;
+            
             Debug.Log("Left rotation");
             GameManager.instance.rotateTrack();
         }
@@ -327,8 +326,7 @@ public class Gestures : MonoBehaviour
         
         if (_palmLeft.transform.localPosition.x > _palmLeftStartPos.x + displacement)
         {
-            canRotateRight = false;
-            canRotateLeft = false;
+           
             Debug.Log("Right rotation");
             GameManager.instance.rotateTrack(false);
         }

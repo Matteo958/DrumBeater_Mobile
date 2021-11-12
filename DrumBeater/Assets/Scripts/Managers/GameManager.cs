@@ -226,7 +226,6 @@ public class GameManager : MonoBehaviour
             _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
             yield return null;
         }
-        _gestures.canRotateLeft = true;
-        _gestures.canRotateRight = true;
+        
     }
 }
