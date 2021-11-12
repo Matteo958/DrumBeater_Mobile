@@ -22,7 +22,7 @@ public class NoteSpawner : MonoBehaviour
     [Tooltip("The color of the note during auto perfect")]
     [SerializeField] private Material autoModeNoteMaterial;
 
-    private Dictionary<int, Remover> trackRemoversMap = new Dictionary<int, Remover>();
+    public Dictionary<int, Remover> trackRemoversMap = new Dictionary<int, Remover>();
     private List<int> notesPosition = new List<int>();
 
     // The number of seconds for each song beat
@@ -75,8 +75,6 @@ public class NoteSpawner : MonoBehaviour
 
     public void startSong(Song song)
     {
-
-        Debug.Log("Pippo");
         spawnIndex = 0;
 
         // Record the time when the music starts
@@ -95,7 +93,7 @@ public class NoteSpawner : MonoBehaviour
 
     void Update()
     {
-        if (!songHasStarted || spawnIndex == timeStamps.Count)
+        if (!songHasStarted)
             return;
 
         // Determine how many seconds since the song started
@@ -103,7 +101,9 @@ public class NoteSpawner : MonoBehaviour
         // Determine how many beats since the song started
         songPosInBeats = songPosition / secPerBeat;
 
-        Debug.Log(timeStamps.Count);
+        if (spawnIndex == timeStamps.Count)
+            return;
+
         // Check if there are still notes for the song and if the note has to be spawned yet
         if (songPosInBeats >= timeStamps[spawnIndex] - noteSpawnGapInBeats)
         {
@@ -114,7 +114,6 @@ public class NoteSpawner : MonoBehaviour
 
     private void spawnNote()
     {
-        Debug.Log("Spawn");
         spawnedNote = ObjectPool.instance.getPooledObj();
         if (spawnedNote != null)
         {
@@ -130,7 +129,7 @@ public class NoteSpawner : MonoBehaviour
             if (GameManager.instance.autoMode)
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
             else
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[1];
+                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
         }
         else
             Debug.LogError("Increase object pool number");
@@ -154,10 +153,8 @@ public class NoteSpawner : MonoBehaviour
 
     public void activateSolo()
     {
-        foreach (KeyValuePair<int, Remover> entry in trackRemoversMap)
-        {
-            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;
-        }
+        foreach (KeyValuePair<int, Remover> entry in trackRemoversMap)       
+            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;       
     }
 
     public void activateAutoMode()
@@ -168,5 +165,10 @@ public class NoteSpawner : MonoBehaviour
     public void deactivateAutoMode()
     {
         ObjectPool.instance.changeObjsMaterial(noteMaterials);
+    }
+
+    public Transform getButton(int id)
+    {
+        return trackRemoversMap[id].transform;
     }
 }

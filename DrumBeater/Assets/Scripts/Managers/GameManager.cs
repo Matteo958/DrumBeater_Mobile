@@ -5,7 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private Song _song = default;
-    [SerializeField] private Gestures _gestures = default;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
@@ -20,7 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera _mainCamera = default;
     [SerializeField] private Transform _fog = default;
 
-
+    [HideInInspector] public bool canRotate = true;
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool gamePaused = false;
@@ -29,6 +28,7 @@ public class GameManager : MonoBehaviour
     [Tooltip("Duration of the auto mode in seconds")]
     [SerializeField] private float autoModeTime = 10;
     [SerializeField] private int percentageToSolo = 90;
+    [SerializeField] private GameObject button;
 
     // Check if the level is already started
     public bool levelStarted = false;
@@ -52,9 +52,9 @@ public class GameManager : MonoBehaviour
             instance = this;
     }
 
-    public void StartSong()
+    public void startSong()
     {
-        Debug.Log("StartLevel");
+        button.SetActive(false);
         _song.GetDataFromMidi();
     }
 
@@ -109,17 +109,13 @@ public class GameManager : MonoBehaviour
             _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
         else
             _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
-
     }
 
     public void OnPressButtonTrack(Transform button)
     {
-        button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
-        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
-
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        
+        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
+                
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -129,10 +125,34 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
     }
 
+    public void OnPressButtonTrackNoVR(int buttonPressed)
+    {
+        Transform button = NoteSpawner.instance.getButton(buttonPressed);
+
+        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
+        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
+        
+        if (soloIsActive)
+        {
+            PointsManager.instance.finalBonusHit();
+            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        }
+        else if (button.childCount > 1 && button.GetChild(1).GetComponent<NoteController>().press())        
+            Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+        
+        //StartCoroutine(unpress(button));
+    }
+
     public void OnUnpressButtonTrack(Transform button)
     {
-        button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
+        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
     }
+
+    //private IEnumerator unpress(Transform button)
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
+    //}
 
     public void verifyTrack(int buttonID)
     {
@@ -146,6 +166,9 @@ public class GameManager : MonoBehaviour
 
     public void rotateTrack(bool clockwise = true)
     {
+        if (!canRotate)
+            return;
+
         if (clockwise)
         {
             if (activeTrack == 3)
@@ -216,6 +239,7 @@ public class GameManager : MonoBehaviour
 
     IEnumerator rotateTrackRoutine(float angle, float duration)
     {
+        canRotate = false;
         float startRotation = _tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;
         float t = 0;
@@ -226,6 +250,6 @@ public class GameManager : MonoBehaviour
             _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
             yield return null;
         }
-        
+        canRotate = true;
     }
 }

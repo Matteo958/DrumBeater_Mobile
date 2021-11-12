@@ -4,51 +4,54 @@ using UnityEngine;
 
 public class NoteController : MonoBehaviour
 {
+    private float _perfectGap = 0.2f;
+    private float _goodGap = 0.4f;
+    private float _okGap = 0.5f;
+    private float _fill = 0;
+
     [HideInInspector] public float bpmTime;
     [HideInInspector] public bool isLastNote = false;
-    [HideInInspector] public bool special = false;
-    private float fill = 0;
-    
+
     void Update()
     {
-        fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
+        _fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
 
-        transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), fill);
+        transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), _fill);
 
-        if (GameManager.instance.autoMode && fill >= 0.97)
+        if (GameManager.instance.autoMode && _fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
-        else if (fill > 1.1)
+        else if (_fill > 1.1)
             miss();
     }
 
     public bool press()
     {
-        if ((fill <= 1.1 && fill > 1.07) || (fill <= 0.9 && fill >= 0.7))
+        if (Mathf.Abs(1 - _fill) <= _perfectGap)
         {
-            hit(PointsManager.Precision.OK);
+            hit(PointsManager.Precision.PERFECT);
             return true;
-        }
-        else if ((fill <= 1.07 && fill > 1.03) || (fill >= 0.93 && fill < 0.97))
+        }   
+        else if (Mathf.Abs(1 - _fill) <= _goodGap)
         {
             hit(PointsManager.Precision.GOOD);
             return true;
         }
-        else if (fill <= 1.03 && fill >= 0.97)
+        else if (Mathf.Abs(1 - _fill) <= _okGap)
         {
-            hit(PointsManager.Precision.PERFECT);
+            hit(PointsManager.Precision.OK);
             return true;
         }
 
         return false;
     }
-    
+
     private void hit(PointsManager.Precision p)
     {
         PointsManager.instance.hitNote(p);
-        if (isLastNote)
-        {
+
+        if (isLastNote)        
             GameManager.instance.finishSong();
-        }
+
         transform.parent = null;
         gameObject.SetActive(false);
     }
@@ -57,9 +60,8 @@ public class NoteController : MonoBehaviour
     {
         PointsManager.instance.missNote();
         if (isLastNote)
-        {
             GameManager.instance.finishSong();
-        }
+
         transform.parent = null;
         gameObject.SetActive(false);
     }
@@ -67,7 +69,6 @@ public class NoteController : MonoBehaviour
     private void OnDisable()
     {
         isLastNote = false;
-        gameObject.transform.parent = null;
         transform.localScale = new Vector3(0.001f, 1, 0.001f);
     }
 }

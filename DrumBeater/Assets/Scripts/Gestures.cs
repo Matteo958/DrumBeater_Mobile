@@ -21,54 +21,20 @@ public class Gestures : MonoBehaviour
 
     [SerializeField] private float _dispForBaseRotation = default;
 
-    public int _powerUp1Active;
+    public int _powerUp1Active = 0;
 
-    public bool _canActivatePower1, _canActivatePower2, _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, canRotateRight, canRotateLeft, _rotationStarted;
+    public bool _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, _rotationStarted;
 
     private Vector3 _palmRightStartPos;
     private Vector3 _palmLeftStartPos;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        _powerUp1Active = 0;
-
-        _canActivatePower1 = _canActivatePower2 = true;
-        _handOpenLeft = _handOpenRight = false;
-        _fistLeft = _fistRight = false;
-        canRotateLeft = canRotateRight = true;
-        _rotationStarted = false;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetButtonDown("PowerUp1"))
-        {
-            _canActivatePower1 = true;
-        }else if (Input.GetButtonDown("PowerUp2"))
-        {
-            _canActivatePower2 = true;
-        }
-        else if (Input.GetButtonDown("RotateLeft"))
-        {
-            canRotateLeft = true;
-        }
-        else if (Input.GetButtonDown("RotateRight"))
-        {
-            canRotateRight = true;
-        }
-        
-    }
     #region Clapping PowerUp
     public void ActivateHandsLookingToEachOther()
     {
-        _powerUp1Active = _powerUp1Active == 2? _powerUp1Active:_powerUp1Active+1;
+        _powerUp1Active = _powerUp1Active == 2 ? _powerUp1Active : _powerUp1Active + 1;
 
-        if(_powerUp1Active == 2 && _canActivatePower1)
-        {
+        if (_powerUp1Active == 2 && GameManager.instance.hasAutoMode)
             StartCoroutine(CheckHandsClapping());
-        }
     }
 
     public void DeactivateHandsLookingToEachOther()
@@ -81,24 +47,14 @@ public class Gestures : MonoBehaviour
         while (_powerUp1Active == 2)
         {
             UpdatePalmPosHandsClapping(0.02f);
-
             yield return null;
         }
-
     }
 
     private void UpdatePalmPosHandsClapping(float destination)
     {
-
         if (Vector3.Distance(_palmLeft.localPosition, _palmRight.localPosition) < destination)
-        {
-            _canActivatePower1 = false;
-            //foreach (Transform cube in _cubeExample.transform)
-            //{
-            //    cube.GetComponent<ExplodeExample>().Explode();
-            //}
             GameManager.instance.activateAutoMode();
-        }
     }
 
     #endregion
@@ -107,14 +63,11 @@ public class Gestures : MonoBehaviour
     public void ActivateFistLeft()
     {
         _fistLeft = true;
-
-        if(_canActivatePower2)
-            StartCoroutine(CheckHandOpenLeft());
+        StartCoroutine(CheckHandOpenLeft());
     }
 
     public void DeactivateFistLeft()
     {
-        
         _handOpenLeft = false;
         _fistLeft = false;
     }
@@ -124,10 +77,8 @@ public class Gestures : MonoBehaviour
         while (!_handOpenLeft && _fistLeft)
         {
             UpdateHandOpenLeft();
-
             yield return new WaitForSeconds(0.01f);
         }
-        //Debug.Log("LeftHand Open");
     }
 
     private void UpdateHandOpenLeft()
@@ -145,12 +96,11 @@ public class Gestures : MonoBehaviour
 
     IEnumerator CheckFistLeft()
     {
-        while (_canActivatePower2 && _fistLeft)
+        while (_fistLeft)
         {
             UpdatePalmPosFistLeft();
             yield return new WaitForSeconds(0.01f);
         }
-        //Debug.Log("Left Fist");
     }
 
     private void UpdatePalmPosFistLeft()
@@ -164,18 +114,8 @@ public class Gestures : MonoBehaviour
             //Debug.Log("Power Activated by Left Hand");
             _handOpenLeft = false;
 
-            //foreach (Transform cube in _cubeExample.transform)
-            //{
-            //    cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //    cube.GetComponent<Collider>().enabled = false;
-            //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
-            //}
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
-            {
-                //Debug.Log("Power Activated by Right Hand");
                 GameManager.instance.pause();
-            }
-
         }
     }
     #endregion
@@ -185,13 +125,11 @@ public class Gestures : MonoBehaviour
     {
         _fistRight = true;
 
-        if (_canActivatePower2)
-            StartCoroutine(CheckHandOpenRight());
+        StartCoroutine(CheckHandOpenRight());
     }
 
     public void DeactivateFistRight()
     {
-        
         _handOpenRight = false;
         _fistRight = false;
     }
@@ -201,10 +139,8 @@ public class Gestures : MonoBehaviour
         while (!_handOpenRight && _fistRight)
         {
             UpdateHandOpenRight();
-
             yield return new WaitForSeconds(0.01f);
         }
-        //Debug.Log("RightHand Open");
     }
 
     // Richiamare in update in un if con condizioni !handopenright && canactivatepower2 per fare in modo che venga controllato continuamente e non solo con mano verso camera
@@ -223,12 +159,11 @@ public class Gestures : MonoBehaviour
 
     IEnumerator CheckFistRight()
     {
-        while (_canActivatePower2 && _fistRight)
+        while (_fistRight)
         {
             UpdatePalmPosFistRight();
             yield return new WaitForSeconds(0.01f);
         }
-        //Debug.Log("Right Fist");
     }
 
     private void UpdatePalmPosFistRight()
@@ -239,20 +174,9 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f))
         {
-            
             _handOpenRight = false;
-            //foreach (Transform cube in _cubeExample.transform)
-            //{
-            //    cube.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            //    cube.GetComponent<Collider>().enabled = false;
-            //    cube.GetComponent<ExplodeExample>().ReturnToStartPos();
-            //}
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
-            {
-                //Debug.Log("Power Activated by Right Hand");
                 GameManager.instance.pause();
-            }
-                
         }
     }
 
@@ -264,10 +188,8 @@ public class Gestures : MonoBehaviour
     {
         _palmRightStartPos = _palmRight.transform.localPosition;
         _rotationStarted = true;
-        if (canRotateLeft)
-        {
+        if (GameManager.instance.canRotate)
             StartCoroutine(RotateLeft());
-        }
     }
 
     public void DeactivateRotationLeft()
@@ -277,7 +199,7 @@ public class Gestures : MonoBehaviour
 
     IEnumerator RotateLeft()
     {
-        while (_rotationStarted && canRotateLeft)
+        while (_rotationStarted && GameManager.instance.canRotate)
         {
             UpdatePalmPosRightToLeft(_dispForBaseRotation);
             yield return new WaitForSeconds(0.01f);
@@ -289,7 +211,6 @@ public class Gestures : MonoBehaviour
 
         if (_palmRight.transform.localPosition.x < _palmRightStartPos.x - displacement)
         {
-            
             Debug.Log("Left rotation");
             GameManager.instance.rotateTrack();
         }
@@ -301,20 +222,18 @@ public class Gestures : MonoBehaviour
     {
         _palmLeftStartPos = _palmLeft.transform.localPosition;
         _rotationStarted = true;
-        if (canRotateRight)
-        {
+        if (GameManager.instance.canRotate)
             StartCoroutine(RotateRight());
-        }
     }
 
     public void DeactivateRotationRight()
     {
         _rotationStarted = false;
     }
-    
+
     IEnumerator RotateRight()
     {
-        while (_rotationStarted && canRotateRight)
+        while (_rotationStarted && GameManager.instance.canRotate)
         {
             UpdatePalmPosLeftToRight(_dispForBaseRotation);
             yield return new WaitForSeconds(0.01f);
@@ -323,10 +242,8 @@ public class Gestures : MonoBehaviour
 
     private void UpdatePalmPosLeftToRight(float displacement)
     {
-        
         if (_palmLeft.transform.localPosition.x > _palmLeftStartPos.x + displacement)
         {
-           
             Debug.Log("Right rotation");
             GameManager.instance.rotateTrack(false);
         }

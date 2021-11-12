@@ -213,7 +213,6 @@ public class AudioManager : MonoBehaviour
         }
 
         _jobTable.Remove(job.type);
-        Debug.Log("Job count: " + _jobTable.Count);
     }
 
     private AudioTrack GetAudioTrack(AudioType type, string job = "")

@@ -6,17 +6,16 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [SerializeField] private GameObject Video = default;
+    [SerializeField] private GameObject _video = default;
 
-
-    [SerializeField] private Text pointsText;
-    [SerializeField] private Text percentageText;
-    [SerializeField] private Text comboText;
-    [SerializeField] private Text maxComboText;
-    [SerializeField] private Text comboMultiplierText;
-    [SerializeField] private GameObject soloText;
-    [SerializeField] private GameObject pausePanel;
-    [SerializeField] private GameObject endGamePanel;
+    [SerializeField] private Text _pointsText;
+    [SerializeField] private Text _percentageText;
+    [SerializeField] private Text _comboText;
+    [SerializeField] private Text _maxComboText;
+    [SerializeField] private Text _comboMultiplierText;
+    [SerializeField] private GameObject _soloText;
+    [SerializeField] private GameObject _pausePanel;
+    [SerializeField] private GameObject _endGamePanel;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
@@ -44,7 +43,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _pauseContinueText = default;
     [SerializeField] private Transform _pauseRestartText = default;
     [SerializeField] private Transform _pauseReturnText = default;
-
 
     //[SerializeField] private float _panelsOffset = default;
 
@@ -216,7 +214,7 @@ public class UIManager : MonoBehaviour
 
         if (songs)
         {
-            Video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+            _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
             foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
             {
@@ -445,15 +443,13 @@ public class UIManager : MonoBehaviour
             switch (button)
             {
                 case "Play":
-                    //TO-DO --> Play song or tutorial
                     ClosePanel();
+                    //_tutorialChoice.GetComponent<Collider>().enabled = false;
                     _buttonCredits.GetComponent<Collider>().enabled = false;
                     _buttonQuit.GetComponent<Collider>().enabled = false;
                     _knobMusicSlider.GetComponent<Collider>().enabled = false;
                     _knobSFXSlider.GetComponent<Collider>().enabled = false;
                     _songChoice.GetComponent<Collider>().enabled = false;
-                    //_tutorialChoice.GetComponent<Collider>().enabled = false;
-
                     _tracks.gameObject.SetActive(true);
 
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
@@ -464,8 +460,6 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                     StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
                     StartCoroutine(TracksUp(-540.28f, 0.01f, 0.05f, true));
-
-                    //GameManager.instance.StartLevel();
 
                     break;
                 case "Quit":
@@ -485,7 +479,6 @@ public class UIManager : MonoBehaviour
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonQuit.GetComponent<Collider>().enabled = true;
                     break;
-
             }
         }
     }
@@ -566,8 +559,8 @@ public class UIManager : MonoBehaviour
 
     public void updateGameUI()
     {
-        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
-        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+        _comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        _comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
     public void showEndGame()
@@ -648,8 +641,6 @@ public class UIManager : MonoBehaviour
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
         StartCoroutine(FillButtonRangePause("Continue", text.GetChild(1)));
-
-
     }
 
     public void OnRestartText(Transform text)
@@ -660,10 +651,7 @@ public class UIManager : MonoBehaviour
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-
         StartCoroutine(FillButtonRangePause("Restart", text.GetChild(1)));
-
-
     }
 
     public void OnReturnText(Transform text)
@@ -674,10 +662,7 @@ public class UIManager : MonoBehaviour
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-
         StartCoroutine(FillButtonRangePause("Return", text.GetChild(1)));
-
-
     }
 
     public void OutContinueText(Transform text)
@@ -753,15 +738,14 @@ public class UIManager : MonoBehaviour
         if (levelStarted)
         {
             GameManager.instance.levelStarted = true;
-            GameManager.instance.StartSong();
+            GameManager.instance.startSong();
         }
         else
             GameManager.instance.gamePaused = false;
 
-        foreach (Transform a in _audience)
-        {
+        foreach (Transform a in _audience)        
             a.GetComponent<Audience>().Jump();
-        }
+
         Debug.Log("TRACKS UP");
     }
 
