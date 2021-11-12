@@ -49,7 +49,6 @@ public class PointsManager : MonoBehaviour
             Destroy(this.gameObject);
         else        
             instance = this;
-        
     }
 
     public void hitNote(Precision precision)
@@ -79,7 +78,6 @@ public class PointsManager : MonoBehaviour
         if(comboHits == autoModeHits)        
             GameManager.instance.hasAutoMode = true;
         
-
         UIManager.instance.updateGameUI();
     }
 

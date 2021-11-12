@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("Duration of the auto mode in seconds")]
     [SerializeField] private float autoModeTime = 10;
-    [SerializeField] private int comboHitsToBonus = 150;
+    [SerializeField] private int percentageToSolo = 90;
 
     // Check if the level is already started
     public bool levelStarted = false;
@@ -191,7 +191,9 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator finish()
     {
-        if (PointsManager.instance.maxComboHits > comboHitsToBonus)
+        PointsManager.instance.calculatePercentage();
+
+        if (PointsManager.instance.hitsPercentage > percentageToSolo)
         {
             _soloText.GetComponent<RotateText>().activate();
 
@@ -208,9 +210,7 @@ public class GameManager : MonoBehaviour
         rightTrack = 2;
         activeTrack = 2;
 
-
         NoteSpawner.instance.songHasStarted = false;
-        PointsManager.instance.calculatePercentage();
         UIManager.instance.showEndGame();
     }
 
