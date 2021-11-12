@@ -105,11 +105,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") >= 1.0)        
-            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);        
-        else        
+        if (_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") >= 1.0)
+            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
+        else
             _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
-        
+
     }
 
     public void OnPressButtonTrack(Transform button)
@@ -119,9 +119,7 @@ public class GameManager : MonoBehaviour
         _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
 
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-
-
-
+        
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -153,20 +151,32 @@ public class GameManager : MonoBehaviour
             if (activeTrack == 3)
                 return;
 
-            activeTrack = activeTrack == 1 ? 2 : 3;
-
-            //_tracks.transform.Rotate(0, -90, 0);   
-            StartCoroutine(RotateTrack(-90, 0.5f));
+            if (rightTrack == 3 && activeTrack == 1)
+            {
+                activeTrack = 3;
+                StartCoroutine(rotateTrackRoutine(-180, 0.5f));
+            }
+            else
+            {
+                activeTrack = activeTrack == 1 ? 2 : 3;
+                StartCoroutine(rotateTrackRoutine(-90, 0.5f));
+            }
         }
         else
         {
             if (activeTrack == 1)
                 return;
 
-            activeTrack = activeTrack == 3 ? 2 : 1;
-
-            //_tracks.transform.Rotate(0, 90, 0);
-            StartCoroutine(RotateTrack(90, 0.5f));
+            if (rightTrack == 1 && activeTrack == 3)
+            {
+                activeTrack = 1;
+                StartCoroutine(rotateTrackRoutine(180, 0.5f));
+            }
+            else
+            {
+                activeTrack = activeTrack == 3 ? 2 : 1;
+                StartCoroutine(rotateTrackRoutine(90, 0.5f));
+            }
 
         }
 
@@ -204,7 +214,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.showEndGame();
     }
 
-    IEnumerator RotateTrack(float angle, float duration)
+    IEnumerator rotateTrackRoutine(float angle, float duration)
     {
         float startRotation = _tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;

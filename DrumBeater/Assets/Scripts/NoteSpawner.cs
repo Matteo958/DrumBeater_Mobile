@@ -135,7 +135,8 @@ public class NoteSpawner : MonoBehaviour
         else
             Debug.LogError("Increase object pool number");
 
-        GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]);
+        if (spawnIndex < notesPosition.Count - 1)
+            GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]);
     }
 
     public void setNotes(Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)

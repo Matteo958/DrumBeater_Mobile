@@ -132,7 +132,7 @@ public class UIManager : MonoBehaviour
         _choiceStartScale = _songChoice.transform.localScale;
         _panelOpening = false;
 
-        _fogStartPos = _fog.position;
+        //_fogStartPos = _fog.position;
         //// Firstly all difficulties are set to 1 --> Medium
         //for (int i = 0; i < 3; i++)
         //{
@@ -900,8 +900,6 @@ public class UIManager : MonoBehaviour
 
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
-
-
                 }
                 else
                 {

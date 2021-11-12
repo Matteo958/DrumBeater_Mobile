@@ -8,9 +8,7 @@ public class NoteController : MonoBehaviour
     [HideInInspector] public bool isLastNote = false;
     [HideInInspector] public bool special = false;
     private float fill = 0;
-
-    public int ButtonID;
-
+    
     void Update()
     {
         fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
