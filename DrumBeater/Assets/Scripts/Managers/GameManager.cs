@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField] private Song _song = default;
+    [SerializeField] private Gestures _gestures = default;
+
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
@@ -48,12 +51,12 @@ public class GameManager : MonoBehaviour
         else
             instance = this;
     }
-    
-    //public void StartLevel()
-    //{
-    //    Debug.Log("StartLevel");
-    //    StartCoroutine(UnpauseDirLightColor(_startDirLightColor, _fog.position, _fogStartPos));
-    //}
+
+    public void StartSong()
+    {
+        Debug.Log("StartLevel");
+        _song.GetDataFromMidi();
+    }
 
     //public void LevelFinished()
     //{
@@ -117,6 +120,8 @@ public class GameManager : MonoBehaviour
 
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
 
+
+
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -150,7 +155,8 @@ public class GameManager : MonoBehaviour
 
             activeTrack = activeTrack == 1 ? 2 : 3;
 
-            _tracks.transform.Rotate(0, -90, 0);            
+            //_tracks.transform.Rotate(0, -90, 0);   
+            StartCoroutine(RotateTrack(-90, 0.5f));
         }
         else
         {
@@ -159,7 +165,9 @@ public class GameManager : MonoBehaviour
 
             activeTrack = activeTrack == 3 ? 2 : 1;
 
-            _tracks.transform.Rotate(0, 90, 0);
+            //_tracks.transform.Rotate(0, 90, 0);
+            StartCoroutine(RotateTrack(90, 0.5f));
+
         }
 
         if (rightTrack == activeTrack)
@@ -194,5 +202,21 @@ public class GameManager : MonoBehaviour
         NoteSpawner.instance.songHasStarted = false;
         PointsManager.instance.calculatePercentage();
         UIManager.instance.showEndGame();
+    }
+
+    IEnumerator RotateTrack(float angle, float duration)
+    {
+        float startRotation = _tracks.transform.eulerAngles.y;
+        float endRotation = startRotation + angle;
+        float t = 0;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            float yRotation = Mathf.Lerp(startRotation, endRotation, t / duration) % 360.0f;
+            _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
+            yield return null;
+        }
+        _gestures.canRotateLeft = true;
+        _gestures.canRotateRight = true;
     }
 }

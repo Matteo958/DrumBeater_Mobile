@@ -75,6 +75,8 @@ public class NoteSpawner : MonoBehaviour
 
     public void startSong(Song song)
     {
+
+        Debug.Log("Pippo");
         spawnIndex = 0;
 
         // Record the time when the music starts
@@ -101,6 +103,7 @@ public class NoteSpawner : MonoBehaviour
         // Determine how many beats since the song started
         songPosInBeats = songPosition / secPerBeat;
 
+        Debug.Log(timeStamps.Count);
         // Check if there are still notes for the song and if the note has to be spawned yet
         if (songPosInBeats >= timeStamps[spawnIndex] - noteSpawnGapInBeats)
         {
@@ -111,6 +114,7 @@ public class NoteSpawner : MonoBehaviour
 
     private void spawnNote()
     {
+        Debug.Log("Spawn");
         spawnedNote = ObjectPool.instance.getPooledObj();
         if (spawnedNote != null)
         {
@@ -126,7 +130,7 @@ public class NoteSpawner : MonoBehaviour
             if (GameManager.instance.autoMode)
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
             else
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex]];
+                spawnedNote.GetComponent<Renderer>().material = noteMaterials[1];
         }
         else
             Debug.LogError("Increase object pool number");

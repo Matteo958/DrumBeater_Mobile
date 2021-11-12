@@ -9,6 +9,8 @@ public class NoteController : MonoBehaviour
     [HideInInspector] public bool special = false;
     private float fill = 0;
 
+    public int ButtonID;
+
     void Update()
     {
         fill = (NoteSpawner.instance.noteSpawnGapInBeats - (bpmTime - NoteSpawner.instance.songPosInBeats)) / NoteSpawner.instance.noteSpawnGapInBeats;
@@ -17,13 +19,13 @@ public class NoteController : MonoBehaviour
 
         if (GameManager.instance.autoMode && fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
-        else if (fill > 1)
+        else if (fill > 1.1)
             miss();
     }
 
     public bool press()
     {
-        if ((fill <= 1.1 && fill > 1.07) || (fill >= 0.9 && fill < 0.3))
+        if ((fill <= 1.1 && fill > 1.07) || (fill <= 0.9 && fill >= 0.7))
         {
             hit(PointsManager.Precision.OK);
             return true;

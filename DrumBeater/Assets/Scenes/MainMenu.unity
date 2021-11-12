@@ -1574,6 +1574,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e670cd37e99946242bccb957941632b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Video: {fileID: 0}
   pointsText: {fileID: 0}
   percentageText: {fileID: 0}
   comboText: {fileID: 0}
@@ -1591,19 +1592,31 @@ MonoBehaviour:
   _panelQuit: {fileID: 1736440084}
   _songChoice: {fileID: 1962685084}
   _tutorialChoice: {fileID: 622648197}
+  _songChoiceStartPos: {fileID: 0}
+  _tutorialChoiceStartPos: {fileID: 0}
   _buttonQuit: {fileID: 0}
   _buttonCredits: {fileID: 0}
   _knobMusicSlider: {fileID: 0}
   _knobSFXSlider: {fileID: 0}
   _starterAnchor: {fileID: 0}
-  _panelsOffset: 1.2
+  _audience: {fileID: 0}
+  _pauseContinueText: {fileID: 0}
+  _pauseRestartText: {fileID: 0}
+  _pauseReturnText: {fileID: 0}
   _pauseContainer: {fileID: 0}
   _tracks: {fileID: 0}
-  _manhole: {fileID: 0}
   _console: {fileID: 0}
+  _manhole: {fileID: 0}
+  _manhole2: {fileID: 0}
+  _manhole3: {fileID: 0}
+  _dirLight: {fileID: 0}
+  _pauseDirLightColor: {r: 0, g: 0, b: 0, a: 0}
+  _songDirLightColor: {r: 0, g: 0, b: 0, a: 0}
+  _mainCamera: {fileID: 0}
+  _fog: {fileID: 0}
+  _halo: {fileID: 0}
   Option: 0
-  SongToPlay: 0000000000000000
-  TutorialToPlay: 0
+  Difficulty: 0
 --- !u!4 &113547302
 Transform:
   m_ObjectHideFlags: 0

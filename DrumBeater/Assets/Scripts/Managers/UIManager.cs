@@ -566,16 +566,16 @@ public class UIManager : MonoBehaviour
 
     public void updateGameUI()
     {
-        comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
-        comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
+        //comboText.text = "COMBO\n" + PointsManager.instance.comboHits;
+        //comboMultiplierText.text = "x " + PointsManager.instance.comboMultiplier;
     }
 
     public void showEndGame()
     {
-        pointsText.text = "POINTS: " + PointsManager.instance.points;
-        percentageText.text = PointsManager.instance.hitsPercentage + "%";
-        maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
-        endGamePanel.SetActive(true);
+        //pointsText.text = "POINTS: " + PointsManager.instance.points;
+        //percentageText.text = PointsManager.instance.hitsPercentage + "%";
+        //maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
+        //endGamePanel.SetActive(true);
     }
 
     public void showPausePanel()
@@ -751,7 +751,10 @@ public class UIManager : MonoBehaviour
         _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
 
         if (levelStarted)
+        {
             GameManager.instance.levelStarted = true;
+            //GameManager.instance.StartSong();
+        }
         else
             GameManager.instance.gamePaused = false;
 
@@ -978,8 +981,8 @@ public class UIManager : MonoBehaviour
     }
 
     public void showHalo(bool left = false) {
-        if(!_showingHalo)
-            StartCoroutine(showHaloRoutine(left));
+        //if(!_showingHalo)
+        //    StartCoroutine(showHaloRoutine(left));
     }
 
     private IEnumerator showHaloRoutine(bool left)
@@ -1006,12 +1009,12 @@ public class UIManager : MonoBehaviour
 
     public void hideHalo()
     {
-        _showingHalo = false;
-        float t = 0;
+        //_showingHalo = false;
+        //float t = 0;
 
-        Color tempColor = _halo.color;
-        tempColor.a = 0;
-        _halo.color = tempColor;
+        //Color tempColor = _halo.color;
+        //tempColor.a = 0;
+        //_halo.color = tempColor;
     }
 }
 

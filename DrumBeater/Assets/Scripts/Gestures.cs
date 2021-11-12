@@ -23,7 +23,7 @@ public class Gestures : MonoBehaviour
 
     public int _powerUp1Active;
 
-    public bool _canActivatePower1, _canActivatePower2, _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, _canRotateRight, _canRotateLeft, _rotationStarted;
+    public bool _canActivatePower1, _canActivatePower2, _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, canRotateRight, canRotateLeft, _rotationStarted;
 
     private Vector3 _palmRightStartPos;
     private Vector3 _palmLeftStartPos;
@@ -36,7 +36,7 @@ public class Gestures : MonoBehaviour
         _canActivatePower1 = _canActivatePower2 = true;
         _handOpenLeft = _handOpenRight = false;
         _fistLeft = _fistRight = false;
-        _canRotateLeft = _canRotateRight = false;
+        canRotateLeft = canRotateRight = false;
         _rotationStarted = false;
     }
 
@@ -52,11 +52,11 @@ public class Gestures : MonoBehaviour
         }
         else if (Input.GetButtonDown("RotateLeft"))
         {
-            _canRotateLeft = true;
+            canRotateLeft = true;
         }
         else if (Input.GetButtonDown("RotateRight"))
         {
-            _canRotateRight = true;
+            canRotateRight = true;
         }
         
     }
@@ -264,7 +264,7 @@ public class Gestures : MonoBehaviour
     {
         _palmRightStartPos = _palmRight.transform.localPosition;
         _rotationStarted = true;
-        if (_canRotateLeft)
+        if (canRotateLeft)
         {
             StartCoroutine(RotateLeft());
         }
@@ -277,7 +277,7 @@ public class Gestures : MonoBehaviour
 
     IEnumerator RotateLeft()
     {
-        while (_rotationStarted && _canRotateLeft)
+        while (_rotationStarted && canRotateLeft)
         {
             UpdatePalmPosRightToLeft(_dispForBaseRotation);
             yield return new WaitForSeconds(0.01f);
@@ -289,7 +289,8 @@ public class Gestures : MonoBehaviour
 
         if (_palmRight.transform.localPosition.x < _palmRightStartPos.x - displacement)
         {
-            _canRotateLeft = false;
+            canRotateLeft = false;
+            canRotateRight = false;
             Debug.Log("Left rotation");
             GameManager.instance.rotateTrack();
         }
@@ -301,7 +302,7 @@ public class Gestures : MonoBehaviour
     {
         _palmLeftStartPos = _palmLeft.transform.localPosition;
         _rotationStarted = true;
-        if (_canRotateRight)
+        if (canRotateRight)
         {
             StartCoroutine(RotateRight());
         }
@@ -314,7 +315,7 @@ public class Gestures : MonoBehaviour
     
     IEnumerator RotateRight()
     {
-        while (_rotationStarted && _canRotateRight)
+        while (_rotationStarted && canRotateRight)
         {
             UpdatePalmPosLeftToRight(_dispForBaseRotation);
             yield return new WaitForSeconds(0.01f);
@@ -326,7 +327,8 @@ public class Gestures : MonoBehaviour
         
         if (_palmLeft.transform.localPosition.x > _palmLeftStartPos.x + displacement)
         {
-            _canRotateRight = false;
+            canRotateRight = false;
+            canRotateLeft = false;
             Debug.Log("Right rotation");
             GameManager.instance.rotateTrack(false);
         }

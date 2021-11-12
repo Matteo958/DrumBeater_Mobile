@@ -36,7 +36,7 @@ public class Song : MonoBehaviour
     {
         var notes = midiFile.GetNotes();
         Note[] array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
-        Debug.Log(array.Length);
+        Debug.Log("Array: " + array.Length);
         notes.CopyTo(array, 0);
 
         NoteSpawner.instance.setNotes(array,bpm);
@@ -45,6 +45,7 @@ public class Song : MonoBehaviour
     }
     public void StartSong()
     {
+        Debug.Log("Start");
         NoteSpawner.instance.startSong(this);
     }
     public static float GetAudioSourceTime()
