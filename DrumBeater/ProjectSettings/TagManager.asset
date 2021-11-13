@@ -27,7 +27,7 @@ TagManager:
   - Floor
   - PowerUpIcosphere
   - SoloText
-  - 
+  - Panel
   - 
   - 
   - 
@@ -50,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: P
+    uniqueID: 1503079555
     locked: 0

@@ -1574,15 +1574,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e670cd37e99946242bccb957941632b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Video: {fileID: 0}
-  pointsText: {fileID: 0}
-  percentageText: {fileID: 0}
-  comboText: {fileID: 0}
-  maxComboText: {fileID: 0}
-  comboMultiplierText: {fileID: 0}
-  soloText: {fileID: 0}
-  pausePanel: {fileID: 0}
-  endGamePanel: {fileID: 0}
+  _video: {fileID: 0}
+  _pointsText: {fileID: 0}
+  _percentageText: {fileID: 0}
+  _comboText: {fileID: 0}
+  _maxComboText: {fileID: 0}
+  _comboMultiplierText: {fileID: 0}
+  _soloText: {fileID: 0}
+  _pausePanel: {fileID: 0}
+  _endGamePanel: {fileID: 0}
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
@@ -13130,14 +13130,10 @@ MonoBehaviour:
   _pinkyRightEnd: {fileID: 606131229}
   _dispForBaseRotation: 0.1
   _powerUp1Active: 0
-  _canActivatePower1: 0
-  _canActivatePower2: 0
   _handOpenLeft: 0
   _handOpenRight: 0
   _fistLeft: 0
   _fistRight: 0
-  _canRotateRight: 0
-  _canRotateLeft: 0
   _rotationStarted: 0
 --- !u!1 &1148905310 stripped
 GameObject:

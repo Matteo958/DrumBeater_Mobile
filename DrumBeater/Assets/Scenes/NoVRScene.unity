@@ -30592,15 +30592,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e670cd37e99946242bccb957941632b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Video: {fileID: 1648401083}
-  pointsText: {fileID: 0}
-  percentageText: {fileID: 0}
-  comboText: {fileID: 1004782181}
-  maxComboText: {fileID: 0}
-  comboMultiplierText: {fileID: 182553360}
-  soloText: {fileID: 0}
-  pausePanel: {fileID: 0}
-  endGamePanel: {fileID: 0}
+  _video: {fileID: 0}
+  _pointsText: {fileID: 0}
+  _percentageText: {fileID: 0}
+  _comboText: {fileID: 0}
+  _maxComboText: {fileID: 0}
+  _comboMultiplierText: {fileID: 0}
+  _soloText: {fileID: 0}
+  _pausePanel: {fileID: 0}
+  _endGamePanel: {fileID: 0}
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
@@ -32968,7 +32968,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129980081}
   m_LocalRotation: {x: -0.3954091, y: 0.58621806, z: 0.3954091, w: 0.58621806}
-  m_LocalPosition: {x: 1.7, y: 0.055, z: -0}
+  m_LocalPosition: {x: 1.65, y: 0.055, z: -0}
   m_LocalScale: {x: 0.7, y: 0.7, z: 0.7}
   m_Children:
   - {fileID: 1151132330}
@@ -33001,8 +33001,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1137255606}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -960, y: -540.28, z: -5}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -960, y: -540.32, z: -5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 851402497}
@@ -33010,7 +33010,7 @@ Transform:
   - {fileID: 1129980082}
   m_Father: {fileID: 1869415393}
   m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!4 &1140039927 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3516563088188480402, guid: 27b403835085e2444bffc7e78576142c, type: 3}
@@ -104080,7 +104080,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _song: {fileID: 2075764178}
-  _gestures: {fileID: 0}
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
@@ -104091,6 +104090,7 @@ MonoBehaviour:
   _pauseDirLightColor: {r: 0.3019608, g: 0.3010858, b: 0.3010858, a: 1}
   _mainCamera: {fileID: 0}
   _fog: {fileID: 694975326}
+  canRotate: 1
   autoMode: 0
   hasAutoMode: 0
   gamePaused: 0

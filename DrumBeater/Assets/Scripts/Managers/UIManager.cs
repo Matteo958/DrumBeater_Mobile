@@ -444,12 +444,14 @@ public class UIManager : MonoBehaviour
             {
                 case "Play":
                     ClosePanel();
-                    //_tutorialChoice.GetComponent<Collider>().enabled = false;
+                    
                     _buttonCredits.GetComponent<Collider>().enabled = false;
                     _buttonQuit.GetComponent<Collider>().enabled = false;
                     _knobMusicSlider.GetComponent<Collider>().enabled = false;
                     _knobSFXSlider.GetComponent<Collider>().enabled = false;
                     _songChoice.GetComponent<Collider>().enabled = false;
+                    //_tutorialChoice.GetComponent<Collider>().enabled = false;
+
                     _tracks.gameObject.SetActive(true);
 
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
@@ -459,7 +461,7 @@ public class UIManager : MonoBehaviour
                     _isDarkening = false;
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                     StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
-                    StartCoroutine(TracksUp(-540.28f, 0.01f, 0.05f, true));
+                    StartCoroutine(TracksUp(-540.33f, 0.01f, 0.05f, true));
 
                     break;
                 case "Quit":
@@ -582,7 +584,7 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
         StartCoroutine(TracksDown(-542.5f, 0.01f, 0.1f));
-        StartCoroutine(PauseContainerUp(-540.28f, 0.01f, 0.1f));
+        StartCoroutine(PauseContainerUp(-540.27f, 0.01f, 0.1f));
 
     }
 
@@ -601,7 +603,7 @@ public class UIManager : MonoBehaviour
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
-                StartCoroutine(TracksUp(-540.28f, 0.01f, 0.1f, false));
+                StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, false));
 
                 break;
             case PauseOption.Restart:
@@ -611,20 +613,14 @@ public class UIManager : MonoBehaviour
 
                 GameManager.instance.levelStarted = false;
                 GameManager.instance.gamePaused = false;
-                _choice.GetComponent<AnchorableBehaviour>().Detach();
 
-                _choice.GetComponent<Collider>().enabled = true;
+                _choice.GetComponent<AnchorableBehaviour>().Detach();
                 _choice.position = _choiceStartPos.position;
                 _choice.GetComponent<AnchorableBehaviour>().TryAttach();
-                _buttonCredits.GetComponent<Collider>().enabled = true;
-                _buttonQuit.GetComponent<Collider>().enabled = true;
-                _knobMusicSlider.GetComponent<Collider>().enabled = true;
-                _knobSFXSlider.GetComponent<Collider>().enabled = true;
-
 
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
-                StartCoroutine(ConsoleUp(-540.4f, 0.01f, 0.1f));
+                StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
 
                 break;
         }
@@ -706,6 +702,12 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+
+        _choice.GetComponent<Collider>().enabled = true;
+        _buttonCredits.GetComponent<Collider>().enabled = true;
+        _buttonQuit.GetComponent<Collider>().enabled = true;
+        _knobMusicSlider.GetComponent<Collider>().enabled = true;
+        _knobSFXSlider.GetComponent<Collider>().enabled = true;
     }
 
     IEnumerator ConsoleDown(float endPosY, float threshold, float speed)

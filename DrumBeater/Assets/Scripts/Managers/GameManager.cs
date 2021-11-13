@@ -54,7 +54,7 @@ public class GameManager : MonoBehaviour
 
     public void startSong()
     {
-        button.SetActive(false);
+        //button.SetActive(false);
         _song.GetDataFromMidi();
     }
 
