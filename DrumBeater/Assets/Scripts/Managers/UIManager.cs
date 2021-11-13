@@ -21,6 +21,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
 
+    [SerializeField] private GameObject _powerUpIcosphere = default;
     [SerializeField] private GameObject _panelSongs = default;
     [SerializeField] private GameObject _panelTutorial = default;
     [SerializeField] private GameObject _panelCredits = default;
@@ -137,6 +138,14 @@ public class UIManager : MonoBehaviour
         //_panelStartScaleX = _panelQuit.transform.localScale.x;
         _panelQuit.SetActive(false);
         _panelCredits.SetActive(false);
+    }
+
+    public void fillIcosphere(float fill)
+    {
+        _powerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", fill);
+
+        if (fill == 1)
+            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
     }
 
 

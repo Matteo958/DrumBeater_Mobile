@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
 
-    [SerializeField] private GameObject _PowerUpIcosphere = default;
     [SerializeField] private GameObject _tracks = default;
     [SerializeField] private GameObject _soloText = default;
 
@@ -124,19 +123,10 @@ public class GameManager : MonoBehaviour
 
         UIManager.instance.closePausePanel();
     }
-
-    private void Update()
-    {
-        if (_PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") >= 1.0)
-            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
-        else
-            _PowerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
-    }
-
+    
     public void OnPressButtonTrack(Transform button)
     {
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
 
         if (soloIsActive)
         {
@@ -152,7 +142,6 @@ public class GameManager : MonoBehaviour
         Transform button = NoteSpawner.instance.getButton(buttonPressed);
 
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-        _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
 
         if (soloIsActive)
         {
@@ -163,7 +152,7 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
 
         //StartCoroutine(unpress(button));
-    }
+    }   
 
     public void OnUnpressButtonTrack(Transform button)
     {
