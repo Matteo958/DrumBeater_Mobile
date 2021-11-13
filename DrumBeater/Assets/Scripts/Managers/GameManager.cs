@@ -31,6 +31,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float autoModeTime = 10;
     [SerializeField] private int percentageToSolo = 90;
     [SerializeField] private GameObject button;
+    [SerializeField] private GameObject button2;
+    [SerializeField] private GameObject button3;
 
     // Check if the level is already started
     public bool levelStarted = false;
@@ -53,7 +55,6 @@ public class GameManager : MonoBehaviour
 
     public void startSong()
     {
-        //button.SetActive(false);
         switch (difficulty)
         {
             case 0:
@@ -71,16 +72,25 @@ public class GameManager : MonoBehaviour
     public void startEasy()
     {
         _songEasy.GetDataFromMidi();
+        button.SetActive(false);
+        button2.SetActive(false);
+        button3.SetActive(false);
     }
 
     public void startMedium()
     {
         _songMedium.GetDataFromMidi();
+        button.SetActive(false);
+        button2.SetActive(false);
+        button3.SetActive(false);
     }
 
     public void startExpert()
     {
         _songExpert.GetDataFromMidi();
+        button.SetActive(false);
+        button2.SetActive(false);
+        button3.SetActive(false);
     }
 
     //public void LevelFinished()
@@ -110,6 +120,9 @@ public class GameManager : MonoBehaviour
 
     public void pause()
     {
+        if (!canRotate)
+            return;
+
         AudioListener.pause = true;
         gamePaused = true;
 

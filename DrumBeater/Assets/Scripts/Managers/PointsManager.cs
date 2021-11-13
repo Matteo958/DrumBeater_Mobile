@@ -111,19 +111,4 @@ public class PointsManager : MonoBehaviour
         comboMultiplier = 1;
         maxComboHits = 0;
     }
-
-    //public void setEasy()
-    //{
-    //    difficultMultiplier = easyMultiplier;
-    //}
-
-    //public void setMedium()
-    //{
-    //    difficultMultiplier = normalMultiplier;
-    //}
-
-    //public void setHard()
-    //{
-    //    difficultMultiplier = hardMultiplier;
-    //}
 }

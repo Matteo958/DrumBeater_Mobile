@@ -18,7 +18,7 @@ public class ForceField : MonoBehaviour
         while (transform.localScale.x < (endScale - 0.1f))
         {
             transform.localScale = Vector3.Lerp(transform.localScale, new Vector3(endScale, endScale, endScale), t);
-            t += Time.deltaTime * 0.05f;
+            t += Time.deltaTime * 0.1f;
             yield return null;
         }
 
@@ -36,11 +36,5 @@ public class ForceField : MonoBehaviour
         }
 
         Destroy(this.gameObject);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

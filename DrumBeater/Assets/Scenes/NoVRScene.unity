@@ -30826,6 +30826,7 @@ MonoBehaviour:
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
+  _powerUpIcosphere: {fileID: 919132148429521920}
   _panelSongs: {fileID: 1072829966}
   _panelTutorial: {fileID: 1634207298}
   _panelCredits: {fileID: 966479229}
@@ -104517,7 +104518,6 @@ MonoBehaviour:
   _buttonTrackNotPressed: {fileID: 2100000, guid: 454522ff55a42ba4f9788b2524238ad7, type: 2}
   _buttonTrackPressed: {fileID: 2100000, guid: 2d0e6d3a5303f9d47acde1fac10f3532, type: 2}
   _forceField: {fileID: 2066758562273144531, guid: 239e7667977ea1a4bbe6197b832a0d6b, type: 3}
-  _PowerUpIcosphere: {fileID: 919132148429521920}
   _tracks: {fileID: 1137255606}
   _soloText: {fileID: 0}
   _dirLight: {fileID: 705507994}
@@ -104533,6 +104533,8 @@ MonoBehaviour:
   autoModeTime: 15
   percentageToSolo: 90
   button: {fileID: 440385077}
+  button2: {fileID: 795158870}
+  button3: {fileID: 1709524929}
   levelStarted: 0
 --- !u!4 &1830810048
 Transform:

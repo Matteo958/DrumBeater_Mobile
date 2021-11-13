@@ -593,7 +593,6 @@ public class UIManager : MonoBehaviour
     {
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
 
-
         switch (Option)
         {
             case PauseOption.Continue:
@@ -748,8 +747,6 @@ public class UIManager : MonoBehaviour
 
         foreach (Transform a in _audience)        
             a.GetComponent<Audience>().Jump();
-
-        Debug.Log("TRACKS UP");
     }
 
     IEnumerator TracksDown(float endPosY, float threshold, float speed)
@@ -815,10 +812,8 @@ public class UIManager : MonoBehaviour
             choice.GetComponent<Rigidbody>().useGravity = false;
             choice.GetComponent<Rigidbody>().isKinematic = true;
             choice.GetComponent<Collider>().enabled = false;
-            if (choice.tag == "SongChoice")
-            {
-                choice.position = _songChoiceStartPos.position;
-            }
+            if (choice.tag == "SongChoice")            
+                choice.position = _songChoiceStartPos.position;            
             else
                 choice.position = _tutorialChoiceStartPos.position;
 
@@ -844,10 +839,8 @@ public class UIManager : MonoBehaviour
             choice.GetComponent<Rigidbody>().useGravity = false;
             choice.GetComponent<Rigidbody>().isKinematic = true;
             choice.GetComponent<Collider>().enabled = false;
-            if (choice.tag == "SongChoice")
-            {
-                choice.position = _songChoiceStartPos.position;
-            }
+            if (choice.tag == "SongChoice")            
+                choice.position = _songChoiceStartPos.position;            
             else
                 choice.position = _tutorialChoiceStartPos.position;
 
@@ -884,7 +877,6 @@ public class UIManager : MonoBehaviour
                 }
                 else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
                 {
-
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
                 }
@@ -911,8 +903,6 @@ public class UIManager : MonoBehaviour
                 {
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
-
-
                 }
                 else
                 {
@@ -940,14 +930,12 @@ public class UIManager : MonoBehaviour
 
     public void OnPressButtonCredits()
     {
-
         _panelContainerActive = _panelCredits;
         _panelOpening = true;
         _panelCredits.SetActive(true);
         _buttonQuit.GetComponent<Collider>().enabled = false;
         _songChoice.GetComponent<Collider>().enabled = false;
         _tutorialChoice.GetComponent<Collider>().enabled = false;
-
 
         StartCoroutine(open(_panelCredits, false));
     }
@@ -1002,4 +990,3 @@ public class UIManager : MonoBehaviour
         _halo.color = tempColor;
     }
 }
-
