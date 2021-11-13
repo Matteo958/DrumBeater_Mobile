@@ -138,14 +138,14 @@ public class NoteSpawner : MonoBehaviour
             GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]);
     }
 
-    public void setNotes(Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)
+    public void setNotes(TempoMap tempo, Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)
     {
         // Calculate the number of seconds in each beat
         secPerBeat = 60f / bpm;
 
         foreach (Note note in array)
         {
-            MetricTimeSpan metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, Song.midiFile.GetTempoMap());
+            MetricTimeSpan metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempo);
             timeStamps.Add((metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + metricTimeSpan.Milliseconds / 1000f) / secPerBeat);
             notesPosition.Add((int)note.NoteName);
         }

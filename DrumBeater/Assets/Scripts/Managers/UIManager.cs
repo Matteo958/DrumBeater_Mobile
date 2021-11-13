@@ -83,8 +83,6 @@ public class UIManager : MonoBehaviour
 
     public PauseOption Option;
 
-
-
     // Check if player is pressing button play
     private bool _buttonPressed;
 
@@ -108,8 +106,6 @@ public class UIManager : MonoBehaviour
     //private GameObject _panelContainerActive;
     //// Panel song or panel tutorial that is in front of camera
     //private Transform _panelActive;
-
-    public int Difficulty;
 
     private void Awake()
     {
@@ -136,8 +132,6 @@ public class UIManager : MonoBehaviour
         //{
         //    Songs[i] = 1;
         //}
-
-        Difficulty = 1;
 
         _buttonPressed = false;
         //_panelStartScaleX = _panelQuit.transform.localScale.x;
@@ -383,8 +377,6 @@ public class UIManager : MonoBehaviour
         {
             t.GetComponent<Collider>().enabled = true;
         }
-
-
         _panelSongs.transform.GetChild(0).transform.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
 
@@ -537,13 +529,13 @@ public class UIManager : MonoBehaviour
         switch (button.tag)
         {
             case "Easy":
-                Difficulty = 0;
+                GameManager.instance.difficulty = 0;
                 break;
             case "Medium":
-                Difficulty = 1;
+                GameManager.instance.difficulty = 1;
                 break;
             case "Hard":
-                Difficulty = 2;
+                GameManager.instance.difficulty = 2;
                 break;
         }
 

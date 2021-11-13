@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private Song _song = default;
+    [SerializeField] private Song _songEasy = default;
+    [SerializeField] private Song _songMedium = default;
+    [SerializeField] private Song _songExpert = default;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
@@ -24,6 +26,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool gamePaused = false;
     [HideInInspector] public int activeTrack = 2;
+    [HideInInspector] public int difficulty;
 
     [Tooltip("Duration of the auto mode in seconds")]
     [SerializeField] private float autoModeTime = 10;
@@ -39,9 +42,6 @@ public class GameManager : MonoBehaviour
     private Color _startDirLightColor;
     private Vector3 _fogStartPos;
 
-    private bool _isPausing;
-
-
     public static GameManager instance { get; private set; }
 
     private void Awake()
@@ -55,7 +55,33 @@ public class GameManager : MonoBehaviour
     public void startSong()
     {
         //button.SetActive(false);
-        _song.GetDataFromMidi();
+        switch (difficulty)
+        {
+            case 0:
+                _songEasy.GetDataFromMidi();
+                break;
+            case 1:
+                _songMedium.GetDataFromMidi();
+                break;
+            case 2:
+                _songExpert.GetDataFromMidi();
+                break;
+        }
+    }
+
+    public void startEasy()
+    {
+        _songEasy.GetDataFromMidi();
+    }
+
+    public void startMedium()
+    {
+        _songMedium.GetDataFromMidi();
+    }
+
+    public void startExpert()
+    {
+        _songExpert.GetDataFromMidi();
     }
 
     //public void LevelFinished()
@@ -85,20 +111,16 @@ public class GameManager : MonoBehaviour
 
     public void pause()
     {
-        //Time.timeScale = 0;
-
         AudioListener.pause = true;
         gamePaused = true;
-        _isPausing = true;
 
         UIManager.instance.showPausePanel();
     }
 
     public void unpause()
     {
-        //Time.timeScale = 1;
-
-        _isPausing = false;
+        AudioListener.pause = false;
+        gamePaused = false;
 
         UIManager.instance.closePausePanel();
     }
@@ -115,7 +137,7 @@ public class GameManager : MonoBehaviour
     {
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
         _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
-                
+
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -131,15 +153,15 @@ public class GameManager : MonoBehaviour
 
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
         _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", _PowerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.GetFloat("Fill") + 0.0075f);
-        
+
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
         }
-        else if (button.childCount > 1 && button.GetChild(1).GetComponent<NoteController>().press())        
+        else if (button.childCount > 1 && button.GetChild(1).GetComponent<NoteController>().press())
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
-        
+
         //StartCoroutine(unpress(button));
     }
 
