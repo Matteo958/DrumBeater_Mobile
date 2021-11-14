@@ -24,6 +24,7 @@ public class Song : MonoBehaviour
 
     public void GetDataFromMidi()
     {
+        Debug.Log(midiFile != null);
         var notes = midiFile.GetNotes();
         Note[] array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
         notes.CopyTo(array, 0);

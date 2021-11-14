@@ -42,24 +42,27 @@ public class ObjectPool : MonoBehaviour
         return null;
     }
 
-    public void changeObjsMaterial(Material mat)
-    {
-        for (int i = 0; i < amountToPool; i++)
-        {
-            if (pooledObjs[i].activeInHierarchy)
-                pooledObjs[i].GetComponent<Renderer>().material = mat;
-        }
-    }
-
-    public void changeObjsMaterial(List<Material> mat)
+    public void activateAuto(Material mat)
     {
         for (int i = 0; i < amountToPool; i++)
         {
             if (pooledObjs[i].activeInHierarchy)
             {
-                Random.InitState(System.DateTime.Now.Millisecond);
-                pooledObjs[i].GetComponent<Renderer>().material = mat[Random.Range(0, mat.Count - 1)];
+                pooledObjs[i].GetComponent<Renderer>().material = mat;
+                pooledObjs[i].GetComponent<NoteController>().auto = true;
             }
+                
         }
     }
+
+    //public void deactivateAuto()
+    //{
+    //    for (int i = 0; i < amountToPool; i++)
+    //    {
+    //        if (pooledObjs[i].activeInHierarchy)
+    //        {
+    //            pooledObjs[i].GetComponent<NoteController>().auto = false;
+    //        }
+    //    }
+    //}
 }

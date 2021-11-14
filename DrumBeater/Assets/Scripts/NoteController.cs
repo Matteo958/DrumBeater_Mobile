@@ -9,6 +9,8 @@ public class NoteController : MonoBehaviour
     private float _okGap = 0.5f;
     private float _fill = 0;
 
+    public bool auto = false;
+
     [HideInInspector] public float bpmTime;
     [HideInInspector] public bool isLastNote = false;
 
@@ -18,7 +20,7 @@ public class NoteController : MonoBehaviour
 
         transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), _fill);
 
-        if (GameManager.instance.autoMode && _fill >= 0.97)
+        if (auto && _fill >= 0.97)
             hit(PointsManager.Precision.PERFECT);
         else if (_fill > 1.1)
             miss();

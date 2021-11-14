@@ -20,7 +20,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera _mainCamera = default;
     [SerializeField] private Transform _fog = default;
 
-    [HideInInspector] public bool canRotate = true;
+    [HideInInspector] public bool canRotate = false;
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool gamePaused = false;
@@ -28,11 +28,13 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public int difficulty;
 
     [Tooltip("Duration of the auto mode in seconds")]
-    [SerializeField] private float autoModeTime = 10;
+    public float autoModeTime = 10;
     [SerializeField] private int percentageToSolo = 90;
     [SerializeField] private GameObject button;
     [SerializeField] private GameObject button2;
     [SerializeField] private GameObject button3;
+
+    [SerializeField] private GameObject _canvasHalo = default;
 
     // Check if the level is already started
     public bool levelStarted = false;
@@ -55,6 +57,7 @@ public class GameManager : MonoBehaviour
 
     public void startSong()
     {
+        _canvasHalo.SetActive(true);
         switch (difficulty)
         {
             case 0:
@@ -103,7 +106,11 @@ public class GameManager : MonoBehaviour
     public void activateAutoMode()
     {
         if (hasAutoMode)
+        {
             StartCoroutine(autoModeCoroutine());
+            StartCoroutine(UIManager.instance.emptyIcosphere());
+        }
+            
     }
 
     private IEnumerator autoModeCoroutine()
@@ -115,7 +122,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(autoModeTime);
 
         autoMode = false;
-        NoteSpawner.instance.deactivateAutoMode();
+        PointsManager.instance.comboHitsAuto = 0;
+        //NoteSpawner.instance.deactivateAutoMode();
     }
 
     public void pause()
@@ -147,7 +155,13 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
         }
         else if (button.GetChild(1).GetComponent<NoteController>().press())
+        {
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+            button.GetComponentInParent<ParticleSystem>().Play();
+        }
+            
+
+        
     }
 
     public void OnPressButtonTrackNoVR(int buttonPressed)
@@ -183,9 +197,21 @@ public class GameManager : MonoBehaviour
         rightTrack = buttonID < 3 ? 1 : (buttonID < 8 ? 2 : 3);
 
         if (rightTrack > activeTrack)
-            UIManager.instance.showHalo();
+        {
+            canRotate = true;
+            if(rightTrack-activeTrack > 1)
+                UIManager.instance.showHalo(true);
+            else
+                UIManager.instance.showHalo();
+        }
         else if (rightTrack < activeTrack)
-            UIManager.instance.showHalo(true);
+        {
+            canRotate = true;
+            if (activeTrack - rightTrack > 1)
+                UIManager.instance.showHalo();
+            else
+                UIManager.instance.showHalo(true);
+        }  
     }
 
     public void rotateTrack(bool clockwise = true)
@@ -195,12 +221,9 @@ public class GameManager : MonoBehaviour
 
         if (clockwise)
         {
-            if (activeTrack == 3)
-                return;
-
-            if (rightTrack == 3 && activeTrack == 1)
+            if (rightTrack == 1 && activeTrack == 3)
             {
-                activeTrack = 3;
+                activeTrack = 1;
                 StartCoroutine(rotateTrackRoutine(-180, 0.5f));
             }
             else
@@ -211,12 +234,9 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (activeTrack == 1)
-                return;
-
-            if (rightTrack == 1 && activeTrack == 3)
+            if (rightTrack == 3 && activeTrack == 1)
             {
-                activeTrack = 1;
+                activeTrack = 3;
                 StartCoroutine(rotateTrackRoutine(180, 0.5f));
             }
             else
@@ -274,6 +294,6 @@ public class GameManager : MonoBehaviour
             _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
             yield return null;
         }
-        canRotate = true;
+        
     }
 }

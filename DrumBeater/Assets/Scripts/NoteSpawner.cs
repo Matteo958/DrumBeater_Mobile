@@ -127,9 +127,16 @@ public class NoteSpawner : MonoBehaviour
 
             spawnedNote.GetComponent<NoteController>().bpmTime = timeStamps[spawnIndex];
             if (GameManager.instance.autoMode)
+            {
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
+                spawnedNote.GetComponent<NoteController>().auto = true;
+            }
             else
+            {
                 spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
+                spawnedNote.GetComponent<NoteController>().auto = false;
+            }
+                
         }
         else
             Debug.LogError("Increase object pool number");
@@ -159,13 +166,13 @@ public class NoteSpawner : MonoBehaviour
 
     public void activateAutoMode()
     {
-        ObjectPool.instance.changeObjsMaterial(autoModeNoteMaterial);
+        ObjectPool.instance.activateAuto(autoModeNoteMaterial);
     }
 
-    public void deactivateAutoMode()
-    {
-        ObjectPool.instance.changeObjsMaterial(noteMaterials);
-    }
+    //public void deactivateAutoMode()
+    //{
+    //    ObjectPool.instance.deactivateAuto();
+    //}
 
     public Transform getButton(int id)
     {

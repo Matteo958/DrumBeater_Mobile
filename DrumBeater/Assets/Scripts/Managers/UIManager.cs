@@ -8,6 +8,10 @@ public class UIManager : MonoBehaviour
 {
     [SerializeField] private GameObject _video = default;
 
+    [SerializeField] private UnityEngine.Video.VideoClip _videoClipEasy = default;
+    [SerializeField] private UnityEngine.Video.VideoClip _videoClipNormal = default;
+    [SerializeField] private UnityEngine.Video.VideoClip _videoClipHard = default;
+
     [SerializeField] private Text _pointsText;
     [SerializeField] private Text _percentageText;
     [SerializeField] private Text _comboText;
@@ -142,10 +146,34 @@ public class UIManager : MonoBehaviour
 
     public void fillIcosphere(float fill)
     {
+        if (GameManager.instance.autoMode)
+            return;
+
         _powerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", fill);
 
         if (fill == 1)
             _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
+        else if (fill == 0)
+        {
+            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
+            _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
+        }
+            
+
+    }
+
+    public IEnumerator emptyIcosphere()
+    {
+        float t = GameManager.instance.autoModeTime;
+        while (t > 0)
+        {
+            t -= Time.deltaTime;
+            _powerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", t / GameManager.instance.autoModeTime);
+
+            yield return null;
+        }
+        _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
+        _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
     }
 
 
@@ -161,6 +189,11 @@ public class UIManager : MonoBehaviour
                 _choice = _songChoice;
                 _choiceStartPos = _songChoiceStartPos;
                 _tutorialChoice.GetComponent<Collider>().enabled = false;
+
+                _panelSongs.transform.GetChild(0).GetChild(3).GetChild(1).GetComponent<Text>().color = new Color(0, 1, 0, 1);
+                GameManager.instance.difficulty = 1;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipNormal;
+
                 StartCoroutine(open(_panelSongs, true));
                 break;
             case "Tutorial":
@@ -194,6 +227,7 @@ public class UIManager : MonoBehaviour
         //_panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
         if (_panelContainerActive == _panelSongs)
         {
+            _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
             {
                 t.GetComponent<Collider>().enabled = false;
@@ -539,12 +573,21 @@ public class UIManager : MonoBehaviour
         {
             case "Easy":
                 GameManager.instance.difficulty = 0;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipEasy;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
                 break;
             case "Medium":
                 GameManager.instance.difficulty = 1;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipNormal;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
                 break;
             case "Hard":
                 GameManager.instance.difficulty = 2;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipHard;
+                _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
                 break;
         }
 
