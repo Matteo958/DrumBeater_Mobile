@@ -50,13 +50,13 @@ public class NoteController : MonoBehaviour
 
     private void hit(PointsManager.Precision p)
     {
-        PointsManager.instance.hitNote(p);
+        PointsManager.instance.hitNote(p, auto);
 
         if (isLastNote)        
             GameManager.instance.finishSong();
 
-        transform.GetComponentInParent<ParticleSystem>().Play();
-        transform.parent = null;
+        GetComponentInParent<ParticleSystemRenderer>().material = GetComponent<Renderer>().material;
+        GetComponentInParent<ParticleSystem>().Play();
         gameObject.SetActive(false);
     }
 
@@ -66,14 +66,15 @@ public class NoteController : MonoBehaviour
         if (isLastNote)
             GameManager.instance.finishSong();
 
-        transform.GetComponentInParent<Remover>().callError();
-        transform.parent = null;
+        GetComponentInParent<Remover>().callError();
         gameObject.SetActive(false);
     }
 
     private void OnDisable()
     {
         isLastNote = false;
+        auto = false;
+        transform.parent = null;
         transform.localScale = new Vector3(0.001f, 1, 0.001f);
     }
 }

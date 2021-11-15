@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Camera _mainCamera = default;
     [SerializeField] private Transform _fog = default;
 
-    [HideInInspector] public bool canRotate = false;
+    [HideInInspector] public bool canRotateRight = false;
+    [HideInInspector] public bool canRotateLeft = false;
     [HideInInspector] public bool autoMode = false;
     [HideInInspector] public bool hasAutoMode = false;
     [HideInInspector] public bool gamePaused = false;
@@ -110,7 +111,7 @@ public class GameManager : MonoBehaviour
             StartCoroutine(autoModeCoroutine());
             StartCoroutine(UIManager.instance.emptyIcosphere());
         }
-            
+
     }
 
     private IEnumerator autoModeCoroutine()
@@ -128,7 +129,7 @@ public class GameManager : MonoBehaviour
 
     public void pause()
     {
-        if (!canRotate)
+        if (!canRotateRight && !canRotateLeft)
             return;
 
         AudioListener.pause = true;
@@ -144,7 +145,7 @@ public class GameManager : MonoBehaviour
 
         UIManager.instance.closePausePanel();
     }
-    
+
     public void OnPressButtonTrack(Transform button)
     {
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
@@ -159,9 +160,9 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponentInParent<ParticleSystem>().Play();
         }
-            
 
-        
+
+
     }
 
     public void OnPressButtonTrackNoVR(int buttonPressed)
@@ -179,7 +180,7 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
 
         //StartCoroutine(unpress(button));
-    }   
+    }
 
     public void OnUnpressButtonTrack(Transform button)
     {
@@ -196,32 +197,42 @@ public class GameManager : MonoBehaviour
     {
         rightTrack = buttonID < 3 ? 1 : (buttonID < 8 ? 2 : 3);
 
-        if (rightTrack > activeTrack)
-        {
-            canRotate = true;
-            if(rightTrack-activeTrack > 1)
-                UIManager.instance.showHalo(true);
-            else
-                UIManager.instance.showHalo();
-        }
-        else if (rightTrack < activeTrack)
-        {
-            canRotate = true;
-            if (activeTrack - rightTrack > 1)
-                UIManager.instance.showHalo();
-            else
-                UIManager.instance.showHalo(true);
-        }  
-    }
-
-    public void rotateTrack(bool clockwise = true)
-    {
-        if (!canRotate)
+        if (rightTrack == activeTrack)
             return;
 
+        if (rightTrack > activeTrack)
+        {
+            if (rightTrack - activeTrack > 1)
+            {
+                canRotateLeft = true;
+                UIManager.instance.showHalo(true);
+            }
+            else
+            {
+                canRotateRight = true;
+                UIManager.instance.showHalo();
+            }
+        }
+        else 
+        {
+            if (activeTrack - rightTrack > 1)
+            {
+                canRotateRight = true;
+                UIManager.instance.showHalo();
+            }
+            else
+            {
+                canRotateLeft = true;
+                UIManager.instance.showHalo(true);
+            }
+        }
+    }
+
+    public void rotateTrack(bool clockwise)
+    {
         if (clockwise)
         {
-            if (rightTrack == 1 && activeTrack == 3)
+            if (activeTrack - rightTrack > 1)
             {
                 activeTrack = 1;
                 StartCoroutine(rotateTrackRoutine(-180, 0.5f));
@@ -232,9 +243,9 @@ public class GameManager : MonoBehaviour
                 StartCoroutine(rotateTrackRoutine(-90, 0.5f));
             }
         }
-        else
+        else if (!clockwise)
         {
-            if (rightTrack == 3 && activeTrack == 1)
+            if (rightTrack - activeTrack > 1)
             {
                 activeTrack = 3;
                 StartCoroutine(rotateTrackRoutine(180, 0.5f));
@@ -247,8 +258,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (rightTrack == activeTrack)
-            UIManager.instance.hideHalo();
+        UIManager.instance.hideHalo();
     }
 
     public void finishSong()
@@ -283,7 +293,8 @@ public class GameManager : MonoBehaviour
 
     IEnumerator rotateTrackRoutine(float angle, float duration)
     {
-        canRotate = false;
+        canRotateRight = false;
+        canRotateLeft = false;
         float startRotation = _tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;
         float t = 0;
@@ -294,6 +305,6 @@ public class GameManager : MonoBehaviour
             _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
             yield return null;
         }
-        
+
     }
 }

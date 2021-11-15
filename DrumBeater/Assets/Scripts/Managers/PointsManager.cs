@@ -52,7 +52,7 @@ public class PointsManager : MonoBehaviour
             instance = this;
     }
 
-    public void hitNote(Precision precision)
+    public void hitNote(Precision precision, bool isAuto)
     {
         switch (precision)
         {
@@ -71,7 +71,9 @@ public class PointsManager : MonoBehaviour
 
         hits++;
         comboHits++;
-        comboHitsAuto++;
+
+        if(!isAuto)
+            comboHitsAuto++;
 
         if (comboHits > maxComboHits)
             maxComboHits = comboHits;
@@ -91,7 +93,7 @@ public class PointsManager : MonoBehaviour
         comboHits = 0;
         comboHitsAuto = 0;
         miss++;
-        UIManager.instance.fillIcosphere((float)comboHitsAuto / autoModeHits);
+        UIManager.instance.fillIcosphere(0);
         UIManager.instance.updateGameUI();
     }
 
