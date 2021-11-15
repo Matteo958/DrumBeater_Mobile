@@ -202,7 +202,7 @@ public class Gestures : MonoBehaviour
         while (_rotationStarted && GameManager.instance.canRotate)
         {
             UpdatePalmPosRightToLeft(_dispForBaseRotation);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0);
         }
     }
 
@@ -236,7 +236,7 @@ public class Gestures : MonoBehaviour
         while (_rotationStarted && GameManager.instance.canRotate)
         {
             UpdatePalmPosLeftToRight(_dispForBaseRotation);
-            yield return new WaitForSeconds(0.01f);
+            yield return new WaitForSeconds(0);
         }
     }
 

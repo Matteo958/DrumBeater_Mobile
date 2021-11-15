@@ -28,6 +28,7 @@ public class NoteController : MonoBehaviour
 
     public bool press()
     {
+        
         if (Mathf.Abs(1 - _fill) <= _perfectGap)
         {
             hit(PointsManager.Precision.PERFECT);
@@ -54,6 +55,7 @@ public class NoteController : MonoBehaviour
         if (isLastNote)        
             GameManager.instance.finishSong();
 
+        transform.GetComponentInParent<ParticleSystem>().Play();
         transform.parent = null;
         gameObject.SetActive(false);
     }
@@ -64,6 +66,7 @@ public class NoteController : MonoBehaviour
         if (isLastNote)
             GameManager.instance.finishSong();
 
+        transform.GetComponentInParent<Remover>().callError();
         transform.parent = null;
         gameObject.SetActive(false);
     }

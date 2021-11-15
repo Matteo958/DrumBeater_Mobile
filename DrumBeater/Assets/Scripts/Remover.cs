@@ -11,15 +11,30 @@ public class Remover : MonoBehaviour
 
     //private float currentNoteBeat;
     //private Material mat;
+    public void callError()
+    {
+        StartCoroutine(error());
+    }
+
+    IEnumerator error()
+    {
+        float t = 1;
+        while (t > 0)
+        {
+            transform.localPosition = new Vector3(Mathf.Sin(Time.time * 100f), Mathf.Cos(Time.time * 100f), transform.localPosition.z) * 0.005f;
+            t -= Time.deltaTime * 7f;
+
+            yield return null;
+        }
+    }
 
     private void Start()
     {
-        //notesBeatQueue = new Queue<float>();
-        //mat = GetComponent<Renderer>().material;
     }
 
     void Update()
     {
+        
         //if (notesBeatQueue.Count == 0)
         //    return;
 

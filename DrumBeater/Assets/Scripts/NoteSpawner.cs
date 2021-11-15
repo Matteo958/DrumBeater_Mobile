@@ -130,11 +130,13 @@ public class NoteSpawner : MonoBehaviour
             {
                 spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
                 spawnedNote.GetComponent<NoteController>().auto = true;
+                spawnedNote.GetComponentInParent<ParticleSystemRenderer>().material = autoModeNoteMaterial;
             }
             else
             {
                 spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
                 spawnedNote.GetComponent<NoteController>().auto = false;
+                spawnedNote.GetComponentInParent<ParticleSystemRenderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
             }
                 
         }
