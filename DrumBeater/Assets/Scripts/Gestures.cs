@@ -61,7 +61,7 @@ public class Gestures : MonoBehaviour
 
     #region Left Fist
     public void ActivateFistLeft()
-    {
+    {        
         _fistLeft = true;
         StartCoroutine(CheckHandOpenLeft());
     }

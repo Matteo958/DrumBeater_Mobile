@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     public bool levelStarted = false;
     private bool soloIsActive = false;
     private int rightTrack = 2;
+    private bool _rotating = false;
 
 
     private Color _startDirLightColor;
@@ -129,7 +130,7 @@ public class GameManager : MonoBehaviour
 
     public void pause()
     {
-        if (!canRotateRight && !canRotateLeft)
+        if (_rotating)
             return;
 
         AudioListener.pause = true;
@@ -160,9 +161,6 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponentInParent<ParticleSystem>().Play();
         }
-
-
-
     }
 
     public void OnPressButtonTrackNoVR(int buttonPressed)
@@ -295,6 +293,7 @@ public class GameManager : MonoBehaviour
     {
         canRotateRight = false;
         canRotateLeft = false;
+        _rotating = true;
         float startRotation = _tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;
         float t = 0;
@@ -305,6 +304,6 @@ public class GameManager : MonoBehaviour
             _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
             yield return null;
         }
-
+        _rotating = false;
     }
 }
