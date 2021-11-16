@@ -59,6 +59,8 @@ public class GameManager : MonoBehaviour
 
     public void startSong()
     {
+        gamePaused = false;
+        AudioListener.pause = false;
         _canvasHalo.SetActive(true);
         switch (difficulty)
         {
@@ -107,7 +109,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        finishSong();
+        //finishSong();
     }
 
     public void activateAutoMode()
@@ -146,10 +148,8 @@ public class GameManager : MonoBehaviour
 
     public void unpause()
     {
-        AudioListener.pause = false;
         gamePaused = false;
-
-        UIManager.instance.closePausePanel();
+        AudioListener.pause = false;
     }
 
     public void OnPressButtonTrack(Transform button)

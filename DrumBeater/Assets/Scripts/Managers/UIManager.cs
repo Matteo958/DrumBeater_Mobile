@@ -75,6 +75,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _fog = default;
     [SerializeField] private Image _halo = default;
 
+    [SerializeField] private Transform _timerPause = default;
+
     
     private Vector3 _fogStartPos;
     private bool _isDarkening;
@@ -158,7 +160,7 @@ public class UIManager : MonoBehaviour
         if (hitPrecision.color.a > 0)
         {
             Color newColor = hitPrecision.color;
-            newColor.a -= Time.deltaTime * 5;
+            newColor.a -= Time.deltaTime * 3;
             hitPrecision.color = newColor;
         }
                 
@@ -255,6 +257,7 @@ public class UIManager : MonoBehaviour
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
             {
                 t.GetComponent<Collider>().enabled = false;
+                t.GetComponent<Text>().color = new Color(1f, 1f, 1f, 1);
             }
         }
         _tutorialChoice.GetComponent<Collider>().enabled = true;
@@ -297,6 +300,8 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.2f;
             yield return null;
         }
+
+       
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
@@ -568,7 +573,7 @@ public class UIManager : MonoBehaviour
                     _pauseRestartText.GetComponent<Collider>().enabled = true;
                     _pauseReturnText.GetComponent<Collider>().enabled = true;
 
-                    GameManager.instance.unpause();
+                    closePausePanel();
                     break;
                 case "Restart":
                     Option = PauseOption.Restart;
@@ -576,7 +581,8 @@ public class UIManager : MonoBehaviour
                     _pauseContinueText.GetComponent<Collider>().enabled = true;
                     _pauseReturnText.GetComponent<Collider>().enabled = true;
 
-                    GameManager.instance.unpause();
+                    closePausePanel();
+                    
                     break;
                 case "Return":
                     Option = PauseOption.Return;
@@ -584,7 +590,7 @@ public class UIManager : MonoBehaviour
                     _pauseContinueText.GetComponent<Collider>().enabled = true;
                     _pauseRestartText.GetComponent<Collider>().enabled = true;
 
-                    GameManager.instance.unpause();
+                    closePausePanel();
                     break;
             }
         }
@@ -719,12 +725,19 @@ public class UIManager : MonoBehaviour
 
                 break;
             case PauseOption.Restart:
+                _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+                _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
+                _tracks.gameObject.SetActive(true);
+                _isDarkening = false;
+                StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
+                StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
+                StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, true));
                 break;
             case PauseOption.Return:
                 _console.gameObject.SetActive(true);
 
                 GameManager.instance.levelStarted = false;
-                GameManager.instance.gamePaused = false;
 
                 _choice.GetComponent<AnchorableBehaviour>().Detach();
                 _choice.position = _choiceStartPos.position;
@@ -837,6 +850,13 @@ public class UIManager : MonoBehaviour
 
     IEnumerator TracksUp(float endPosY, float threshold, float speed, bool levelStarted)
     {
+
+        if (levelStarted)
+        {
+            GameManager.instance.levelStarted = true;
+            GameManager.instance.startSong();
+            audienceJump();
+        }
         float t = 0;
         while (Mathf.Abs(_tracks.localPosition.y - endPosY) > threshold)
         {
@@ -849,15 +869,16 @@ public class UIManager : MonoBehaviour
         _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
         _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
 
-        if (levelStarted)
-        {
-            GameManager.instance.levelStarted = true;
-            GameManager.instance.startSong();
-        }
-        else
-            GameManager.instance.gamePaused = false;
+        
+        if(!levelStarted)
+            _timerPause.GetComponent<Animator>().SetTrigger("timer");
+        
+        
+    }
 
-        foreach (Transform a in _audience)        
+    public void audienceJump()
+    {
+        foreach (Transform a in _audience)
             a.GetComponent<Audience>().Jump();
     }
 
