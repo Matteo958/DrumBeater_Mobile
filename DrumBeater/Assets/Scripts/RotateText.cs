@@ -24,13 +24,13 @@ public class RotateText : MonoBehaviour
     {
         active = true;
         GetComponent<Renderer>().material = activeMaterial;
-        spotLight.SetActive(false);
+        spotLight.SetActive(true);
     }
 
     public void deactivate()
     {
         active = false;
         GetComponent<Renderer>().material = originalMaterial;
-        spotLight.SetActive(true);
+        spotLight.SetActive(false);
     }
 }

@@ -105,6 +105,11 @@ public class GameManager : MonoBehaviour
     //    StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
     //}
 
+    private void Start()
+    {
+        finishSong();
+    }
+
     public void activateAutoMode()
     {
         if (hasAutoMode)
@@ -180,10 +185,7 @@ public class GameManager : MonoBehaviour
         //StartCoroutine(unpress(button));
     }
 
-    public void OnUnpressButtonTrack(Transform button)
-    {
-        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
-    }
+    
 
     //private IEnumerator unpress(Transform button)
     //{
@@ -202,12 +204,12 @@ public class GameManager : MonoBehaviour
         {
             if (rightTrack - activeTrack > 1)
             {
-                canRotateLeft = true;
+                canRotateRight = true;
                 UIManager.instance.showHalo(true);
             }
             else
             {
-                canRotateRight = true;
+                canRotateLeft = true;
                 UIManager.instance.showHalo();
             }
         }
@@ -215,12 +217,12 @@ public class GameManager : MonoBehaviour
         {
             if (activeTrack - rightTrack > 1)
             {
-                canRotateRight = true;
+                canRotateLeft = true;
                 UIManager.instance.showHalo();
             }
             else
             {
-                canRotateLeft = true;
+                canRotateRight = true;
                 UIManager.instance.showHalo(true);
             }
         }
@@ -280,6 +282,8 @@ public class GameManager : MonoBehaviour
 
         yield return new WaitForSeconds(20);
 
+
+        Debug.Log("CIAOOOOO");
         _soloText.GetComponent<RotateText>().deactivate();
         soloIsActive = false;
         rightTrack = 2;

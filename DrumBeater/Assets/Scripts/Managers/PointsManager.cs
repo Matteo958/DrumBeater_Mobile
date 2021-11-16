@@ -36,8 +36,8 @@ public class PointsManager : MonoBehaviour
     public float points = 0;
     public float hitsPercentage = 0;
 
-    private int hits = 0;
-    private int miss = 0;
+    public int hits = 0;
+    public int miss = 0;
     public int comboHits = 0;
     public int comboHitsAuto = 0;
     public int maxComboHits = 0;
@@ -105,6 +105,7 @@ public class PointsManager : MonoBehaviour
     public void calculatePercentage()
     {
         hitsPercentage = (hits * 100) / (hits + miss);
+        //hitsPercentage = 100;
     }
 
     public void reset()

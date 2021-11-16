@@ -12,14 +12,11 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UnityEngine.Video.VideoClip _videoClipNormal = default;
     [SerializeField] private UnityEngine.Video.VideoClip _videoClipHard = default;
 
-    [SerializeField] private Text _pointsText;
+    
     [SerializeField] private Text _percentageText;
     [SerializeField] private Text _comboText;
     [SerializeField] private Text _maxComboText;
     [SerializeField] private Text _comboMultiplierText;
-    [SerializeField] private GameObject _soloText;
-    [SerializeField] private GameObject _pausePanel;
-    [SerializeField] private GameObject _endGamePanel;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
@@ -49,10 +46,17 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _pauseRestartText = default;
     [SerializeField] private Transform _pauseReturnText = default;
 
+    [SerializeField] private Text _songFinishedDiffText = default;
+    [SerializeField] private Text _pointsText = default;
+    [SerializeField] private Text _beatenNotesText = default;
+    [SerializeField] private Text _beatenNotesPercentageText = default;
+    [SerializeField] private Text _rankText = default;
+
     //[SerializeField] private float _panelsOffset = default;
 
     // Animations
     [SerializeField] private Transform _pauseContainer = default;
+    [SerializeField] private Transform _endGamePanel;
     [SerializeField] private Transform _tracks = default;
     
     [SerializeField] private Transform _console = default;
@@ -67,6 +71,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Camera _mainCamera = default;
     [SerializeField] private Transform _fog = default;
     [SerializeField] private Image _halo = default;
+
+    
     private Vector3 _fogStartPos;
     private bool _isDarkening;
     private bool _showingHalo = false;
@@ -152,10 +158,14 @@ public class UIManager : MonoBehaviour
         _powerUpIcosphere.transform.GetChild(0).GetComponent<Renderer>().material.SetFloat("Fill", fill);
 
         if (fill == 1)
-            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", true);
+        {
+            Debug.Log("FILL");
+            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", true);
+        }
+            
         else if (fill == 0)
         {
-            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
+            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", false);
             _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
         }
             
@@ -172,7 +182,7 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
-        _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpActive", false);
+        _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", false);
         _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
     }
 
@@ -253,6 +263,7 @@ public class UIManager : MonoBehaviour
         {
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
+            
             foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
             {
                 p.GetComponent<Collider>().enabled = true;
@@ -576,18 +587,24 @@ public class UIManager : MonoBehaviour
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipEasy;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+
+                
                 break;
             case "Medium":
                 GameManager.instance.difficulty = 1;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipNormal;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+
+                
                 break;
             case "Hard":
                 GameManager.instance.difficulty = 2;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipHard;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
+
+                
                 break;
         }
 
@@ -611,10 +628,48 @@ public class UIManager : MonoBehaviour
 
     public void showEndGame()
     {
-        //pointsText.text = "POINTS: " + PointsManager.instance.points;
-        //percentageText.text = PointsManager.instance.hitsPercentage + "%";
-        //maxComboText.text = "MAX COMBO: " + PointsManager.instance.maxComboHits;
-        //endGamePanel.SetActive(true);
+        _endGamePanel.gameObject.SetActive(true);
+        
+        switch (GameManager.instance.difficulty)
+        {
+            case 0:
+                _songFinishedDiffText.text = "Difficulty -- Easy";
+                
+                break;
+            case 1:
+                _songFinishedDiffText.text = "Difficulty -- Medium";
+                break;
+            case 2:
+                _songFinishedDiffText.text = "Difficulty -- Hard";
+                break;
+        }
+
+        if (PointsManager.instance.hitsPercentage == 100)
+            _rankText.text = "SSS";
+        else if (PointsManager.instance.hitsPercentage < 100 && PointsManager.instance.hitsPercentage >= 98)
+            _rankText.text = "SS";
+        else if (PointsManager.instance.hitsPercentage < 98 && PointsManager.instance.hitsPercentage >= 96)
+            _rankText.text = "S";
+        else if (PointsManager.instance.hitsPercentage < 96 && PointsManager.instance.hitsPercentage >= 88)
+            _rankText.text = "A";
+        else if (PointsManager.instance.hitsPercentage < 88 && PointsManager.instance.hitsPercentage >= 74)
+            _rankText.text = "B";
+        else if (PointsManager.instance.hitsPercentage < 74 && PointsManager.instance.hitsPercentage >= 50)
+            _rankText.text = "C";
+        else if (PointsManager.instance.hitsPercentage < 50 && PointsManager.instance.hitsPercentage >= 30)
+            _rankText.text = "D";
+        else if (PointsManager.instance.hitsPercentage < 30 )
+            _rankText.text = "E";
+
+        _beatenNotesText.text = PointsManager.instance.hits.ToString() + " / " + (PointsManager.instance.hits + PointsManager.instance.miss).ToString();
+        _beatenNotesPercentageText.text = PointsManager.instance.hitsPercentage.ToString() + " %";
+        _pointsText.text = PointsManager.instance.points.ToString();
+
+        _isDarkening = true;
+
+        StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
+        StartCoroutine(TracksDown(-542.5f, 0.01f, 0.1f));
+        StartCoroutine(EndGameContainerUp(-540.27f, 0.01f, 0.1f));
     }
 
     public void showPausePanel()
@@ -836,6 +891,34 @@ public class UIManager : MonoBehaviour
         _pauseContainer.gameObject.SetActive(false);
     }
 
+    IEnumerator EndGameContainerUp(float endPosY, float threshold, float speed)
+    {
+        float t = 0;
+        while (Mathf.Abs(_endGamePanel.localPosition.y - endPosY) > threshold)
+        {
+            _endGamePanel.localPosition = Vector3.Lerp(_endGamePanel.localPosition, new Vector3(_endGamePanel.localPosition.x, endPosY, _endGamePanel.localPosition.z), t);
+            t += Time.deltaTime * speed;
+            yield return null;
+        }
+        _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
+    }
+
+    IEnumerator EndGameContainerDown(float endPosY, float threshold, float speed)
+    {
+        float t = 0;
+        while (Mathf.Abs(_endGamePanel.localPosition.y - endPosY) > threshold)
+        {
+            _endGamePanel.localPosition = Vector3.Lerp(_endGamePanel.localPosition, new Vector3(_endGamePanel.localPosition.x, endPosY, _endGamePanel.localPosition.z), t);
+            t += Time.deltaTime * speed;
+            yield return null;
+        }
+        
+
+        _endGamePanel.gameObject.SetActive(false);
+    }
+
 
     IEnumerator CheckSongChoiceHeight(Transform choice)
     {
@@ -1032,4 +1115,6 @@ public class UIManager : MonoBehaviour
         tempColor.a = 0;
         _halo.color = tempColor;
     }
+
+    
 }
