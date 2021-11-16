@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         {
             PointsManager.instance.finalBonusHit();
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
+            button.GetComponent<Renderer>().material = _buttonTrackPressed;
         }
         else if (button.GetChild(1).GetComponent<NoteController>().press())
         {
@@ -182,16 +183,13 @@ public class GameManager : MonoBehaviour
         else if (button.childCount > 1 && button.GetChild(1).GetComponent<NoteController>().press())
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
 
-        //StartCoroutine(unpress(button));
     }
 
-    
-
-    //private IEnumerator unpress(Transform button)
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackNotPressed;
-    //}
+    public void OnUnpressButtonTrack(Transform button)
+    {
+        if(soloIsActive)
+            button.GetComponent<Renderer>().material = _buttonTrackNotPressed;
+    }
 
     public void verifyTrack(int buttonID)
     {
