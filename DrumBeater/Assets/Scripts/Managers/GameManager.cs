@@ -171,7 +171,7 @@ public class GameManager : MonoBehaviour
     public void OnPressButtonTrackNoVR(int buttonPressed)
     {
         Transform button = NoteSpawner.instance.getButton(buttonPressed);
-
+        AudioManager.instance.playAudio(Audio.AudioType.HitNote);
         //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
 
         if (soloIsActive)

@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 
+public enum Precision
+{
+    OK,
+    GOOD,
+    PERFECT,
+    MISS
+}
+
 public class PointsManager : MonoBehaviour
 {
-    public enum Precision
-    {
-        OK,
-        GOOD,
-        PERFECT
-    }
 
     [Tooltip("The maximum combo multiplier")]
     [SerializeField] private int maxComboMultiplier = 10;

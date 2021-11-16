@@ -12,11 +12,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private UnityEngine.Video.VideoClip _videoClipNormal = default;
     [SerializeField] private UnityEngine.Video.VideoClip _videoClipHard = default;
 
-    
-    [SerializeField] private Text _percentageText;
     [SerializeField] private Text _comboText;
-    [SerializeField] private Text _maxComboText;
     [SerializeField] private Text _comboMultiplierText;
+    [SerializeField] private Text hitPrecision;
+
+    [SerializeField] private Color perfectColor;
+    [SerializeField] private Color goodColor;
+    [SerializeField] private Color okColor;
+    [SerializeField] private Color missColor;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
@@ -148,6 +151,17 @@ public class UIManager : MonoBehaviour
         //_panelStartScaleX = _panelQuit.transform.localScale.x;
         _panelQuit.SetActive(false);
         _panelCredits.SetActive(false);
+    }
+
+    private void Update()
+    {
+        if (hitPrecision.color.a > 0)
+        {
+            Color newColor = hitPrecision.color;
+            newColor.a -= Time.deltaTime * 5;
+            hitPrecision.color = newColor;
+        }
+                
     }
 
     public void fillIcosphere(float fill)
@@ -1116,5 +1130,27 @@ public class UIManager : MonoBehaviour
         _halo.color = tempColor;
     }
 
-    
+    public void showPrecision(Precision precision)
+    {
+        switch (precision)
+        {
+            case Precision.PERFECT:
+                hitPrecision.text = "PERFECT";
+                hitPrecision.color = perfectColor;
+                break;
+            case Precision.GOOD:
+                hitPrecision.text = "GOOD";
+                hitPrecision.color = goodColor;
+                break;
+            case Precision.OK:
+                hitPrecision.text = "OK";
+                hitPrecision.color = okColor;
+                break;
+            default:
+                hitPrecision.text = "MISS";
+                hitPrecision.color = missColor;
+                break;
+        }
+    }
+        
 }

@@ -6,6 +6,7 @@ using Melanchall.DryWetMidi.Interaction;
 public class Song : MonoBehaviour
 {
     public int bpm;
+    public int spawnGapInBeat;
     public Audio.AudioType type;
     public MidiFile midiFile;
     public float songDelayInSeconds;

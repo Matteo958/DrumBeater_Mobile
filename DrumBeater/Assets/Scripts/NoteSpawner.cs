@@ -8,7 +8,7 @@ public class NoteSpawner : MonoBehaviour
 {
     public List<float> timeStamps = new List<float>();
     [Tooltip("The gap in beats between the note's spawn and its actual beat time")]
-    public float noteSpawnGapInBeats;
+    [HideInInspector] public float noteSpawnGapInBeats;
     [Tooltip("Heights of the note")]
     [SerializeField] private float noteHeight = 1.3f;
     [Tooltip("The first track")]
@@ -76,6 +76,7 @@ public class NoteSpawner : MonoBehaviour
     public void startSong(Song song)
     {
         spawnIndex = 0;
+        noteSpawnGapInBeats = song.spawnGapInBeat;
 
         // Record the time when the music starts
         dspSongTime = (float)AudioSettings.dspTime;
