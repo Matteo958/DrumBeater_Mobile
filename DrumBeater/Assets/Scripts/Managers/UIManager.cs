@@ -48,6 +48,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _pauseContinueText = default;
     [SerializeField] private Transform _pauseRestartText = default;
     [SerializeField] private Transform _pauseReturnText = default;
+    [SerializeField] private Transform _endGameRestartText = default;
+    [SerializeField] private Transform _endGameReturnText = default;
 
     [SerializeField] private Text _songFinishedDiffText = default;
     [SerializeField] private Text _pointsText = default;
@@ -94,10 +96,18 @@ public class UIManager : MonoBehaviour
     [System.Serializable]
     public enum PauseOption
     {
-        None, Continue, Restart, Return
+        None, ContinuePause, RestartPause, ReturnPause
     }
 
-    public PauseOption Option;
+    public PauseOption optionPause;
+
+    [System.Serializable]
+    public enum EndGameOption
+    {
+        None, RestartEndGame, ReturnEndGame
+    }
+
+    public EndGameOption optionEndGame;
 
     // Check if player is pressing button play
     private bool _buttonPressed;
@@ -518,6 +528,7 @@ public class UIManager : MonoBehaviour
                     //_tutorialChoice.GetComponent<Collider>().enabled = false;
 
                     _tracks.gameObject.SetActive(true);
+                    _tracks.localEulerAngles = new Vector3(0, 0, 0);
 
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
                     _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
@@ -552,7 +563,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator FillButtonRangePause(string button, Transform obj)
     {
-        Debug.Log("Coroutine avviata");
+       
         float t = 0;
         while (obj.GetComponent<Image>().fillAmount < 0.98f && _buttonPressed)
         {
@@ -560,23 +571,23 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.1f;
             yield return null;
         }
-        Debug.Log("Coroutine terminata senza premere il tasto");
+        
         if (obj.GetComponent<Image>().fillAmount >= 0.98)
         {
-            Debug.Log("Coroutine terminata premendo il tasto");
+            
             _buttonPressed = false;
             switch (button)
             {
 
-                case "Continue":
-                    Option = PauseOption.Continue;
+                case "ContinuePause":
+                    optionPause = PauseOption.ContinuePause;
                     _pauseRestartText.GetComponent<Collider>().enabled = true;
                     _pauseReturnText.GetComponent<Collider>().enabled = true;
 
                     closePausePanel();
                     break;
-                case "Restart":
-                    Option = PauseOption.Restart;
+                case "RestartPause":
+                    optionPause = PauseOption.RestartPause;
 
                     _pauseContinueText.GetComponent<Collider>().enabled = true;
                     _pauseReturnText.GetComponent<Collider>().enabled = true;
@@ -584,13 +595,25 @@ public class UIManager : MonoBehaviour
                     closePausePanel();
                     
                     break;
-                case "Return":
-                    Option = PauseOption.Return;
+                case "ReturnPause":
+                    optionPause = PauseOption.ReturnPause;
 
                     _pauseContinueText.GetComponent<Collider>().enabled = true;
                     _pauseRestartText.GetComponent<Collider>().enabled = true;
 
                     closePausePanel();
+                    break;
+                case "RestartEndGame":
+                    optionEndGame = EndGameOption.RestartEndGame;
+                    _endGameReturnText.GetComponent<Collider>().enabled = true;
+
+                    closeEndGamePanel();
+                    break;
+                case "ReturnEndGame":
+                    optionEndGame = EndGameOption.ReturnEndGame;
+                    _endGameRestartText.GetComponent<Collider>().enabled = true;
+
+                    closeEndGamePanel();
                     break;
             }
         }
@@ -711,9 +734,9 @@ public class UIManager : MonoBehaviour
     {
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
 
-        switch (Option)
+        switch (optionPause)
         {
-            case PauseOption.Continue:
+            case PauseOption.ContinuePause:
                 _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
                 _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
 
@@ -724,20 +747,24 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, false));
 
                 break;
-            case PauseOption.Restart:
+            case PauseOption.RestartPause:
                 _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
                 _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
 
+                GameManager.instance.activeTrack = 2;
+
                 _tracks.gameObject.SetActive(true);
+                _tracks.localEulerAngles = new Vector3(0, 0, 0);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
                 StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, true));
                 break;
-            case PauseOption.Return:
+            case PauseOption.ReturnPause:
                 _console.gameObject.SetActive(true);
 
                 GameManager.instance.levelStarted = false;
+                GameManager.instance.activeTrack = 2;
 
                 _choice.GetComponent<AnchorableBehaviour>().Detach();
                 _choice.position = _choiceStartPos.position;
@@ -751,17 +778,53 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void closeEndGamePanel()
+    {
+        _manhole.GetComponent<Animator>().SetBool("Manhole", true);
 
+        switch (optionEndGame)
+        {
+            
+            case EndGameOption.RestartEndGame:
+                _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+                _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
+                GameManager.instance.activeTrack = 2;
+
+                _tracks.gameObject.SetActive(true);
+                _isDarkening = false;
+                StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
+                StartCoroutine(EndGameContainerDown(-542.5f, 0.01f, 0.1f));
+                StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, true));
+                break;
+            case EndGameOption.ReturnEndGame:
+                _console.gameObject.SetActive(true);
+
+                GameManager.instance.levelStarted = false;
+                GameManager.instance.activeTrack = 2;
+
+                _choice.GetComponent<AnchorableBehaviour>().Detach();
+                _choice.position = _choiceStartPos.position;
+                _choice.GetComponent<AnchorableBehaviour>().TryAttach();
+
+                StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
+                StartCoroutine(EndGameContainerDown(-542.5f, 0.01f, 0.1f));
+                StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
+
+                break;
+        }
+    }
+
+    #region Buttons Pause Panel
     public void OnContinueText(Transform text)
     {
         _pauseRestartText.GetComponent<Collider>().enabled = false;
         _pauseReturnText.GetComponent<Collider>().enabled = false;
 
         _buttonPressed = true;
-        Debug.Log("ButtonPressedTRUE");
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-        StartCoroutine(FillButtonRangePause("Continue", text.GetChild(1)));
+        StartCoroutine(FillButtonRangePause("ContinuePause", text.GetChild(1)));
     }
 
     public void OnRestartText(Transform text)
@@ -772,7 +835,7 @@ public class UIManager : MonoBehaviour
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-        StartCoroutine(FillButtonRangePause("Restart", text.GetChild(1)));
+        StartCoroutine(FillButtonRangePause("RestartPause", text.GetChild(1)));
     }
 
     public void OnReturnText(Transform text)
@@ -783,13 +846,12 @@ public class UIManager : MonoBehaviour
         _buttonPressed = true;
         text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
 
-        StartCoroutine(FillButtonRangePause("Return", text.GetChild(1)));
+        StartCoroutine(FillButtonRangePause("ReturnPause", text.GetChild(1)));
     }
 
     public void OutContinueText(Transform text)
     {
         _buttonPressed = false;
-        Debug.Log("ButtonPressedFALSE");
         text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
 
         _pauseRestartText.GetComponent<Collider>().enabled = true;
@@ -816,6 +878,50 @@ public class UIManager : MonoBehaviour
         _pauseRestartText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
+#endregion
+
+
+    #region Buttons EndGame Panel
+    public void OnRestartEndGameText(Transform text)
+    {
+        _endGameReturnText.GetComponent<Collider>().enabled = false;
+
+        _buttonPressed = true;
+        text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
+
+        StartCoroutine(FillButtonRangePause("RestartEndGame", text.GetChild(1)));
+    }
+    
+    public void OnReturnEndGameText(Transform text)
+    {
+        _endGameRestartText.GetComponent<Collider>().enabled = false;
+
+        _buttonPressed = true;
+        text.GetComponent<Text>().color = new Color(0, 1, 0, 1);
+
+        StartCoroutine(FillButtonRangePause("ReturnEndGame", text.GetChild(1)));
+    }
+
+    public void OutRestartEndGameText(Transform text)
+    {
+        _buttonPressed = false;
+        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        
+        _endGameReturnText.GetComponent<Collider>().enabled = true;
+        text.GetChild(1).GetComponent<Image>().fillAmount = 0;
+    }
+
+    public void OutReturnEndGameText(Transform text)
+    {
+        _buttonPressed = false;
+        text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
+        
+        _endGameRestartText.GetComponent<Collider>().enabled = true;
+        text.GetChild(1).GetComponent<Image>().fillAmount = 0;
+    }
+    #endregion
+
+    #region Console, Track, PausePanel, EndGamePanel Animations
 
     IEnumerator ConsoleUp(float endPosY, float threshold, float speed)
     {
@@ -953,8 +1059,9 @@ public class UIManager : MonoBehaviour
 
         _endGamePanel.gameObject.SetActive(false);
     }
+    #endregion
 
-
+    #region Song and Tutorial Spheres Behaviours
     IEnumerator CheckSongChoiceHeight(Transform choice)
     {
         while (_songChoiceIsFloating)
@@ -1088,7 +1195,9 @@ public class UIManager : MonoBehaviour
         _buttonCredits.GetComponent<Collider>().enabled = false;
         _buttonQuit.GetComponent<Collider>().enabled = false;
     }
+    #endregion
 
+    #region Credits and Quit Button pression methods
     public void OnPressButtonCredits()
     {
         _panelContainerActive = _panelCredits;
@@ -1113,7 +1222,9 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(open(_panelQuit, false));
     }
+    #endregion
 
+    #region Halo Methods
     public void showHalo(bool left = false) {
         if (!_showingHalo)
             StartCoroutine(showHaloRoutine(left));
@@ -1150,6 +1261,7 @@ public class UIManager : MonoBehaviour
         tempColor.a = 0;
         _halo.color = tempColor;
     }
+    #endregion
 
     public void showPrecision(Precision precision)
     {
