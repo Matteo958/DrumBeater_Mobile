@@ -156,12 +156,6 @@ public class NoteSpawner : MonoBehaviour
         }
     }
 
-    public void activateSolo()
-    {
-        foreach (KeyValuePair<int, Remover> entry in trackRemoversMap)       
-            entry.Value.GetComponent<Renderer>().material = autoModeNoteMaterial;       
-    }
-
     public void activateAutoMode()
     {
         ObjectPool.instance.activateAuto(autoModeNoteMaterial);

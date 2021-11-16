@@ -275,13 +275,10 @@ public class GameManager : MonoBehaviour
             yield return new WaitForSeconds(2);
 
             soloIsActive = true;
-            NoteSpawner.instance.activateSolo();
         }
 
         yield return new WaitForSeconds(20);
 
-
-        Debug.Log("CIAOOOOO");
         _soloText.GetComponent<RotateText>().deactivate();
         soloIsActive = false;
         rightTrack = 2;
