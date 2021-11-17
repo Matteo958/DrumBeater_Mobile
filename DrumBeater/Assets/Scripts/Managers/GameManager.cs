@@ -57,8 +57,10 @@ public class GameManager : MonoBehaviour
             instance = this;
     }
 
+
     public void startSong()
     {
+        AudioManager.instance.stopAudio(Audio.AudioType.MT_2, true);
         gamePaused = false;
         AudioListener.pause = false;
         _canvasHalo.SetActive(true);
@@ -100,16 +102,9 @@ public class GameManager : MonoBehaviour
         button3.SetActive(false);
     }
 
-    //public void LevelFinished()
-    //{
-    //    LevelStarted = false;
-    //    UIManager.instance.closePausePanel();
-    //    StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
-    //}
-
     private void Start()
     {
-        //finishSong();
+        AudioManager.instance.playAudio(Audio.AudioType.MT_2, true);
     }
 
     public void activateAutoMode()
@@ -132,7 +127,6 @@ public class GameManager : MonoBehaviour
 
         autoMode = false;
         PointsManager.instance.comboHitsAuto = 0;
-        //NoteSpawner.instance.deactivateAutoMode();
     }
 
     public void pause()
@@ -154,8 +148,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPressButtonTrack(Transform button)
     {
-        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
-
+        AudioManager.instance.playAudio(Audio.AudioType.HitNote);
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -173,7 +166,6 @@ public class GameManager : MonoBehaviour
     {
         Transform button = NoteSpawner.instance.getButton(buttonPressed);
         AudioManager.instance.playAudio(Audio.AudioType.HitNote);
-        //button.GetChild(0).GetComponent<Renderer>().material = _buttonTrackPressed;
 
         if (soloIsActive)
         {

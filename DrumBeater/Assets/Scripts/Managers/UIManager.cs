@@ -63,7 +63,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _pauseContainer = default;
     [SerializeField] private Transform _endGamePanel;
     [SerializeField] private Transform _tracks = default;
-    
+
     [SerializeField] private Transform _console = default;
 
     [SerializeField] private Transform _manhole = default;
@@ -82,7 +82,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _timerPause = default;
     [SerializeField] private Transform _soloText = default;
 
-    
+
     private Vector3 _fogStartPos;
     private bool _isDarkening;
     private bool _showingHalo = false;
@@ -176,7 +176,7 @@ public class UIManager : MonoBehaviour
             newColor.a -= Time.deltaTime * 3;
             hitPrecision.color = newColor;
         }
-                
+
     }
 
     public void fillIcosphere(float fill)
@@ -191,13 +191,13 @@ public class UIManager : MonoBehaviour
             Debug.Log("FILL");
             _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", true);
         }
-            
+
         else if (fill == 0)
         {
             _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", false);
             _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
         }
-            
+
 
     }
 
@@ -293,7 +293,7 @@ public class UIManager : MonoBehaviour
         {
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
-            
+
             foreach (Transform p in _panel.transform.GetChild(0).transform.GetChild(3))
             {
                 p.GetComponent<Collider>().enabled = true;
@@ -314,7 +314,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-       
+
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
@@ -522,7 +522,7 @@ public class UIManager : MonoBehaviour
             {
                 case "Play":
                     ClosePanel();
-                    
+
                     _buttonCredits.GetComponent<Collider>().enabled = false;
                     _buttonQuit.GetComponent<Collider>().enabled = false;
                     _knobMusicSlider.GetComponent<Collider>().enabled = false;
@@ -566,7 +566,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator FillButtonRangePause(string button, Transform obj)
     {
-       
+
         float t = 0;
         while (obj.GetComponent<Image>().fillAmount < 0.98f && _buttonPressed)
         {
@@ -574,10 +574,10 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.1f;
             yield return null;
         }
-        
+
         if (obj.GetComponent<Image>().fillAmount >= 0.98)
         {
-            
+
             _buttonPressed = false;
             switch (button)
             {
@@ -596,7 +596,7 @@ public class UIManager : MonoBehaviour
                     _pauseReturnText.GetComponent<Collider>().enabled = true;
 
                     closePausePanel();
-                    
+
                     break;
                 case "ReturnPause":
                     optionPause = PauseOption.ReturnPause;
@@ -634,7 +634,7 @@ public class UIManager : MonoBehaviour
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipEasy;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
 
-                
+
                 break;
             case "Medium":
                 GameManager.instance.difficulty = 1;
@@ -642,7 +642,7 @@ public class UIManager : MonoBehaviour
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipNormal;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
 
-                
+
                 break;
             case "Hard":
                 GameManager.instance.difficulty = 2;
@@ -650,7 +650,7 @@ public class UIManager : MonoBehaviour
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipHard;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
 
-                
+
                 break;
         }
 
@@ -675,12 +675,12 @@ public class UIManager : MonoBehaviour
     public void showEndGame()
     {
         _endGamePanel.gameObject.SetActive(true);
-        
+
         switch (GameManager.instance.difficulty)
         {
             case 0:
                 _songFinishedDiffText.text = "Difficulty -- Easy";
-                
+
                 break;
             case 1:
                 _songFinishedDiffText.text = "Difficulty -- Medium";
@@ -704,7 +704,7 @@ public class UIManager : MonoBehaviour
             _rankText.text = "C";
         else if (PointsManager.instance.hitsPercentage < 50 && PointsManager.instance.hitsPercentage >= 30)
             _rankText.text = "D";
-        else if (PointsManager.instance.hitsPercentage < 30 )
+        else if (PointsManager.instance.hitsPercentage < 30)
             _rankText.text = "E";
 
         _beatenNotesText.text = PointsManager.instance.hits.ToString() + " / " + (PointsManager.instance.hits + PointsManager.instance.miss).ToString();
@@ -787,7 +787,7 @@ public class UIManager : MonoBehaviour
 
         switch (optionEndGame)
         {
-            
+
             case EndGameOption.RestartEndGame:
                 _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
                 _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
@@ -881,7 +881,7 @@ public class UIManager : MonoBehaviour
         _pauseRestartText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
-#endregion
+    #endregion
 
 
     #region Buttons EndGame Panel
@@ -894,7 +894,7 @@ public class UIManager : MonoBehaviour
 
         StartCoroutine(FillButtonRangePause("RestartEndGame", text.GetChild(1)));
     }
-    
+
     public void OnReturnEndGameText(Transform text)
     {
         _endGameRestartText.GetComponent<Collider>().enabled = false;
@@ -909,7 +909,7 @@ public class UIManager : MonoBehaviour
     {
         _buttonPressed = false;
         text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
-        
+
         _endGameReturnText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
@@ -918,7 +918,7 @@ public class UIManager : MonoBehaviour
     {
         _buttonPressed = false;
         text.GetComponent<Text>().color = new Color(1, 1, 1, 1);
-        
+
         _endGameRestartText.GetComponent<Collider>().enabled = true;
         text.GetChild(1).GetComponent<Image>().fillAmount = 0;
     }
@@ -931,6 +931,7 @@ public class UIManager : MonoBehaviour
         
         fillIcosphere(0);
         _points.GetComponent<Animator>().SetBool("Points", false);
+        AudioManager.instance.playAudio(Audio.AudioType.MT_2, true);
         float t = 0;
         while (Mathf.Abs(_console.localPosition.y - endPosY) > threshold)
         {
@@ -990,8 +991,8 @@ public class UIManager : MonoBehaviour
         _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
         _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
 
-        
-        if(!levelStarted)
+
+        if (!levelStarted)
             _timerPause.GetComponent<Animator>().SetTrigger("timer");
 
         _halo.gameObject.SetActive(true);
@@ -1074,7 +1075,7 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
-        
+
 
         _endGamePanel.gameObject.SetActive(false);
     }
@@ -1099,8 +1100,8 @@ public class UIManager : MonoBehaviour
             choice.GetComponent<Rigidbody>().useGravity = false;
             choice.GetComponent<Rigidbody>().isKinematic = true;
             choice.GetComponent<Collider>().enabled = false;
-            if (choice.tag == "SongChoice")            
-                choice.position = _songChoiceStartPos.position;            
+            if (choice.tag == "SongChoice")
+                choice.position = _songChoiceStartPos.position;
             else
                 choice.position = _tutorialChoiceStartPos.position;
 
@@ -1126,8 +1127,8 @@ public class UIManager : MonoBehaviour
             choice.GetComponent<Rigidbody>().useGravity = false;
             choice.GetComponent<Rigidbody>().isKinematic = true;
             choice.GetComponent<Collider>().enabled = false;
-            if (choice.tag == "SongChoice")            
-                choice.position = _songChoiceStartPos.position;            
+            if (choice.tag == "SongChoice")
+                choice.position = _songChoiceStartPos.position;
             else
                 choice.position = _tutorialChoiceStartPos.position;
 
@@ -1219,6 +1220,7 @@ public class UIManager : MonoBehaviour
     #region Credits and Quit Button pression methods
     public void OnPressButtonCredits()
     {
+        AudioManager.instance.playAudio(Audio.AudioType.ButtonClick);
         _panelContainerActive = _panelCredits;
         _panelOpening = true;
         _panelCredits.SetActive(true);
@@ -1232,6 +1234,7 @@ public class UIManager : MonoBehaviour
 
     public void OnPressButtonQuit()
     {
+        AudioManager.instance.playAudio(Audio.AudioType.ButtonClick);
         _panelOpening = true;
         _panelQuit.SetActive(true);
         _panelContainerActive = _panelQuit;
@@ -1244,7 +1247,8 @@ public class UIManager : MonoBehaviour
     #endregion
 
     #region Halo Methods
-    public void showHalo(bool left = false) {
+    public void showHalo(bool left = false)
+    {
         if (!_showingHalo)
             StartCoroutine(showHaloRoutine(left));
     }
@@ -1253,10 +1257,10 @@ public class UIManager : MonoBehaviour
     {
         _showingHalo = true;
 
-        if (left)        
-            _halo.rectTransform.localScale = new Vector3(-1,1,1);        
+        if (left)
+            _halo.rectTransform.localScale = new Vector3(-1, 1, 1);
         else
-            _halo.rectTransform.localScale = new Vector3(1,1,1);
+            _halo.rectTransform.localScale = new Vector3(1, 1, 1);
 
         float t = 0;
 
@@ -1304,5 +1308,5 @@ public class UIManager : MonoBehaviour
                 break;
         }
     }
-        
+
 }
