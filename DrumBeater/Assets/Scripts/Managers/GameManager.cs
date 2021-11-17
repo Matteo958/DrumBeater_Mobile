@@ -267,17 +267,30 @@ public class GameManager : MonoBehaviour
     private IEnumerator finish()
     {
         PointsManager.instance.calculatePercentage();
+        float t = 0;
 
         if (PointsManager.instance.hitsPercentage > percentageToSolo)
         {
             _soloText.GetComponent<RotateText>().activate();
 
-            yield return new WaitForSeconds(2);
+            while (t < 2)
+            {
+                if (!gamePaused)
+                    t += Time.deltaTime;
+                yield return null;
+            }
 
             soloIsActive = true;
+            t = 0;
         }
 
-        yield return new WaitForSeconds(20);
+
+        while(t < 20)
+        {
+            if (!gamePaused)
+                t += Time.deltaTime;
+            yield return null;
+        }
 
         _soloText.GetComponent<RotateText>().deactivate();
         soloIsActive = false;

@@ -16,7 +16,7 @@ public class RotateText : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (active)
+        if (active && !GameManager.instance.gamePaused)
             transform.Rotate(0, speed * Time.deltaTime, 0);
     }
 
