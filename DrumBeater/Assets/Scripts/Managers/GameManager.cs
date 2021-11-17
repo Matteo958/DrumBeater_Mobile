@@ -261,9 +261,9 @@ public class GameManager : MonoBehaviour
     private void rotateToCenter()
     {
         if (activeTrack == 1)
-            rotateTrack(false);
-        else if (activeTrack == 3)
             rotateTrack(true);
+        else if (activeTrack == 3)
+            rotateTrack(false);
     }
 
 
@@ -303,6 +303,7 @@ public class GameManager : MonoBehaviour
         }
 
         _soloText.GetComponent<RotateText>().deactivate();
+        _soloText.transform.localEulerAngles = new Vector3(0, 18, 0);
         soloIsActive = false;
 
         NoteSpawner.instance.songHasStarted = false;

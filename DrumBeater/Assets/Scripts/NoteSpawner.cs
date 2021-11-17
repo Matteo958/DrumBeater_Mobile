@@ -170,4 +170,11 @@ public class NoteSpawner : MonoBehaviour
     {
         return trackRemoversMap[id].transform;
     }
+
+    public void reset()
+    {
+        timeStamps.Clear();
+        notesPosition.Clear();
+        
+    }
 }

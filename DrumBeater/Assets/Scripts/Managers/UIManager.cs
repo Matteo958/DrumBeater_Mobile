@@ -70,6 +70,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _manhole2 = default;
     [SerializeField] private Transform _manhole3 = default;
 
+    [SerializeField] private Transform _points = default;
+
     [SerializeField] private Light _dirLight = default;
     [SerializeField] private Color _pauseDirLightColor = default;
     [SerializeField] private Color _songDirLightColor = default;
@@ -78,6 +80,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image _halo = default;
 
     [SerializeField] private Transform _timerPause = default;
+    [SerializeField] private Transform _soloText = default;
 
     
     private Vector3 _fogStartPos;
@@ -925,6 +928,9 @@ public class UIManager : MonoBehaviour
 
     IEnumerator ConsoleUp(float endPosY, float threshold, float speed)
     {
+        
+        fillIcosphere(0);
+        _points.GetComponent<Animator>().SetBool("Points", false);
         float t = 0;
         while (Mathf.Abs(_console.localPosition.y - endPosY) > threshold)
         {
@@ -959,9 +965,18 @@ public class UIManager : MonoBehaviour
 
         if (levelStarted)
         {
+            
             GameManager.instance.levelStarted = true;
+            NoteSpawner.instance.reset();
             GameManager.instance.startSong();
             audienceJump();
+
+            PointsManager.instance.reset();
+            
+            updateGameUI();
+            hideHalo();
+            fillIcosphere(0);
+            _points.GetComponent<Animator>().SetBool("Points", true);
         }
         float t = 0;
         while (Mathf.Abs(_tracks.localPosition.y - endPosY) > threshold)
@@ -978,8 +993,8 @@ public class UIManager : MonoBehaviour
         
         if(!levelStarted)
             _timerPause.GetComponent<Animator>().SetTrigger("timer");
-        
-        
+
+        _halo.gameObject.SetActive(true);
     }
 
     public void audienceJump()
@@ -990,6 +1005,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator TracksDown(float endPosY, float threshold, float speed)
     {
+        _halo.gameObject.SetActive(false);
         float t = 0;
         while (Mathf.Abs(_tracks.localPosition.y - endPosY) > threshold)
         {
@@ -1003,6 +1019,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator PauseContainerUp(float endPosY, float threshold, float speed)
     {
+        
         float t = 0;
         while (Mathf.Abs(_pauseContainer.localPosition.y - endPosY) > threshold)
         {
@@ -1044,6 +1061,8 @@ public class UIManager : MonoBehaviour
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
         _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
         _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
+
+        
     }
 
     IEnumerator EndGameContainerDown(float endPosY, float threshold, float speed)

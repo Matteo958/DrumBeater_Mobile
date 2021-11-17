@@ -116,6 +116,7 @@ public class PointsManager : MonoBehaviour
         hits = 0;
         miss = 0;
         comboHits = 0;
+        comboHitsAuto = 0;
         comboMultiplier = 1;
         maxComboHits = 0;
     }

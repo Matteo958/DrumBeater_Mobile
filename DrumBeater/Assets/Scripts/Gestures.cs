@@ -5,7 +5,6 @@ public class Gestures : MonoBehaviour
 {
     [SerializeField] private Transform _palmRight = default;
     [SerializeField] private Transform _palmLeft = default;
-    [SerializeField] private Transform _cubeExample;
 
     [SerializeField] private GameObject _thumbLeftEnd = default;
     [SerializeField] private GameObject _indexLeftEnd = default;
