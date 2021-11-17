@@ -187,16 +187,15 @@ public class GameManager : MonoBehaviour
 
     public void OnUnpressButtonTrack(Transform button)
     {
-        if(soloIsActive)
+        if (soloIsActive)
             button.GetComponent<Renderer>().material = _buttonTrackNotPressed;
     }
 
-    public void verifyTrack(int buttonID)
+    public IEnumerator verifyTrack(int buttonID)
     {
-        rightTrack = buttonID < 3 ? 1 : (buttonID < 8 ? 2 : 3);
+        yield return new WaitForSeconds(0.2f);
 
-        if (rightTrack == activeTrack)
-            return;
+        rightTrack = buttonID < 3 ? 1 : (buttonID < 8 ? 2 : 3);
 
         if (rightTrack > activeTrack)
         {
@@ -211,7 +210,7 @@ public class GameManager : MonoBehaviour
                 UIManager.instance.showHalo();
             }
         }
-        else 
+        else if( rightTrack < activeTrack)
         {
             if (activeTrack - rightTrack > 1)
             {
@@ -259,6 +258,15 @@ public class GameManager : MonoBehaviour
         UIManager.instance.hideHalo();
     }
 
+    private void rotateToCenter()
+    {
+        if (activeTrack == 1)
+            rotateTrack(false);
+        else if (activeTrack == 3)
+            rotateTrack(true);
+    }
+
+
     public void finishSong()
     {
         StartCoroutine(finish());
@@ -280,12 +288,14 @@ public class GameManager : MonoBehaviour
                 yield return null;
             }
 
+            rotateToCenter();
             soloIsActive = true;
+
             t = 0;
         }
 
 
-        while(t < 20)
+        while (t < 20)
         {
             if (!gamePaused)
                 t += Time.deltaTime;
@@ -294,8 +304,6 @@ public class GameManager : MonoBehaviour
 
         _soloText.GetComponent<RotateText>().deactivate();
         soloIsActive = false;
-        rightTrack = 2;
-        activeTrack = 2;
 
         NoteSpawner.instance.songHasStarted = false;
         UIManager.instance.showEndGame();
