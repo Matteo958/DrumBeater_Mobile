@@ -939,6 +939,8 @@ public class UIManager : MonoBehaviour
         
         fillIcosphere(0);
         _points.GetComponent<Animator>().SetBool("Points", false);
+        AudioListener.pause = false;
+        AudioManager.instance.stopAudio(Audio.AudioType.MT_1);
         AudioManager.instance.playAudio(Audio.AudioType.MT_2, true);
         float t = 0;
         while (Mathf.Abs(_console.localPosition.y - endPosY) > threshold)

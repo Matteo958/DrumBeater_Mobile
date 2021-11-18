@@ -185,7 +185,7 @@ public class AudioManager : MonoBehaviour
         if (job.fade)
         {
             float initial = job.action == AudioAction.START || job.action == AudioAction.RESTART ? 0 : 1;
-            float target = initial == 0 ? 0.2f : 0;
+            float target = initial == 0 ? 0.35f : 0;
             float duration = 1.0f;
             float timer = 0.0f;
 
