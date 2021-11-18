@@ -82,6 +82,14 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _timerPause = default;
     [SerializeField] private Transform _soloText = default;
 
+    // Slider Music and SFX
+    [SerializeField] private Transform _musicSliderConsole = default;
+    [SerializeField] private Transform _sfxSliderConsole = default;
+    [SerializeField] private Transform _musicSliderPause = default;
+    [SerializeField] private Transform _sfxSliderPause = default;
+    [SerializeField] private Transform _musicSliderEndGame = default;
+    [SerializeField] private Transform _sfxSliderEndGame = default;
+
 
     private Vector3 _fogStartPos;
     private bool _isDarkening;
@@ -1309,4 +1317,91 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    
+
+    public void setMusicSliders(Transform slider)
+    {
+        float _sliderValue = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
+        switch (slider.tag)
+        {
+            case "Console":
+                _musicSliderPause.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderEndGame.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderPause.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderEndGame.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderPause.localPosition = new Vector3(_sliderValue * 100, _musicSliderPause.localPosition.y, _musicSliderPause.localPosition.z);
+                _musicSliderEndGame.localPosition = new Vector3(_sliderValue * 100, _musicSliderEndGame.localPosition.y, _musicSliderEndGame.localPosition.z);
+                _musicSliderPause.GetComponent<InteractionSlider>().enabled = true;
+                _musicSliderEndGame.GetComponent<InteractionSlider>().enabled = true;
+                break;
+            case "Pause":
+                _musicSliderEndGame.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderConsole.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderEndGame.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderConsole.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderEndGame.localPosition = new Vector3(_sliderValue * 100, _musicSliderEndGame.localPosition.y, _musicSliderEndGame.localPosition.z);
+                _musicSliderConsole.localPosition = new Vector3(_sliderValue * 0.1f, _musicSliderConsole.localPosition.y, _musicSliderConsole.localPosition.z);
+                _musicSliderEndGame.GetComponent<InteractionSlider>().enabled = true;
+                _musicSliderConsole.GetComponent<InteractionSlider>().enabled = true;
+                break;
+            case "EndGame":
+                _musicSliderPause.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderConsole.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _musicSliderPause.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderConsole.GetComponent<InteractionSlider>().enabled = false;
+                _musicSliderPause.localPosition = new Vector3(_sliderValue * 100, _musicSliderPause.localPosition.y, _musicSliderPause.localPosition.z);
+                _musicSliderConsole.localPosition = new Vector3(_sliderValue * 0.1f, _musicSliderConsole.localPosition.y, _musicSliderConsole.localPosition.z);
+                _musicSliderPause.GetComponent<InteractionSlider>().enabled = true;
+                _musicSliderConsole.GetComponent<InteractionSlider>().enabled = true;
+                break;
+        }
+    }
+
+    public void setSFXSliders(Transform slider)
+    {
+        float _sliderValue = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
+        switch (slider.tag)
+        {
+            case "Console":
+                _sfxSliderPause.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderPause.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderPause.localPosition = new Vector3(_sliderValue * 100, _sfxSliderPause.localPosition.y, _sfxSliderPause.localPosition.z);
+                _sfxSliderEndGame.localPosition = new Vector3(_sliderValue * 100, _sfxSliderEndGame.localPosition.y, _sfxSliderEndGame.localPosition.z);
+                _sfxSliderPause.GetComponent<InteractionSlider>().enabled = true;
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().enabled = true;
+                break;
+            case "Pause":
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderEndGame.localPosition = new Vector3(_sliderValue * 100, _sfxSliderEndGame.localPosition.y, _sfxSliderEndGame.localPosition.z);
+                _sfxSliderConsole.localPosition = new Vector3(_sliderValue * 0.1f, _sfxSliderConsole.localPosition.y, _sfxSliderConsole.localPosition.z);
+                _sfxSliderEndGame.GetComponent<InteractionSlider>().enabled = true;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().enabled = true;
+                break;
+            case "EndGame":
+                _sfxSliderPause.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().HorizontalSliderPercent = _sliderValue;
+                _sfxSliderPause.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().enabled = false;
+                _sfxSliderPause.localPosition = new Vector3(_sliderValue * 100, _sfxSliderPause.localPosition.y, _sfxSliderPause.localPosition.z);
+                _sfxSliderConsole.localPosition = new Vector3(_sliderValue * 0.1f, _sfxSliderConsole.localPosition.y, _sfxSliderConsole.localPosition.z);
+                _sfxSliderPause.GetComponent<InteractionSlider>().enabled = true;
+                _sfxSliderConsole.GetComponent<InteractionSlider>().enabled = true;
+                break;
+        }
+    }
+
+    public void OnContactMusicSlider(Transform slider)
+    {
+        AudioManager.instance.tracks[0].source.volume = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
+    }
+
+    public void OnContactSfxSlider(Transform slider)
+    {
+        AudioManager.instance.tracks[1].source.volume = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
+    }
 }

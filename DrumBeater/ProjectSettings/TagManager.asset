@@ -4,16 +4,16 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Songs
   - StarterAnchor
-  - PanelSong
   - Easy
   - Medium
   - Hard
-  - PanelTutorial
   - ForceField
   - SongChoice
   - TutorialChoice
+  - Console
+  - Pause
+  - EndGame
   layers:
   - Default
   - TransparentFX
