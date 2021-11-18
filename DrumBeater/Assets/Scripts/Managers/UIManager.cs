@@ -241,7 +241,7 @@ public class UIManager : MonoBehaviour
                 GameManager.instance.difficulty = 1;
                 _video.GetComponent<UnityEngine.Video.VideoPlayer>().clip = _videoClipNormal;
 
-                StartCoroutine(open(_panelSongs, true));
+                StartCoroutine(open(_panelSongs));
                 break;
             case "Tutorial":
                 _panelTutorial.SetActive(true);
@@ -249,7 +249,7 @@ public class UIManager : MonoBehaviour
                 _choice = _tutorialChoice;
                 _choiceStartPos = _tutorialChoiceStartPos;
                 _songChoice.GetComponent<Collider>().enabled = false;
-                StartCoroutine(open(_panelTutorial, false));
+                StartCoroutine(open(_panelTutorial));
                 break;
         }
     }
@@ -274,6 +274,7 @@ public class UIManager : MonoBehaviour
         //_panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
         if (_panelContainerActive == _panelSongs)
         {
+            _panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Rigidbody>().isKinematic = true;
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
             {
@@ -286,7 +287,7 @@ public class UIManager : MonoBehaviour
         StartCoroutine(close(_panelContainerActive));
     }
 
-    IEnumerator open(GameObject _panel, bool songs)
+    IEnumerator open(GameObject _panel)
     {
         float t = 0;
         Vector3 _panelArrivingScale = new Vector3(_panel.transform.localScale.x, _panel.transform.localScale.y, 12);
@@ -297,7 +298,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        if (songs)
+        if (_panelContainerActive == _panelSongs)
         {
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
@@ -307,6 +308,7 @@ public class UIManager : MonoBehaviour
                 p.GetComponent<Collider>().enabled = true;
 
             }
+            _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Rigidbody>().isKinematic = false;
         }
 
     }
@@ -321,8 +323,6 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.2f;
             yield return null;
         }
-
-
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
@@ -535,8 +535,7 @@ public class UIManager : MonoBehaviour
                     _buttonQuit.GetComponent<Collider>().enabled = false;
                     _knobMusicSlider.GetComponent<Collider>().enabled = false;
                     _knobSFXSlider.GetComponent<Collider>().enabled = false;
-                    _songChoice.GetComponent<Collider>().enabled = false;
-                    //_tutorialChoice.GetComponent<Collider>().enabled = false;
+                    _choice.GetComponent<Collider>().enabled = false;
 
                     _tracks.gameObject.SetActive(true);
                     _tracks.localEulerAngles = new Vector3(0, 0, 0);
@@ -803,6 +802,7 @@ public class UIManager : MonoBehaviour
                 GameManager.instance.activeTrack = 2;
 
                 _tracks.gameObject.SetActive(true);
+                _tracks.localEulerAngles = new Vector3(0, 0, 0);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                 StartCoroutine(EndGameContainerDown(-542.5f, 0.01f, 0.1f));
@@ -1236,7 +1236,7 @@ public class UIManager : MonoBehaviour
         _songChoice.GetComponent<Collider>().enabled = false;
         _tutorialChoice.GetComponent<Collider>().enabled = false;
 
-        StartCoroutine(open(_panelCredits, false));
+        StartCoroutine(open(_panelCredits));
     }
 
 
@@ -1250,7 +1250,7 @@ public class UIManager : MonoBehaviour
         _songChoice.GetComponent<Collider>().enabled = false;
         _tutorialChoice.GetComponent<Collider>().enabled = false;
 
-        StartCoroutine(open(_panelQuit, false));
+        StartCoroutine(open(_panelQuit));
     }
     #endregion
 
@@ -1317,7 +1317,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    
+    #region Update Music and SFX Sliders
 
     public void setMusicSliders(Transform slider)
     {
@@ -1404,4 +1404,5 @@ public class UIManager : MonoBehaviour
     {
         AudioManager.instance.tracks[1].source.volume = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
     }
+    #endregion
 }
