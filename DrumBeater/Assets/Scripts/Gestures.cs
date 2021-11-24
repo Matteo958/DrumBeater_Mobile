@@ -29,6 +29,16 @@ public class Gestures : MonoBehaviour
     private Vector3 _palmRightStartPos;
     private Vector3 _palmLeftStartPos;
 
+    private static Gestures _instance;
+    public static Gestures instance { get => _instance; }
+
+    private void Awake()
+    {
+        if (_instance != null && _instance != this)
+            Destroy(this.gameObject);
+        else
+            _instance = this;
+    }
 
     private void Update()
     {

@@ -1113,27 +1113,28 @@ public class UIManager : MonoBehaviour
     {
 
         float t = 0;
-        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold)
+        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold && !tutorialGuideIsActive)
         {
             _tutorialGuide.localPosition = Vector3.Lerp(_tutorialGuide.localPosition, new Vector3(_tutorialGuide.localPosition.x, endPosY, _tutorialGuide.localPosition.z), t);
             t += Time.deltaTime * speed;
             yield return null;
         }
         Tutorial.instance.CheckTutorialState();
+        _tutorialPanels.SetActive(true);
         tutorialGuideIsActive = true;
     }
 
     IEnumerator TutorialGuideDown(float endPosY, float threshold, float speed)
     {
-
+        _tutorialPanels.SetActive(false);
         float t = 0;
-        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold)
+        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold && tutorialGuideIsActive)
         {
             _tutorialGuide.localPosition = Vector3.Lerp(_tutorialGuide.localPosition, new Vector3(_tutorialGuide.localPosition.x, endPosY, _tutorialGuide.localPosition.z), t);
             t += Time.deltaTime * speed;
             yield return null;
         }
-        
+        tutorialGuideIsActive = false;
     }
     #endregion
 
@@ -1273,7 +1274,21 @@ public class UIManager : MonoBehaviour
     }
     #endregion
 
-    #region Credits and Quit Button pression methods
+    #region Options, Credits and Quit Button pression methods
+
+    public void OnPressButtonOptions()
+    {
+        if (tutorialGuideIsActive)
+        {
+            Gestures.instance.canThumbUp = false;
+            
+            StartCoroutine(TutorialGuideDown(-2, 0.01f, 0.05f));
+            Tutorial.instance.tutorialState = 0;
+        } 
+        else
+            StartCoroutine(TutorialGuideUp(-0.2f, 0.01f, 0.05f));
+    }
+
     public void OnPressButtonCredits()
     {
         AudioManager.instance.playAudio(Audio.AudioType.ButtonClick);
