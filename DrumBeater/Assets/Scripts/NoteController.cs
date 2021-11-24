@@ -20,8 +20,9 @@ public class NoteController : MonoBehaviour
 
         transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), _fill);
 
-        if (auto && _fill >= 0.97)
+        if (auto && _fill >= 0.93)
             hit(Precision.PERFECT);
+        //GameManager.instance.pause();
         else if (_fill > 1.1)
             miss();
     }
@@ -57,6 +58,7 @@ public class NoteController : MonoBehaviour
 
         GetComponentInParent<ParticleSystemRenderer>().material = GetComponent<Renderer>().material;
         GetComponentInParent<ParticleSystem>().Play();
+        transform.parent = null;
         gameObject.SetActive(false);
     }
 
@@ -69,6 +71,7 @@ public class NoteController : MonoBehaviour
             GameManager.instance.finishSong();
 
         GetComponentInParent<Remover>().callError();
+        transform.parent = null;
         gameObject.SetActive(false);
     }
 
@@ -76,7 +79,7 @@ public class NoteController : MonoBehaviour
     {
         isLastNote = false;
         auto = false;
-        transform.parent = null;
+
         transform.localScale = new Vector3(0.001f, 1, 0.001f);
     }
 }

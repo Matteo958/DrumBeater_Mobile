@@ -55,6 +55,19 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    public void reset()
+    {
+        for (int i = 0; i < amountToPool; i++)
+        {
+            if (pooledObjs[i].activeInHierarchy)
+            {
+                pooledObjs[i].transform.parent = null;
+                pooledObjs[i].SetActive(false);
+            }
+
+        }
+    }
+
     //public void deactivateAuto()
     //{
     //    for (int i = 0; i < amountToPool; i++)

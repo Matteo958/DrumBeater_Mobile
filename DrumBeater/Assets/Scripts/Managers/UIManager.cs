@@ -91,6 +91,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _sfxSliderEndGame = default;
 
 
+    [SerializeField] private Transform _tutorialGuide = default;
+    [SerializeField] private GameObject _tutorialPanels = default;
+    public bool tutorialGuideIsActive;
+
     private Vector3 _fogStartPos;
     private bool _isDarkening;
     private bool _showingHalo = false;
@@ -158,6 +162,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
+        tutorialGuideIsActive = false;
         _songChoiceIsFloating = _tutorialChoiceIsFloating = false;
 
         _choiceStartScale = _songChoice.transform.localScale;
@@ -174,6 +179,8 @@ public class UIManager : MonoBehaviour
         //_panelStartScaleX = _panelQuit.transform.localScale.x;
         _panelQuit.SetActive(false);
         _panelCredits.SetActive(false);
+
+        StartCoroutine(TutorialGuideUp(-0.2f, 0.01f, 0.05f));
     }
 
     private void Update()
@@ -181,10 +188,18 @@ public class UIManager : MonoBehaviour
         if (hitPrecision.color.a > 0)
         {
             Color newColor = hitPrecision.color;
-            newColor.a -= Time.deltaTime * 3;
+            newColor.a -= Time.deltaTime * 1.5f;
             hitPrecision.color = newColor;
         }
 
+        if (tutorialGuideIsActive)
+        {
+            float pingPong = Mathf.PingPong(Time.time * 1f, 1);
+            _tutorialGuide.transform.localPosition = Vector3.Lerp(new Vector3(_tutorialGuide.transform.localPosition.x, _tutorialGuide.transform.localPosition.y + 0.0005f, _tutorialGuide.transform.localPosition.z),
+                                                            new Vector3(_tutorialGuide.transform.localPosition.x, _tutorialGuide.transform.localPosition.y - 0.0005f, _tutorialGuide.transform.localPosition.z), pingPong);
+        }
+
+        
     }
 
     public void fillIcosphere(float fill)
@@ -289,6 +304,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator open(GameObject _panel)
     {
+        _tutorialPanels.SetActive(false);
         float t = 0;
         Vector3 _panelArrivingScale = new Vector3(_panel.transform.localScale.x, _panel.transform.localScale.y, 12);
         while (Mathf.Abs(_panel.transform.localScale.z - _panelArrivingScale.z) > 0.5f && _panelOpening)
@@ -326,7 +342,7 @@ public class UIManager : MonoBehaviour
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
-
+        _tutorialPanels.SetActive(true);
     }
 
     //Change directional light and main camera color
@@ -537,7 +553,7 @@ public class UIManager : MonoBehaviour
                     _knobSFXSlider.GetComponent<Collider>().enabled = false;
                     _choice.GetComponent<Collider>().enabled = false;
 
-                    _tracks.gameObject.SetActive(true);
+                    
                     _tracks.localEulerAngles = new Vector3(0, 0, 0);
 
                     _manhole.GetComponent<Animator>().SetBool("Manhole", true);
@@ -681,7 +697,7 @@ public class UIManager : MonoBehaviour
 
     public void showEndGame()
     {
-        _endGamePanel.gameObject.SetActive(true);
+        //_endGamePanel.gameObject.SetActive(true);
 
         switch (GameManager.instance.difficulty)
         {
@@ -731,7 +747,7 @@ public class UIManager : MonoBehaviour
         _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
         _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
 
-        _pauseContainer.gameObject.SetActive(true);
+        //_pauseContainer.gameObject.SetActive(true);
         _isDarkening = true;
 
         StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
@@ -750,7 +766,7 @@ public class UIManager : MonoBehaviour
                 _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
                 _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
 
-                _tracks.gameObject.SetActive(true);
+                
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
@@ -763,7 +779,7 @@ public class UIManager : MonoBehaviour
 
                 GameManager.instance.activeTrack = 2;
 
-                _tracks.gameObject.SetActive(true);
+                
                 _tracks.localEulerAngles = new Vector3(0, 0, 0);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
@@ -771,7 +787,7 @@ public class UIManager : MonoBehaviour
                 StartCoroutine(TracksUp(-540.33f, 0.01f, 0.1f, true));
                 break;
             case PauseOption.ReturnPause:
-                _console.gameObject.SetActive(true);
+                //_console.gameObject.SetActive(true);
 
                 GameManager.instance.levelStarted = false;
                 GameManager.instance.activeTrack = 2;
@@ -801,7 +817,7 @@ public class UIManager : MonoBehaviour
 
                 GameManager.instance.activeTrack = 2;
 
-                _tracks.gameObject.SetActive(true);
+            
                 _tracks.localEulerAngles = new Vector3(0, 0, 0);
                 _isDarkening = false;
                 StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
@@ -936,10 +952,11 @@ public class UIManager : MonoBehaviour
 
     IEnumerator ConsoleUp(float endPosY, float threshold, float speed)
     {
-        
+        ObjectPool.instance.reset();
         fillIcosphere(0);
         _points.GetComponent<Animator>().SetBool("Points", false);
         AudioListener.pause = false;
+        NoteSpawner.instance.songHasStarted = false;
         AudioManager.instance.stopAudio(Audio.AudioType.MT_1);
         AudioManager.instance.playAudio(Audio.AudioType.MT_2, true);
         float t = 0;
@@ -968,7 +985,7 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
 
-        _console.gameObject.SetActive(false);
+        //_console.gameObject.SetActive(false);
     }
 
     IEnumerator TracksUp(float endPosY, float threshold, float speed, bool levelStarted)
@@ -976,7 +993,7 @@ public class UIManager : MonoBehaviour
 
         if (levelStarted)
         {
-            
+            ObjectPool.instance.reset();
             GameManager.instance.levelStarted = true;
             NoteSpawner.instance.reset();
             GameManager.instance.startSong();
@@ -1024,8 +1041,7 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
-
-        _tracks.gameObject.SetActive(false);
+        
     }
 
     IEnumerator PauseContainerUp(float endPosY, float threshold, float speed)
@@ -1045,6 +1061,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator PauseContainerDown(float endPosY, float threshold, float speed)
     {
+        
         float t = 0;
         while (Mathf.Abs(_pauseContainer.localPosition.y - endPosY) > threshold)
         {
@@ -1052,12 +1069,12 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+        _pauseContinueText.GetChild(1).GetComponent<Image>().fillAmount = 0;
+        _pauseRestartText.GetChild(1).GetComponent<Image>().fillAmount = 0;
+        _pauseReturnText.GetChild(1).GetComponent<Image>().fillAmount = 0;
 
-        _pauseContinueText.GetComponent<Image>().fillAmount = 0;
-        _pauseRestartText.GetComponent<Image>().fillAmount = 0;
-        _pauseReturnText.GetComponent<Image>().fillAmount = 0;
 
-        _pauseContainer.gameObject.SetActive(false);
+        //_pauseContainer.gameObject.SetActive(false);
     }
 
     IEnumerator EndGameContainerUp(float endPosY, float threshold, float speed)
@@ -1078,6 +1095,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator EndGameContainerDown(float endPosY, float threshold, float speed)
     {
+        
         float t = 0;
         while (Mathf.Abs(_endGamePanel.localPosition.y - endPosY) > threshold)
         {
@@ -1085,9 +1103,37 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
+        _endGameRestartText.GetChild(1).GetComponent<Image>().fillAmount = 0;
+        _endGameReturnText.GetChild(1).GetComponent<Image>().fillAmount = 0;
 
+        //_endGamePanel.gameObject.SetActive(false);
+    }
 
-        _endGamePanel.gameObject.SetActive(false);
+    IEnumerator TutorialGuideUp(float endPosY, float threshold, float speed)
+    {
+
+        float t = 0;
+        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold)
+        {
+            _tutorialGuide.localPosition = Vector3.Lerp(_tutorialGuide.localPosition, new Vector3(_tutorialGuide.localPosition.x, endPosY, _tutorialGuide.localPosition.z), t);
+            t += Time.deltaTime * speed;
+            yield return null;
+        }
+        Tutorial.instance.CheckTutorialState();
+        tutorialGuideIsActive = true;
+    }
+
+    IEnumerator TutorialGuideDown(float endPosY, float threshold, float speed)
+    {
+
+        float t = 0;
+        while (Mathf.Abs(_tutorialGuide.localPosition.y - endPosY) > threshold)
+        {
+            _tutorialGuide.localPosition = Vector3.Lerp(_tutorialGuide.localPosition, new Vector3(_tutorialGuide.localPosition.x, endPosY, _tutorialGuide.localPosition.z), t);
+            t += Time.deltaTime * speed;
+            yield return null;
+        }
+        
     }
     #endregion
 

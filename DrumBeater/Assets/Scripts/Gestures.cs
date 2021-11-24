@@ -24,8 +24,20 @@ public class Gestures : MonoBehaviour
 
     private bool _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, _rotationStarted;
 
+    public bool canThumbUp = true;
+
     private Vector3 _palmRightStartPos;
     private Vector3 _palmLeftStartPos;
+
+
+    private void Update()
+    {
+        //Debug.Log(Vector3.Angle(Vector3.up, _thumbRightEnd.transform.right) + " - " +
+        //    Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) + " - " +
+        //    Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) + " - " +
+        //    Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) + " - " +
+        //    Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position));
+    }
 
     #region Clapping PowerUp
     public void ActivateHandsLookingToEachOther()
@@ -245,4 +257,44 @@ public class Gestures : MonoBehaviour
             GameManager.instance.rotateTrack(false);        
     }
     #endregion
+
+    #region Thumb Up
+    public void ThumbUp()
+    {
+        Debug.Log("OK");
+        StartCoroutine(CheckThumbUp());
+    }
+
+    IEnumerator CheckThumbUp()
+    {
+        while (canThumbUp)
+        {
+            UpdateThumbUp();
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    private void UpdateThumbUp()
+    {
+        if ((Vector3.Angle(Vector3.up, _thumbRightEnd.transform.right) < 30
+            && Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f) ||
+            (Vector3.Angle(Vector3.up, -_thumbLeftEnd.transform.right) < 30
+            && Vector3.Distance(_palmLeft.position, _indexLeftEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmLeft.position, _middleLeftEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmLeft.position, _ringLeftEnd.transform.position) < 0.05f
+            && Vector3.Distance(_palmLeft.position, _pinkyLeftEnd.transform.position) < 0.05f))
+        {
+            
+            Debug.Log("THUMB UP");
+            canThumbUp = false;
+            Tutorial.instance.tutorialState++;
+            Tutorial.instance.CheckTutorialState();
+        }
+    }
+    #endregion
+
+   
 }
