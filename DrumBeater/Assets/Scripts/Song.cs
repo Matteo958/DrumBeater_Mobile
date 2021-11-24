@@ -10,13 +10,14 @@ public class Song : MonoBehaviour
     public Audio.AudioType type;
     public MidiFile midiFile;
     public float songDelayInSeconds;
-    
+    public bool tutorial;
+
     public string fileLocation;
-    
+
     void Start()
     {
         ReadFromFile();
-    }   
+    }
 
     private void ReadFromFile()
     {
@@ -29,9 +30,10 @@ public class Song : MonoBehaviour
         var notes = midiFile.GetNotes();
         Note[] array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
         notes.CopyTo(array, 0);
-        Debug.Log(Application.streamingAssetsPath + "/" + fileLocation);
-        Debug.Log(array.Length);
-        NoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array,bpm);
+        if (tutorial)
+            NoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array, bpm);
+        else
+            TutorialNoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array, bpm);
 
         Invoke(nameof(StartSong), songDelayInSeconds);
     }
