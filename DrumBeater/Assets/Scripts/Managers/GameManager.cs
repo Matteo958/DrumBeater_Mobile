@@ -160,8 +160,9 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponent<Renderer>().material = _buttonTrackPressed;
         }
-        else if (button.GetChild(1).GetComponent<NoteController>().press())
+        else if (tutorial? button.GetChild(1).GetComponent<TutorialNote>().press(): button.GetChild(1).GetComponent<NoteController>().press())
         {
+            
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponentInParent<ParticleSystem>().Play();
         }
@@ -321,5 +322,12 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
         _rotating = false;
+        if (tutorial)
+        {
+            Tutorial.instance.tutorialState++;
+            Tutorial.instance.CheckTutorialState();
+        }
+            
+
     }
 }

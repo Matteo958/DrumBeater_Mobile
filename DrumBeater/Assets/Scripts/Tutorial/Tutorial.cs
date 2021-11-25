@@ -59,6 +59,7 @@ public class Tutorial : MonoBehaviour
                 break;
             case 3:
                 //one note
+                _startText.SetActive(false);
                 _noteText.SetActive(true);
                 StartCoroutine(spawnFirstNote());
                 Gestures.instance.canThumbUp = true;
@@ -82,8 +83,9 @@ public class Tutorial : MonoBehaviour
                 //pause
                 _multipleNotesText.SetActive(false);
                 _pauseText.SetActive(true);
-                Gestures.instance.canThumbUp = true;
-                Gestures.instance.ThumbUp();
+                Gestures.instance.canCloseHand = true;
+                //Gestures.instance.canThumbUp = true;
+                //Gestures.instance.ThumbUp();
                 break;
             case 7:
                 //auto
@@ -158,7 +160,7 @@ public class Tutorial : MonoBehaviour
         while (tutorialState == 3)
         {
             TutorialNoteSpawner.instance.spawnNote(4);
-            yield return new WaitForSeconds(15);
+            yield return new WaitForSeconds(7);
         }
     }
 

@@ -205,6 +205,9 @@ public class Gestures : MonoBehaviour
             _handOpenRight = false;
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
                 GameManager.instance.pause();
+            else if (GameManager.instance.tutorial)
+                UIManager.instance.showPauseTutorialPanel();
+
         }
     }
 

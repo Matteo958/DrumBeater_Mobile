@@ -13,6 +13,7 @@ public class TutorialNote : MonoBehaviour
     
     public void startNote()
     {
+        Debug.Log("FILL: " + _fill);
         StartCoroutine(start());
     }
 
@@ -20,7 +21,7 @@ public class TutorialNote : MonoBehaviour
     {
         while (true)
         {
-            _fill += Time.deltaTime * 2;
+            _fill += Time.deltaTime * 0.3f;
             transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), _fill);
             if (auto && _fill >= 0.93)
             {

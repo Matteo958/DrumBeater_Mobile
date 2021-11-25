@@ -48,7 +48,7 @@ public class TutorialNoteSpawner : MonoBehaviour
 
     public void spawnNote(int buttonId)
     {
-        spawnedNote = ObjectPool.instance.getPooledObj();
+        spawnedNote = ObjectPool.instance.getPooledObjTutorial();
 
         spawnedNote.transform.SetParent(trackRemoversMap[buttonId].transform);
         spawnedNote.transform.localRotation = Quaternion.identity;
