@@ -26,14 +26,10 @@ public class Song : MonoBehaviour
 
     public void GetDataFromMidi()
     {
-        Debug.Log(midiFile != null);
         var notes = midiFile.GetNotes();
         Note[] array = new Melanchall.DryWetMidi.Interaction.Note[notes.Count];
         notes.CopyTo(array, 0);
-        if (tutorial)
-            NoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array, bpm);
-        else
-            TutorialNoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array, bpm);
+        NoteSpawner.instance.setNotes(midiFile.GetTempoMap(), array, bpm);
 
         Invoke(nameof(StartSong), songDelayInSeconds);
     }

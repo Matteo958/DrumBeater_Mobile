@@ -161,11 +161,6 @@ public class NoteSpawner : MonoBehaviour
         ObjectPool.instance.activateAuto(autoModeNoteMaterial);
     }
 
-    //public void deactivateAutoMode()
-    //{
-    //    ObjectPool.instance.deactivateAuto();
-    //}
-
     public Transform getButton(int id)
     {
         return trackRemoversMap[id].transform;

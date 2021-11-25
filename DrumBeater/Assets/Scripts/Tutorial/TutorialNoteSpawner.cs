@@ -5,9 +5,6 @@ using Melanchall.DryWetMidi.Interaction;
 
 public class TutorialNoteSpawner : MonoBehaviour
 {
-    public List<float> timeStamps = new List<float>();
-    [Tooltip("The gap in beats between the note's spawn and its actual beat time")]
-    [HideInInspector] public float noteSpawnGapInBeats;
     [Tooltip("Heights of the note")]
     [SerializeField] private float noteHeight = 1.3f;
     [Tooltip("The first track")]
@@ -18,23 +15,9 @@ public class TutorialNoteSpawner : MonoBehaviour
     [SerializeField] private List<Material> noteMaterials;
     [Tooltip("The color of the note during auto perfect")]
     [SerializeField] private Material autoModeNoteMaterial;
-
+    
     public Dictionary<int, Remover> trackRemoversMap = new Dictionary<int, Remover>();
-    private List<int> notesPosition = new List<int>();
 
-    // The number of seconds for each song beat
-    private float secPerBeat;
-    // Current song position, in seconds
-    public float songPosition;
-    // Current song position, in beats
-    [HideInInspector] public float songPosInBeats;
-    // Check if the song is already started
-    [HideInInspector] public bool tutorialStarted = false;
-    // How many seconds have passed since the song started
-    private float dspSongTime;
-    // The index of the note to spawn
-    private int spawnIndex = 0;
-    private int lastIndex = 0;
     // Spawned note
     private GameObject spawnedNote;
 
@@ -63,97 +46,25 @@ public class TutorialNoteSpawner : MonoBehaviour
         }
     }
 
-    public void startSong(Song song)
-    {
-        spawnIndex = 0;
-        noteSpawnGapInBeats = song.spawnGapInBeat;
-
-        // Record the time when the music starts
-        dspSongTime = (float)AudioSettings.dspTime;
-
-        AudioManager.instance.playAudio(song.type);
-
-        StartCoroutine(wait());
-    }
-    private IEnumerator wait()
-    {
-        yield return new WaitForSeconds(1);
-        tutorialStarted = true;
-    }
-
-    void Update()
-    {
-        if (!tutorialStarted)
-            return;
-
-        // Determine how many seconds since the song started
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime);
-        // Determine how many beats since the song started
-        songPosInBeats = songPosition / secPerBeat;
-
-        if (spawnIndex == timeStamps.Count)
-            return;
-
-        // Check if there are still notes for the song and if the note has to be spawned yet
-        if (songPosInBeats >= timeStamps[spawnIndex] - noteSpawnGapInBeats)
-        {
-            if (notesPosition[spawnIndex] > 7)
-                lastIndex = spawnIndex + 1;
-            else            
-                spawnNote();
-            
-            spawnIndex++;
-        }
-    }
-
-    private void spawnNote()
+    public void spawnNote(int buttonId)
     {
         spawnedNote = ObjectPool.instance.getPooledObj();
 
-        if (spawnedNote != null)
+        spawnedNote.transform.SetParent(trackRemoversMap[buttonId].transform);
+        spawnedNote.transform.localRotation = Quaternion.identity;
+        spawnedNote.transform.localPosition = Vector3.zero + transform.up * noteHeight;
+        spawnedNote.SetActive(true);
+
+        if (GameManager.instance.autoMode)
         {
-            spawnedNote.transform.SetParent(trackRemoversMap[notesPosition[spawnIndex]].transform);
-            spawnedNote.transform.localRotation = Quaternion.identity;
-            spawnedNote.transform.localPosition = Vector3.zero + transform.up * noteHeight;
-            spawnedNote.SetActive(true);
-            
-            spawnedNote.GetComponent<NoteController>().bpmTime = timeStamps[spawnIndex];
-            if (GameManager.instance.autoMode)
-            {
-                spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
-                spawnedNote.GetComponent<NoteController>().auto = true;
-                spawnedNote.GetComponentInParent<ParticleSystemRenderer>().material = autoModeNoteMaterial;
-            }
-            else
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
+            spawnedNote.GetComponent<Renderer>().material = autoModeNoteMaterial;
+            spawnedNote.GetComponent<TutorialNote>().auto = true;
+            spawnedNote.GetComponentInParent<ParticleSystemRenderer>().material = autoModeNoteMaterial;
         }
         else
-            Debug.LogError("Increase object pool number");
+            spawnedNote.GetComponent<Renderer>().material = noteMaterials[buttonId % 5];
 
-        if (spawnIndex < notesPosition.Count - 1)
-            StartCoroutine(GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]));
+        spawnedNote.GetComponent<TutorialNote>().startNote();
     }
 
-    public void setNotes(TempoMap tempo, Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)
-    {
-        // Calculate the number of seconds in each beat
-        secPerBeat = 60f / bpm;
-
-        foreach (Note note in array)
-        {
-            MetricTimeSpan metricTimeSpan = TimeConverter.ConvertTo<MetricTimeSpan>(note.Time, tempo);
-            timeStamps.Add((metricTimeSpan.Minutes * 60f + metricTimeSpan.Seconds + metricTimeSpan.Milliseconds / 1000f) / secPerBeat);
-            notesPosition.Add((int)note.NoteName);
-        }
-    }
-
-    public void activateAutoMode()
-    {
-        ObjectPool.instance.activateAuto(autoModeNoteMaterial);
-    }
-
-    public void goBack()
-    {
-        spawnIndex = lastIndex;
-    }
 }

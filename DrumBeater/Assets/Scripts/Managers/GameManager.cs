@@ -7,13 +7,14 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Song _songEasy = default;
     [SerializeField] private Song _songMedium = default;
     [SerializeField] private Song _songExpert = default;
+    [SerializeField] private Song _tutorial = default;
 
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
 
     [SerializeField] private GameObject _tracks = default;
-    [SerializeField] private GameObject _soloText = default;
+    [SerializeField] public GameObject soloText = default;
 
     [SerializeField] private Light _dirLight = default;
     [SerializeField] private Color _pauseDirLightColor = default;
@@ -39,9 +40,10 @@ public class GameManager : MonoBehaviour
 
     // Check if the level is already started
     public bool levelStarted = false;
-    private bool soloIsActive = false;
+    public bool soloIsActive = false;
     private int rightTrack = 2;
     private bool _rotating = false;
+    public bool tutorial = false;
 
 
     private Color _startDirLightColor;
@@ -114,7 +116,6 @@ public class GameManager : MonoBehaviour
             StartCoroutine(autoModeCoroutine());
             StartCoroutine(UIManager.instance.emptyIcosphere());
         }
-
     }
 
     private IEnumerator autoModeCoroutine()
@@ -123,10 +124,13 @@ public class GameManager : MonoBehaviour
         hasAutoMode = false;
         NoteSpawner.instance.activateAutoMode();
 
-        yield return new WaitForSeconds(autoModeTime);
+        if (!tutorial)
+        {
+            yield return new WaitForSeconds(autoModeTime);
 
-        autoMode = false;
-        PointsManager.instance.comboHitsAuto = 0;
+            autoMode = false;
+            PointsManager.instance.comboHitsAuto = 0;
+        }
     }
 
     public void pause()
@@ -149,6 +153,7 @@ public class GameManager : MonoBehaviour
     public void OnPressButtonTrack(Transform button)
     {
         AudioManager.instance.playAudio(Audio.AudioType.HitNote);
+
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -202,7 +207,7 @@ public class GameManager : MonoBehaviour
                 UIManager.instance.showHalo();
             }
         }
-        else if( rightTrack < activeTrack)
+        else if (rightTrack < activeTrack)
         {
             if (activeTrack - rightTrack > 1)
             {
@@ -258,7 +263,6 @@ public class GameManager : MonoBehaviour
             rotateTrack(false);
     }
 
-
     public void finishSong()
     {
         StartCoroutine(finish());
@@ -271,7 +275,7 @@ public class GameManager : MonoBehaviour
 
         if (PointsManager.instance.hitsPercentage > percentageToSolo)
         {
-            _soloText.GetComponent<RotateText>().activate();
+            soloText.GetComponent<RotateText>().activate();
 
             while (t < 2)
             {
@@ -286,7 +290,6 @@ public class GameManager : MonoBehaviour
             t = 0;
         }
 
-
         while (t < 20)
         {
             if (!gamePaused)
@@ -294,8 +297,8 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
-        _soloText.GetComponent<RotateText>().deactivate();
-        _soloText.transform.localEulerAngles = new Vector3(0, 18, 0);
+        soloText.GetComponent<RotateText>().deactivate();
+        soloText.transform.localEulerAngles = new Vector3(0, 18, 0);
         soloIsActive = false;
 
         NoteSpawner.instance.songHasStarted = false;

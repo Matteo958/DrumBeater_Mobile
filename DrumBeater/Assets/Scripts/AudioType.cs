@@ -6,7 +6,8 @@
         MT_1,
         MT_2,
         ButtonClick,
-        HitNote
+        HitNote,
+        Tutorial
         //....
     }
 }

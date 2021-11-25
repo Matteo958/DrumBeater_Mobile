@@ -25,6 +25,7 @@ public class Gestures : MonoBehaviour
     private bool _handOpenLeft, _handOpenRight, _fistLeft, _fistRight, _rotationStarted;
 
     public bool canThumbUp = true;
+    public bool canCloseHand = false;
 
     private Vector3 _palmRightStartPos;
     private Vector3 _palmLeftStartPos;
@@ -38,15 +39,6 @@ public class Gestures : MonoBehaviour
             Destroy(this.gameObject);
         else
             _instance = this;
-    }
-
-    private void Update()
-    {
-        //Debug.Log(Vector3.Angle(Vector3.up, _thumbRightEnd.transform.right) + " - " +
-        //    Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) + " - " +
-        //    Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) + " - " +
-        //    Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) + " - " +
-        //    Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position));
     }
 
     #region Clapping PowerUp
@@ -82,9 +74,17 @@ public class Gestures : MonoBehaviour
 
     #region Left Fist
     public void ActivateFistLeft()
-    {        
-        _fistLeft = true;
-        StartCoroutine(CheckHandOpenLeft());
+    {
+        if (!GameManager.instance.tutorial)
+        {
+            _fistLeft = true;
+            StartCoroutine(CheckHandOpenLeft());
+        }
+        else if (canCloseHand)
+        {
+            _fistLeft = true;
+            StartCoroutine(CheckHandOpenLeft());
+        }
     }
 
     public void DeactivateFistLeft()
@@ -144,9 +144,16 @@ public class Gestures : MonoBehaviour
     #region Right Fist
     public void ActivateFistRight()
     {
-        _fistRight = true;
-
-        StartCoroutine(CheckHandOpenRight());
+        if (!GameManager.instance.tutorial)
+        {
+            _fistRight = true;
+            StartCoroutine(CheckHandOpenRight());
+        }
+        else if (canCloseHand)
+        {
+            _fistRight = true;
+            StartCoroutine(CheckHandOpenRight());
+        }
     }
 
     public void DeactivateFistRight()
@@ -264,7 +271,7 @@ public class Gestures : MonoBehaviour
     private void UpdatePalmPosLeftToRight(float displacement)
     {
         if (_palmLeft.transform.localPosition.x > _palmLeftStartPos.x + displacement)
-            GameManager.instance.rotateTrack(false);        
+            GameManager.instance.rotateTrack(false);
     }
     #endregion
 
@@ -297,7 +304,7 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmLeft.position, _ringLeftEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmLeft.position, _pinkyLeftEnd.transform.position) < 0.05f))
         {
-            
+
             Debug.Log("THUMB UP");
             canThumbUp = false;
             Tutorial.instance.tutorialState++;
@@ -306,5 +313,5 @@ public class Gestures : MonoBehaviour
     }
     #endregion
 
-   
+
 }

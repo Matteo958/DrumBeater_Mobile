@@ -10,6 +10,14 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private GameObject _mainMenuText3 = default;
     [SerializeField] private GameObject _mainMenuText4 = default;
 
+    [SerializeField] private GameObject _noteText = default;
+    [SerializeField] private GameObject _changeTrackText = default;
+    [SerializeField] private GameObject _multipleNotesText = default;
+    [SerializeField] private GameObject _pauseText = default;
+    [SerializeField] private GameObject _autoText = default;
+    [SerializeField] private GameObject _soloText = default;
+    [SerializeField] private GameObject _finalText = default;
+
     [SerializeField] private Transform _gestures = default;
     public int tutorialState;
 
@@ -21,7 +29,12 @@ public class Tutorial : MonoBehaviour
         if (_instance != null && _instance != this)
             Destroy(this.gameObject);
         else
-            _instance = this;        
+            _instance = this;
+    }
+
+    void Start()
+    {
+        tutorialState = 0;
     }
 
     public void CheckTutorialState()
@@ -43,12 +56,67 @@ public class Tutorial : MonoBehaviour
                 break;
             case 2:
                 UIManager.instance.OnPressButtonOptions();
-               
+                break;
+            case 3:
+                //one note
+                _noteText.SetActive(true);
+                StartCoroutine(spawnFirstNote());
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 4:
+                //change track
+                _noteText.SetActive(false);
+                _changeTrackText.SetActive(true);
+                GameManager.instance.verifyTrack(1);
+                break;
+            case 5:
+                //three notes
+                _changeTrackText.SetActive(false);
+                _multipleNotesText.SetActive(true);
+                StartCoroutine(spawnThreeNotes());
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 6:
+                //pause
+                _multipleNotesText.SetActive(false);
+                _pauseText.SetActive(true);
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 7:
+                //auto
+                _pauseText.SetActive(false);
+                _autoText.SetActive(true);
+                StartCoroutine(spawnAutoNotes());
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 8:
+                //solo
+                _autoText.SetActive(false);
+                _soloText.SetActive(true);
+                GameManager.instance.soloText.GetComponent<RotateText>().activate();
+                GameManager.instance.soloIsActive = true;
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 9:
+                //end
+                _soloText.SetActive(false);
+                _finalText.SetActive(true);
+                Gestures.instance.canThumbUp = true;
+                Gestures.instance.ThumbUp();
+                break;
+            case 10:
+                //close tutorial
+                _finalText.SetActive(false);
                 break;
         }
     }
 
-    IEnumerator menuTutorialCoroutine()
+    private IEnumerator menuTutorialCoroutine()
     {
         float t = 0;
 
@@ -85,10 +153,45 @@ public class Tutorial : MonoBehaviour
         Gestures.instance.ThumbUp();
     }
 
-    
-
-    void Start()
+    private IEnumerator spawnFirstNote()
     {
-        tutorialState = 0;
+        while (tutorialState == 3)
+        {
+            TutorialNoteSpawner.instance.spawnNote(4);
+            yield return new WaitForSeconds(15);
+        }
+    }
+
+    private IEnumerator spawnThreeNotes()
+    {
+        while (tutorialState == 5)
+        {
+            TutorialNoteSpawner.instance.spawnNote(0);
+            yield return new WaitForSeconds(2);
+            TutorialNoteSpawner.instance.spawnNote(1);
+            yield return new WaitForSeconds(2);
+            TutorialNoteSpawner.instance.spawnNote(2);
+            yield return new WaitForSeconds(15);
+        }
+    }
+
+    private IEnumerator spawnAutoNotes()
+    {
+        while (tutorialState == 7)
+        {
+            GameManager.instance.hasAutoMode = true;
+            for (int i = 0; i < 10; i++)
+            {
+                if (tutorialState != 7)
+                    yield break;
+
+                TutorialNoteSpawner.instance.spawnNote((int)Random.Range(0, 2));
+                yield return new WaitForSeconds(Random.Range(2, 3));
+            }
+            GameManager.instance.autoMode = false;
+            PointsManager.instance.comboHitsAuto = 0;
+
+            yield return new WaitForSeconds(15);
+        }
     }
 }
