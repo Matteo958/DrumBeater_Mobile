@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
-    
+
     [SerializeField] public GameObject soloText = default;
 
     [SerializeField] private Light _dirLight = default;
@@ -44,6 +44,8 @@ public class GameManager : MonoBehaviour
     private bool _rotating = false;
     public bool tutorial = false;
 
+    public Audio.AudioType buttonSFX = Audio.AudioType.HitNote1;
+
 
     private Color _startDirLightColor;
     private Vector3 _fogStartPos;
@@ -64,7 +66,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopAudio(Audio.AudioType.MT_2, true);
         gamePaused = false;
         AudioListener.pause = false;
-       
+
         switch (difficulty)
         {
             case 0:
@@ -121,7 +123,7 @@ public class GameManager : MonoBehaviour
     {
         autoMode = true;
         hasAutoMode = false;
-        
+
 
         if (!tutorial)
         {
@@ -156,7 +158,6 @@ public class GameManager : MonoBehaviour
 
     public void OnPressButtonTrack(Transform button)
     {
-        AudioManager.instance.playAudio(Audio.AudioType.HitNote);
 
         if (soloIsActive)
         {
@@ -166,7 +167,7 @@ public class GameManager : MonoBehaviour
         }
         else if (tutorial ? button.GetChild(1).GetComponent<TutorialNote>().press() : button.GetChild(1).GetComponent<NoteController>().press())
         {
-
+            AudioManager.instance.playAudio(buttonSFX);
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponentInParent<ParticleSystem>().Play();
         }
@@ -175,7 +176,6 @@ public class GameManager : MonoBehaviour
     public void OnPressButtonTrackNoVR(int buttonPressed)
     {
         Transform button = NoteSpawner.instance.getButton(buttonPressed);
-        AudioManager.instance.playAudio(Audio.AudioType.HitNote);
 
         if (soloIsActive)
         {
@@ -183,8 +183,10 @@ public class GameManager : MonoBehaviour
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
         }
         else if (button.childCount > 1 && button.GetChild(1).GetComponent<NoteController>().press())
+        {
+            AudioManager.instance.playAudio(buttonSFX);
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
-
+        }
     }
 
     public void OnUnpressButtonTrack(Transform button)
@@ -318,6 +320,7 @@ public class GameManager : MonoBehaviour
         float startRotation = tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;
         float t = 0;
+
         while (t < duration)
         {
             t += Time.deltaTime;
@@ -325,13 +328,13 @@ public class GameManager : MonoBehaviour
             tracks.transform.eulerAngles = new Vector3(tracks.transform.eulerAngles.x, yRotation, tracks.transform.eulerAngles.z);
             yield return null;
         }
+
         _rotating = false;
+
         if (tutorial && Tutorial.instance.tutorialState < 7)
         {
             Tutorial.instance.tutorialState++;
             Tutorial.instance.CheckTutorialState();
         }
-
-
     }
 }
