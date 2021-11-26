@@ -69,7 +69,7 @@ public class Tutorial : MonoBehaviour
                 //change track
                 _noteText.SetActive(false);
                 _changeTrackText.SetActive(true);
-                GameManager.instance.verifyTrack(1);
+                StartCoroutine(GameManager.instance.verifyTrack(1));
                 break;
             case 5:
                 //three notes
@@ -169,11 +169,11 @@ public class Tutorial : MonoBehaviour
         while (tutorialState == 5)
         {
             TutorialNoteSpawner.instance.spawnNote(0);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             TutorialNoteSpawner.instance.spawnNote(1);
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
             TutorialNoteSpawner.instance.spawnNote(2);
-            yield return new WaitForSeconds(15);
+            yield return new WaitForSeconds(7);
         }
     }
 

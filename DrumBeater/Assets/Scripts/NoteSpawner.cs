@@ -133,14 +133,14 @@ public class NoteSpawner : MonoBehaviour
                 spawnedNote.GetComponent<NoteController>().auto = true;
                 spawnedNote.GetComponentInParent<ParticleSystemRenderer>().material = autoModeNoteMaterial;
             }
-            else            
-                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];               
+            else
+                spawnedNote.GetComponent<Renderer>().material = noteMaterials[notesPosition[spawnIndex] % 5];
         }
         else
             Debug.LogError("Increase object pool number");
 
         if (spawnIndex < notesPosition.Count - 1)
-        StartCoroutine(GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]));
+            StartCoroutine(GameManager.instance.verifyTrack(notesPosition[spawnIndex + 1]));
     }
 
     public void setNotes(TempoMap tempo, Melanchall.DryWetMidi.Interaction.Note[] array, int bpm)
