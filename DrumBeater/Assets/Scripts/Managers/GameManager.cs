@@ -157,7 +157,7 @@ public class GameManager : MonoBehaviour
 
     public void OnPressButtonTrack(Transform button)
     {
-
+        AudioManager.instance.playAudio(buttonSFX);
         if (soloIsActive)
         {
             PointsManager.instance.finalBonusHit();
@@ -166,7 +166,7 @@ public class GameManager : MonoBehaviour
         }
         else if (tutorial ? button.GetChild(1).GetComponent<TutorialNote>().press() : button.GetChild(1).GetComponent<NoteController>().press())
         {
-            AudioManager.instance.playAudio(buttonSFX);
+            
             Instantiate(_forceField, new Vector3(Random.Range(-3.0f, 3.0f), -2.2f, Random.Range(0f, 4.5f)), Quaternion.identity);
             button.GetComponentInParent<ParticleSystem>().Play();
         }

@@ -1143,7 +1143,7 @@ public class UIManager : MonoBehaviour
         if (!levelStarted)
             _timerPause.GetComponent<Animator>().SetTrigger("timer");
 
-        _halo.gameObject.SetActive(true);
+        
     }
 
     public void audienceJump()
@@ -1154,7 +1154,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator TracksDown(float endPosY, float threshold, float speed)
     {
-        _halo.gameObject.SetActive(false);
+        hideHalo();
         float t = 0;
         while (Mathf.Abs(_tracks.localPosition.y - endPosY) > threshold)
         {

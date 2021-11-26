@@ -91,6 +91,7 @@ public class Tutorial : MonoBehaviour
                 //auto
                 _pauseText.SetActive(false);
                 _autoText.SetActive(true);
+                UIManager.instance.fillIcosphere(1);
                 StartCoroutine(spawnAutoNotes());
                 Gestures.instance.canThumbUp = true;
                 Gestures.instance.ThumbUp();
