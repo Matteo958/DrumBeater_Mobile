@@ -124,19 +124,15 @@ public class GameManager : MonoBehaviour
         autoMode = true;
         hasAutoMode = false;
 
-
-        if (!tutorial)
-        {
-            NoteSpawner.instance.activateAutoMode();
-            yield return new WaitForSeconds(autoModeTime);
-
-            autoMode = false;
-            PointsManager.instance.comboHitsAuto = 0;
-        }
-        else
-        {
+        if (!tutorial)        
+            NoteSpawner.instance.activateAutoMode();                   
+        else        
             TutorialNoteSpawner.instance.activateAuto();
-        }
+        
+        yield return new WaitForSeconds(autoModeTime);
+
+        autoMode = false;
+        PointsManager.instance.comboHitsAuto = 0;
     }
 
     public void pause()

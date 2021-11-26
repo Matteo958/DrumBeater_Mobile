@@ -201,10 +201,6 @@ public class Tutorial : MonoBehaviour
                 TutorialNoteSpawner.instance.spawnNote((int)Random.Range(0, 2));
                 yield return new WaitForSeconds(Random.Range(2, 3));
             }
-            GameManager.instance.autoMode = false;
-            //PointsManager.instance.comboHitsAuto = 0;
-
-            yield return new WaitForSeconds(15);
         }
         GameManager.instance.autoMode = false;
     }
