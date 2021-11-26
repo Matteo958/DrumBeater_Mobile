@@ -97,9 +97,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Transform _tabletPauseTutorial = default;
     public bool tutorialGuideIsActive;
 
+    [SerializeField] private GameObject _canvasHalo = default;
+
     private Vector3 _fogStartPos;
     private bool _isDarkening;
     private bool _showingHalo = false;
+    private bool _panelOpened = false;
 
     private static UIManager _instance;
 
@@ -287,7 +290,7 @@ public class UIManager : MonoBehaviour
         //        }
         //    }
         //}
-
+        
         //_panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = false;
         if (_panelContainerActive == _panelSongs)
         {
@@ -307,6 +310,7 @@ public class UIManager : MonoBehaviour
     IEnumerator open(GameObject _panel)
     {
         _tutorialPanels.SetActive(false);
+        _panelOpened = true;
         float t = 0;
         Vector3 _panelArrivingScale = new Vector3(_panel.transform.localScale.x, _panel.transform.localScale.y, 12);
         while (Mathf.Abs(_panel.transform.localScale.z - _panelArrivingScale.z) > 0.5f && _panelOpening)
@@ -344,7 +348,11 @@ public class UIManager : MonoBehaviour
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
-        _tutorialPanels.SetActive(true);
+
+        if (!GameManager.instance.levelStarted && !GameManager.instance.tutorial && tutorialGuideIsActive)
+            _tutorialPanels.SetActive(true);
+
+        _panelOpened = false;
     }
 
     //Change directional light and main camera color
@@ -561,6 +569,8 @@ public class UIManager : MonoBehaviour
             switch (button)
             {
                 case "Play":
+
+                    GameManager.instance.levelStarted = true;
                     ClosePanel();
 
                     _buttonCredits.GetComponent<Collider>().enabled = false;
@@ -580,9 +590,14 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
                     StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
                     StartCoroutine(TracksUp(-540.33f, 0.01f, 0.05f, true));
+                    StartCoroutine(TutorialGuideDown(-2f, 0.01f, 0.1f));
 
+                    GameManager.instance.tracks = _tracks.gameObject;
+                    _canvasHalo.SetActive(true);
                     break;
                 case "Tutorial":
+
+                    GameManager.instance.tutorial = true;
                     ClosePanel();
 
                     _buttonCredits.GetComponent<Collider>().enabled = false;
@@ -592,18 +607,19 @@ public class UIManager : MonoBehaviour
                     _choice.GetComponent<Collider>().enabled = false;
 
                     _isDarkening = false;
-                    StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
+                    StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (1 * Vector3.up)));
                     StartCoroutine(ConsoleDown(-542.5f, 0.01f, 0.05f));
                     StartCoroutine(TrackTutorialUp(-540.33f, 0.01f, 0.05f));
 
-                    GameManager.instance.tutorial = true;
+                    
                     Tutorial.instance.tutorialState = 3;
                     if (!tutorialGuideIsActive)
                         StartCoroutine(TutorialGuideUp(-0.2f, 0.01f, 0.05f));
                     else
                         Tutorial.instance.CheckTutorialState();
 
-
+                    GameManager.instance.tracks = _trackTutorialContainer.gameObject;
+                    _canvasHalo.SetActive(true);
                     break;
                 case "Quit":
                     Application.Quit();
@@ -614,6 +630,7 @@ public class UIManager : MonoBehaviour
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonCredits.GetComponent<Collider>().enabled = true;
+                    
                     break;
                 case "BackCredits":
                     ClosePanel();
@@ -621,6 +638,7 @@ public class UIManager : MonoBehaviour
                     _songChoice.GetComponent<Collider>().enabled = true;
                     _tutorialChoice.GetComponent<Collider>().enabled = true;
                     _buttonQuit.GetComponent<Collider>().enabled = true;
+                    
                     break;
             }
         }
@@ -796,6 +814,22 @@ public class UIManager : MonoBehaviour
 
     }
 
+    public void closeTutorial()
+    {
+        _manhole.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
+        _choice.GetComponent<AnchorableBehaviour>().Detach();
+        _choice.position = _choiceStartPos.position;
+        _choice.GetComponent<AnchorableBehaviour>().TryAttach();
+
+        _isDarkening = true;
+        StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (1 * Vector3.up)));
+        StartCoroutine(TrackTutorialDown(-542.5f, 0.01f, 0.1f));
+        StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
+    }
+
     public void closePausePanel()
     {
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
@@ -836,6 +870,7 @@ public class UIManager : MonoBehaviour
                 _choice.position = _choiceStartPos.position;
                 _choice.GetComponent<AnchorableBehaviour>().TryAttach();
 
+                _isDarkening = true;
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
                 StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
@@ -851,7 +886,7 @@ public class UIManager : MonoBehaviour
         _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
         _isDarkening = true;
 
-        StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
+        StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (1 * Vector3.up)));
         StartCoroutine(TrackTutorialDown(-542.5f, 0.01f, 0.1f));
         StartCoroutine(PauseTutorialUp(-540.27f, 0.01f, 0.1f));
     }
@@ -863,7 +898,7 @@ public class UIManager : MonoBehaviour
         _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
 
         _isDarkening = false;
-        StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (2 * Vector3.up)));
+        StartCoroutine(UnpauseDirLightColor(_songDirLightColor, _fog.position, _fogStartPos + (1 * Vector3.up)));
         StartCoroutine(TrackTutorialUp(-540.33f, 0.01f, 0.05f));
         StartCoroutine(PauseTutorialUp(-542.5f, 0.01f, 0.1f));
         Tutorial.instance.tutorialState++;
@@ -900,6 +935,7 @@ public class UIManager : MonoBehaviour
                 _choice.position = _choiceStartPos.position;
                 _choice.GetComponent<AnchorableBehaviour>().TryAttach();
 
+                _isDarkening = true;
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(EndGameContainerDown(-542.5f, 0.01f, 0.1f));
                 StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
@@ -1033,6 +1069,8 @@ public class UIManager : MonoBehaviour
 
     IEnumerator ConsoleUp(float endPosY, float threshold, float speed)
     {
+        if(tutorialGuideIsActive)
+            _tutorialPanels.SetActive(true);
         ObjectPool.instance.reset();
         fillIcosphere(0);
         _points.GetComponent<Animator>().SetBool("Points", false);
@@ -1048,6 +1086,8 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
 
         _choice.GetComponent<Collider>().enabled = true;
         _buttonCredits.GetComponent<Collider>().enabled = true;
@@ -1075,7 +1115,7 @@ public class UIManager : MonoBehaviour
         if (levelStarted)
         {
             ObjectPool.instance.reset();
-            GameManager.instance.levelStarted = true;
+            
             NoteSpawner.instance.reset();
             GameManager.instance.startSong();
             audienceJump();
@@ -1201,7 +1241,8 @@ public class UIManager : MonoBehaviour
             yield return null;
         }
         Tutorial.instance.CheckTutorialState();
-        _tutorialPanels.SetActive(true);
+        if(!_panelOpened)
+            _tutorialPanels.SetActive(true);
         tutorialGuideIsActive = true;
     }
 
@@ -1220,7 +1261,7 @@ public class UIManager : MonoBehaviour
 
     IEnumerator TrackTutorialUp(float endPosY, float threshold, float speed)
     {
-
+        _tutorialPanels.SetActive(true);
         float t = 0;
         while (Mathf.Abs(_trackTutorialContainer.localPosition.y - endPosY) > threshold)
         {
@@ -1228,7 +1269,9 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
-        
+        _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
     }
 
     IEnumerator TrackTutorialDown(float endPosY, float threshold, float speed)
@@ -1241,7 +1284,9 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * speed;
             yield return null;
         }
-        
+        _manhole.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", false);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", false);
     }
 
     public IEnumerator PauseTutorialUp(float endPosY, float threshold, float speed)
@@ -1350,8 +1395,12 @@ public class UIManager : MonoBehaviour
                 {
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
-                    _buttonCredits.GetComponent<Collider>().enabled = true;
-                    _buttonQuit.GetComponent<Collider>().enabled = true;
+                    if(_choice == null)
+                    {
+                        _buttonCredits.GetComponent<Collider>().enabled = true;
+                        _buttonQuit.GetComponent<Collider>().enabled = true;
+                    }
+                    
                 }
                 else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
                 {
@@ -1363,8 +1412,11 @@ public class UIManager : MonoBehaviour
                     anch.GetComponent<Rigidbody>().isKinematic = false;
                     _songChoiceIsFloating = true;
 
-                    _buttonCredits.GetComponent<Collider>().enabled = true;
-                    _buttonQuit.GetComponent<Collider>().enabled = true;
+                    if (_choice == null)
+                    {
+                        _buttonCredits.GetComponent<Collider>().enabled = true;
+                        _buttonQuit.GetComponent<Collider>().enabled = true;
+                    }
                     StartCoroutine(CheckSongChoiceHeight(anch));
                 }
                 break;
@@ -1373,8 +1425,11 @@ public class UIManager : MonoBehaviour
                 {
                     anch.GetComponent<Rigidbody>().useGravity = false;
                     anch.GetComponent<Rigidbody>().isKinematic = true;
-                    _buttonCredits.GetComponent<Collider>().enabled = true;
-                    _buttonQuit.GetComponent<Collider>().enabled = true;
+                    if (_choice == null)
+                    {
+                        _buttonCredits.GetComponent<Collider>().enabled = true;
+                        _buttonQuit.GetComponent<Collider>().enabled = true;
+                    }
 
                 }
                 else if ((anch.position - _starterAnchor.transform.position).magnitude < 0.06f)
@@ -1387,8 +1442,11 @@ public class UIManager : MonoBehaviour
                     anch.GetComponent<Rigidbody>().isKinematic = false;
                     _tutorialChoiceIsFloating = true;
 
-                    _buttonCredits.GetComponent<Collider>().enabled = true;
-                    _buttonQuit.GetComponent<Collider>().enabled = true;
+                    if (_choice == null)
+                    {
+                        _buttonCredits.GetComponent<Collider>().enabled = true;
+                        _buttonQuit.GetComponent<Collider>().enabled = true;
+                    }
                     StartCoroutine(CheckTutorialChoiceHeight(anch));
                 }
                 break;
@@ -1399,6 +1457,7 @@ public class UIManager : MonoBehaviour
 
     public void AnchorDetached(Transform anch)
     {
+        _choice = null;
         anch.GetComponent<Rigidbody>().useGravity = true;
         anch.GetComponent<Rigidbody>().isKinematic = false;
 

@@ -68,6 +68,7 @@ public class Gestures : MonoBehaviour
     {
         if (Vector3.Distance(_palmLeft.localPosition, _palmRight.localPosition) < destination)
             GameManager.instance.activateAutoMode();
+        
     }
 
     #endregion
@@ -78,11 +79,13 @@ public class Gestures : MonoBehaviour
         if (!GameManager.instance.tutorial)
         {
             _fistLeft = true;
+            _handOpenLeft = false;
             StartCoroutine(CheckHandOpenLeft());
         }
         else if (canCloseHand)
         {
             _fistLeft = true;
+            _handOpenLeft = false;
             StartCoroutine(CheckHandOpenLeft());
         }
     }
@@ -95,7 +98,7 @@ public class Gestures : MonoBehaviour
 
     IEnumerator CheckHandOpenLeft()
     {
-        while (!_handOpenLeft && _fistLeft)
+        while (!_handOpenLeft)
         {
             UpdateHandOpenLeft();
             yield return new WaitForSeconds(0.01f);
@@ -132,11 +135,12 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmLeft.position, _ringLeftEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmLeft.position, _pinkyLeftEnd.transform.position) < 0.05f))
         {
-            //Debug.Log("Power Activated by Left Hand");
             _handOpenLeft = false;
-
+            _fistLeft = false;
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
                 GameManager.instance.pause();
+            else if (GameManager.instance.tutorial && Tutorial.instance.tutorialState == 6)
+                UIManager.instance.showPauseTutorialPanel();
         }
     }
     #endregion
@@ -147,11 +151,13 @@ public class Gestures : MonoBehaviour
         if (!GameManager.instance.tutorial)
         {
             _fistRight = true;
+            _handOpenRight = false;
             StartCoroutine(CheckHandOpenRight());
         }
         else if (canCloseHand)
         {
             _fistRight = true;
+            _handOpenRight = false;
             StartCoroutine(CheckHandOpenRight());
         }
     }
@@ -164,7 +170,7 @@ public class Gestures : MonoBehaviour
 
     IEnumerator CheckHandOpenRight()
     {
-        while (!_handOpenRight && _fistRight)
+        while (!_handOpenRight)
         {
             UpdateHandOpenRight();
             yield return new WaitForSeconds(0.01f);
@@ -203,9 +209,10 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f))
         {
             _handOpenRight = false;
+            _fistRight = false;
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)
                 GameManager.instance.pause();
-            else if (GameManager.instance.tutorial)
+            else if (GameManager.instance.tutorial && Tutorial.instance.tutorialState == 6)
                 UIManager.instance.showPauseTutorialPanel();
 
         }
@@ -296,16 +303,16 @@ public class Gestures : MonoBehaviour
 
     private void UpdateThumbUp()
     {
-        if ((Vector3.Angle(Vector3.up, _thumbRightEnd.transform.right) < 30
-            && Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f) ||
-            (Vector3.Angle(Vector3.up, -_thumbLeftEnd.transform.right) < 30
-            && Vector3.Distance(_palmLeft.position, _indexLeftEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmLeft.position, _middleLeftEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmLeft.position, _ringLeftEnd.transform.position) < 0.05f
-            && Vector3.Distance(_palmLeft.position, _pinkyLeftEnd.transform.position) < 0.05f))
+        if ((Vector3.Angle(Vector3.up, _thumbRightEnd.transform.right) < 20
+            && Vector3.Distance(_palmRight.position, _indexRightEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmRight.position, _middleRightEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.045f) ||
+            (Vector3.Angle(Vector3.up, -_thumbLeftEnd.transform.right) < 20
+            && Vector3.Distance(_palmLeft.position, _indexLeftEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmLeft.position, _middleLeftEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmLeft.position, _ringLeftEnd.transform.position) < 0.045f
+            && Vector3.Distance(_palmLeft.position, _pinkyLeftEnd.transform.position) < 0.045f))
         {
 
             Debug.Log("THUMB UP");

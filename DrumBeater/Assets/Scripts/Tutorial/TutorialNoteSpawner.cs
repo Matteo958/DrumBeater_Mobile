@@ -67,4 +67,9 @@ public class TutorialNoteSpawner : MonoBehaviour
         spawnedNote.GetComponent<TutorialNote>().startNote();
     }
 
+    public void activateAuto()
+    {
+        ObjectPool.instance.activateAutoTutorial(autoModeNoteMaterial);
+    }
+
 }

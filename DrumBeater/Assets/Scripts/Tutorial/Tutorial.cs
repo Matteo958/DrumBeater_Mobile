@@ -97,25 +97,36 @@ public class Tutorial : MonoBehaviour
                 break;
             case 8:
                 //solo
+
                 _autoText.SetActive(false);
                 _soloText.SetActive(true);
                 GameManager.instance.soloText.GetComponent<RotateText>().activate();
                 GameManager.instance.soloIsActive = true;
-                Gestures.instance.canThumbUp = true;
-                Gestures.instance.ThumbUp();
+                GameManager.instance.rotateToCenter();
+                StartCoroutine(activateThumbUp());
                 break;
             case 9:
                 //end
                 _soloText.SetActive(false);
                 _finalText.SetActive(true);
-                Gestures.instance.canThumbUp = true;
-                Gestures.instance.ThumbUp();
+                GameManager.instance.soloText.GetComponent<RotateText>().deactivate();
+                GameManager.instance.soloIsActive = false;
+                StartCoroutine(activateThumbUp());
                 break;
             case 10:
                 //close tutorial
                 _finalText.SetActive(false);
+                UIManager.instance.closeTutorial();
+                _startText.SetActive(true);
                 break;
         }
+    }
+
+    IEnumerator activateThumbUp()
+    {
+        yield return new WaitForSeconds(2);
+        Gestures.instance.canThumbUp = true;
+        Gestures.instance.ThumbUp();
     }
 
     private IEnumerator menuTutorialCoroutine()
@@ -191,9 +202,10 @@ public class Tutorial : MonoBehaviour
                 yield return new WaitForSeconds(Random.Range(2, 3));
             }
             GameManager.instance.autoMode = false;
-            PointsManager.instance.comboHitsAuto = 0;
+            //PointsManager.instance.comboHitsAuto = 0;
 
             yield return new WaitForSeconds(15);
         }
+        GameManager.instance.autoMode = false;
     }
 }

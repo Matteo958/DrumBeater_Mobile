@@ -82,10 +82,12 @@ public class PointsManager : MonoBehaviour
 
         if (comboMultiplier < maxComboMultiplier && comboHits % comboMultiplierStep == 0)
             comboMultiplier++;
+        if (!GameManager.instance.hasAutoMode)
+            UIManager.instance.fillIcosphere((float)comboHitsAuto / autoModeHits);
         if (comboHitsAuto == autoModeHits)
             GameManager.instance.hasAutoMode = true;
 
-        UIManager.instance.fillIcosphere((float)comboHitsAuto / autoModeHits);
+        
         UIManager.instance.updateGameUI();
     }
 
@@ -95,7 +97,8 @@ public class PointsManager : MonoBehaviour
         comboHits = 0;
         comboHitsAuto = 0;
         miss++;
-        UIManager.instance.fillIcosphere(0);
+        if(!GameManager.instance.hasAutoMode)
+            UIManager.instance.fillIcosphere(0);
         UIManager.instance.updateGameUI();
     }
 

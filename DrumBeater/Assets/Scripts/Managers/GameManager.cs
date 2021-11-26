@@ -12,8 +12,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Material _buttonTrackNotPressed = default;
     [SerializeField] private Material _buttonTrackPressed = default;
     [SerializeField] private GameObject _forceField = default;
-
-    [SerializeField] private GameObject _tracks = default;
+    
     [SerializeField] public GameObject soloText = default;
 
     [SerializeField] private Light _dirLight = default;
@@ -36,7 +35,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject button2;
     [SerializeField] private GameObject button3;
 
-    [SerializeField] private GameObject _canvasHalo = default;
+    public GameObject tracks;
 
     // Check if the level is already started
     public bool levelStarted = false;
@@ -65,7 +64,7 @@ public class GameManager : MonoBehaviour
         AudioManager.instance.stopAudio(Audio.AudioType.MT_2, true);
         gamePaused = false;
         AudioListener.pause = false;
-        _canvasHalo.SetActive(true);
+       
         switch (difficulty)
         {
             case 0:
@@ -122,14 +121,19 @@ public class GameManager : MonoBehaviour
     {
         autoMode = true;
         hasAutoMode = false;
-        NoteSpawner.instance.activateAutoMode();
+        
 
         if (!tutorial)
         {
+            NoteSpawner.instance.activateAutoMode();
             yield return new WaitForSeconds(autoModeTime);
 
             autoMode = false;
             PointsManager.instance.comboHitsAuto = 0;
+        }
+        else
+        {
+            TutorialNoteSpawner.instance.activateAuto();
         }
     }
 
@@ -256,7 +260,7 @@ public class GameManager : MonoBehaviour
         UIManager.instance.hideHalo();
     }
 
-    private void rotateToCenter()
+    public void rotateToCenter()
     {
         if (activeTrack == 1)
             rotateTrack(true);
@@ -311,18 +315,18 @@ public class GameManager : MonoBehaviour
         canRotateRight = false;
         canRotateLeft = false;
         _rotating = true;
-        float startRotation = _tracks.transform.eulerAngles.y;
+        float startRotation = tracks.transform.eulerAngles.y;
         float endRotation = startRotation + angle;
         float t = 0;
         while (t < duration)
         {
             t += Time.deltaTime;
             float yRotation = Mathf.Lerp(startRotation, endRotation, t / duration) % 360.0f;
-            _tracks.transform.eulerAngles = new Vector3(_tracks.transform.eulerAngles.x, yRotation, _tracks.transform.eulerAngles.z);
+            tracks.transform.eulerAngles = new Vector3(tracks.transform.eulerAngles.x, yRotation, tracks.transform.eulerAngles.z);
             yield return null;
         }
         _rotating = false;
-        if (tutorial)
+        if (tutorial && Tutorial.instance.tutorialState < 7)
         {
             Tutorial.instance.tutorialState++;
             Tutorial.instance.CheckTutorialState();
