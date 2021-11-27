@@ -825,6 +825,7 @@ public class UIManager : MonoBehaviour
 
     public void closeTutorial()
     {
+        Tutorial.instance.tutorialState = 0;
         _manhole.GetComponent<Animator>().SetBool("Manhole", true);
         _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
         _manhole3.GetComponent<Animator>().SetBool("Manhole", true);

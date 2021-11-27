@@ -55,11 +55,13 @@ public class Tutorial : MonoBehaviour
                 StartCoroutine(menuTutorialCoroutine());
                 break;
             case 2:
+                _mainMenuText4.SetActive(false);
                 UIManager.instance.OnPressButtonOptions();
                 break;
             case 3:
                 //one note
                 _startText.SetActive(false);
+                
                 _noteText.SetActive(true);
                 StartCoroutine(spawnFirstNote());
                 Gestures.instance.canThumbUp = true;
@@ -119,6 +121,7 @@ public class Tutorial : MonoBehaviour
                 //close tutorial
                 _finalText.SetActive(false);
                 UIManager.instance.closeTutorial();
+                StartCoroutine(activateThumbUp());
                 _startText.SetActive(true);
                 break;
         }

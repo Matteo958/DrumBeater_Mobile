@@ -184,8 +184,8 @@ public class AudioManager : MonoBehaviour
         // fade volume
         if (job.fade)
         {
-            float initial = job.action == AudioAction.START || job.action == AudioAction.RESTART ? 0 : 0.25f;
-            float target = initial == 0 ? 0.25f : 0;
+            float initial = job.action == AudioAction.START || job.action == AudioAction.RESTART ? 0 : 0.1f;
+            float target = initial == 0 ? 0.1f : 0;
             float duration = 1.0f;
             float timer = 0.0f;
 
