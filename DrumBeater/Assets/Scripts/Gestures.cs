@@ -208,6 +208,7 @@ public class Gestures : MonoBehaviour
             && Vector3.Distance(_palmRight.position, _ringRightEnd.transform.position) < 0.05f
             && Vector3.Distance(_palmRight.position, _pinkyRightEnd.transform.position) < 0.05f))
         {
+            
             _handOpenRight = false;
             _fistRight = false;
             if (!GameManager.instance.gamePaused && GameManager.instance.levelStarted)

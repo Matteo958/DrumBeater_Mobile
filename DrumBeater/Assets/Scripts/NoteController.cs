@@ -20,9 +20,8 @@ public class NoteController : MonoBehaviour
 
         transform.localScale = Vector3.Lerp(new Vector3(0.001f, 1, 0.001f), new Vector3(1, 1, 1), _fill);
 
-        if (auto && _fill >= 0.93)
+        if (auto &&_fill >= 0.93)
             hit(Precision.PERFECT);
-        //GameManager.instance.pause();
         else if (_fill > 1.1)
             miss();
     }

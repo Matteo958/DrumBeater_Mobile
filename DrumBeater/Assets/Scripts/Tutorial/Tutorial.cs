@@ -83,7 +83,7 @@ public class Tutorial : MonoBehaviour
                 //pause
                 _multipleNotesText.SetActive(false);
                 _pauseText.SetActive(true);
-                Gestures.instance.canCloseHand = true;
+                StartCoroutine(activateFistTutorial());
                 //Gestures.instance.canThumbUp = true;
                 //Gestures.instance.ThumbUp();
                 break;
@@ -101,6 +101,7 @@ public class Tutorial : MonoBehaviour
 
                 _autoText.SetActive(false);
                 _soloText.SetActive(true);
+                UIManager.instance.fillIcosphere(0);
                 GameManager.instance.soloText.GetComponent<RotateText>().activate();
                 GameManager.instance.soloIsActive = true;
                 GameManager.instance.rotateToCenter();
@@ -128,6 +129,12 @@ public class Tutorial : MonoBehaviour
         yield return new WaitForSeconds(2);
         Gestures.instance.canThumbUp = true;
         Gestures.instance.ThumbUp();
+    }
+
+    IEnumerator activateFistTutorial()
+    {
+        yield return new WaitForSeconds(1);
+        Gestures.instance.canCloseHand = true;
     }
 
     private IEnumerator menuTutorialCoroutine()
@@ -171,8 +178,8 @@ public class Tutorial : MonoBehaviour
     {
         while (tutorialState == 3)
         {
-            TutorialNoteSpawner.instance.spawnNote(4);
-            yield return new WaitForSeconds(7);
+            TutorialNoteSpawner.instance.spawnNote(5);
+            yield return new WaitForSeconds(5);
         }
     }
 

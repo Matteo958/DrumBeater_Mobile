@@ -29,6 +29,7 @@ namespace Leap.Unity.Interaction {
     }
 
         public string choice = "";
+        public int count = 0;
 
         [Tooltip("is used to recognize the anchor that will make the various menu panels appear")]
         [SerializeField] private bool _isStarterAnchor = default;
@@ -133,6 +134,7 @@ namespace Leap.Unity.Interaction {
 
     public void NotifyAttached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Add(anchObj);
+            count = 1;
             //Debug.Log("Attached");
             
             
@@ -159,6 +161,7 @@ namespace Leap.Unity.Interaction {
 
     public void NotifyDetached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Remove(anchObj);
+            count--;
             //Debug.Log("Detached");
             
             if (_isStarterAnchor)
@@ -175,7 +178,7 @@ namespace Leap.Unity.Interaction {
                         break;
                 }
             }
-            if (_anchoredObjects.Count == 0) {
+            if (_anchoredObjects.Count == 0 && count == 0) {
         OnNoAnchorablesAttached();
       }
     }

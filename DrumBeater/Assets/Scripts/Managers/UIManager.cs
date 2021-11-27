@@ -239,8 +239,11 @@ public class UIManager : MonoBehaviour
 
             yield return null;
         }
-        _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", false);
-        _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
+        if (!GameManager.instance.tutorial)
+        {
+            _powerUpIcosphere.GetComponent<Animator>().SetBool("PowerUpIcosphere", false);
+            _powerUpIcosphere.transform.localScale = new Vector3(100, 100, 100);
+        }
     }
 
 
@@ -276,6 +279,7 @@ public class UIManager : MonoBehaviour
 
     public void ClosePanel()
     {
+        Debug.Log("OOKKK");
         _panelOpening = false;
         //_buttonCredits.GetComponent<Collider>().enabled = true;
         //_buttonQuit.GetComponent<Collider>().enabled = true;
@@ -296,6 +300,8 @@ public class UIManager : MonoBehaviour
         {
             _panelContainerActive.transform.GetChild(0).transform.GetChild(1).GetComponent<Rigidbody>().isKinematic = true;
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Stop();
+            if (!GameManager.instance.levelStarted)
+                AudioManager.instance.playAudio(Audio.AudioType.MT_2, true);
             foreach (Transform t in _panelContainerActive.transform.GetChild(0).transform.GetChild(3))
             {
                 t.GetComponent<Collider>().enabled = false;
@@ -322,6 +328,7 @@ public class UIManager : MonoBehaviour
 
         if (_panelContainerActive == _panelSongs)
         {
+            AudioManager.instance.stopAudio(Audio.AudioType.MT_2, true);
             _video.GetComponent<UnityEngine.Video.VideoPlayer>().Play();
             _panel.transform.GetChild(0).transform.GetChild(1).GetComponent<Collider>().enabled = true;
 
@@ -345,6 +352,8 @@ public class UIManager : MonoBehaviour
             t += Time.deltaTime * 0.2f;
             yield return null;
         }
+
+        
 
         //_panel.transform.position = new Vector3(0, _panel.transform.position.y, _panel.transform.position.z);
         _panel.SetActive(false);
@@ -827,7 +836,7 @@ public class UIManager : MonoBehaviour
         _isDarkening = true;
         StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (1 * Vector3.up)));
         StartCoroutine(TrackTutorialDown(-542.5f, 0.01f, 0.1f));
-        StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
+        StartCoroutine(ConsoleUp(-540.37f, 0.01f, 0.1f));
     }
 
     public void closePausePanel()
@@ -873,7 +882,7 @@ public class UIManager : MonoBehaviour
                 _isDarkening = true;
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(PauseContainerDown(-542.5f, 0.01f, 0.1f));
-                StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
+                StartCoroutine(ConsoleUp(-540.37f, 0.01f, 0.1f));
 
                 break;
         }
@@ -938,7 +947,7 @@ public class UIManager : MonoBehaviour
                 _isDarkening = true;
                 StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));
                 StartCoroutine(EndGameContainerDown(-542.5f, 0.01f, 0.1f));
-                StartCoroutine(ConsoleUp(-540.38f, 0.01f, 0.1f));
+                StartCoroutine(ConsoleUp(-540.37f, 0.01f, 0.1f));
 
                 break;
         }
@@ -1653,6 +1662,7 @@ public class UIManager : MonoBehaviour
     public void OnContactMusicSlider(Transform slider)
     {
         AudioManager.instance.tracks[0].source.volume = slider.GetComponent<InteractionSlider>().HorizontalSliderPercent;
+        _video.GetComponent<UnityEngine.Video.VideoPlayer>().SetDirectAudioVolume(0, slider.GetComponent<InteractionSlider>().HorizontalSliderPercent);
     }
 
     public void OnContactSfxSlider(Transform slider)

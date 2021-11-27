@@ -134,8 +134,10 @@ public class GameManager : MonoBehaviour
         autoMode = false;
         PointsManager.instance.comboHitsAuto = 0;
 
-        if (tutorial)
+        if (Tutorial.instance.tutorialState == 7)
+        {
             UIManager.instance.fillIcosphere(1);
+        }
     }
 
     public void pause()
