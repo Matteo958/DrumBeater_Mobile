@@ -258,7 +258,7 @@ namespace Leap.Unity.Interaction {
 
     #region Internal State
 
-    protected float _horizontalSliderPercent;
+    public float _horizontalSliderPercent;
     protected float _verticalSliderPercent;
     protected RectTransform parent;
 

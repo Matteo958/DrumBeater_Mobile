@@ -3,7 +3,17 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - StarterAnchor
+  - Easy
+  - Medium
+  - Hard
+  - ForceField
+  - SongChoice
+  - TutorialChoice
+  - Console
+  - Pause
+  - EndGame
   layers:
   - Default
   - TransparentFX
@@ -13,12 +23,12 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Song
+  - Floor
+  - PowerUpIcosphere
+  - SoloText
+  - Panel
+  - Tutorial
   - 
   - 
   - 
@@ -40,4 +50,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: P
+    uniqueID: 1503079555
     locked: 0

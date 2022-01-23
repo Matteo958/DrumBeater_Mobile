@@ -28,6 +28,12 @@ namespace Leap.Unity.Interaction {
       }
     }
 
+        public string choice = "";
+        public int count = 0;
+
+        [Tooltip("is used to recognize the anchor that will make the various menu panels appear")]
+        [SerializeField] private bool _isStarterAnchor = default;
+
     [Tooltip("Should this anchor allow multiple objects to be attached to it at the same time? "
            + "This property is enforced by AnchorGroups and AnchorableBehaviours.")]
     public bool allowMultipleObjects = false;
@@ -128,16 +134,51 @@ namespace Leap.Unity.Interaction {
 
     public void NotifyAttached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Add(anchObj);
+            count = 1;
+            //Debug.Log("Attached");
+            
+            
+            if (_isStarterAnchor)
+            {
+                switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
+                {
+                    case "Songs":
+                        choice = "Songs";
+                        
+                        break;
+                    case "Tutorial":
+                        choice = "Tutorial";
+                        
+                        break;
+                    
+                }
+            }
 
-      if (_anchoredObjects.Count == 1) {
+            if (_anchoredObjects.Count == 1) {
         OnAnchorablesAttached();
       }
     }
 
     public void NotifyDetached(AnchorableBehaviour anchObj) {
       _anchoredObjects.Remove(anchObj);
-
-      if (_anchoredObjects.Count == 0) {
+            count--;
+            //Debug.Log("Detached");
+            
+            if (_isStarterAnchor)
+            {
+                switch (anchObj.GetComponent<AnchorableBehaviour>().menu.ToString())
+                {
+                    case "Songs":
+                        choice = "";
+                        
+                        break;
+                    case "Tutorial":
+                        choice = "";
+                        
+                        break;
+                }
+            }
+            if (_anchoredObjects.Count == 0 && count == 0) {
         OnNoAnchorablesAttached();
       }
     }

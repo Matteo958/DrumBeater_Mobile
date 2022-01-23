@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: bcdd3204bc7216b489c97500b8846b63
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Arista Pro Alternate
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: d05d2d26c6af04b4f924749badbe2cfe, type: 3}
+  - {fileID: 12800000, guid: 9c96334c33878f74f8c4dcf2d88cd551, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
