@@ -803,6 +803,10 @@ public class UIManager : MonoBehaviour
         _beatenNotesPercentageText.text = PointsManager.instance.hitsPercentage.ToString() + " %";
         _pointsText.text = PointsManager.instance.points.ToString();
 
+        _manhole.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole2.GetComponent<Animator>().SetBool("Manhole", true);
+        _manhole3.GetComponent<Animator>().SetBool("Manhole", true);
+
         _isDarkening = true;
 
         StartCoroutine(PauseDirLightColor(_pauseDirLightColor, _fog.position, _fogStartPos - (2 * Vector3.up)));

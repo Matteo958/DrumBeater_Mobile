@@ -139,7 +139,8 @@ namespace trinus{
 			trinusCursor.gameObject.SetActive (false);
 			TrinusProcessor.trinusPause (false);
 			setCurrentPage(UI_PAGE.CONNECTION_WAIT);
-		}
+            trinusProcessor.setMonoscopic(true);
+        }
 		public void restartConnection(){
 			restartConnection (true);
 		}
